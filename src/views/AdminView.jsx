@@ -590,7 +590,7 @@ export default function AdminView({ navigate }) {
                 <tbody>
                   {filteredLeads.map(lead => {
                     const waText = encodeURIComponent(
-                      `Hi ${lead.fullName}, thank you for contacting Google Antigravity regarding *${lead.service}* in *${lead.city}* (Tracking ID: ${lead.id}). How can we assist you today?`
+                      `Hi ${lead.fullName}, thank you for contacting UrbanSarkari regarding *${lead.service}* in *${lead.city}* (Tracking ID: ${lead.id}). How can we assist you today?`
                     );
                     const waLink = `https://wa.me/91${lead.phone}?text=${waText}`;
 

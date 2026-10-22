@@ -4,8 +4,8 @@ const MonetizationContext = createContext(null);
 
 const DEFAULT_SETTINGS = {
   adminWhatsAppNumber: '919876543210',
-  merchantUpiId: 'antigravity@upi',
-  merchantName: 'Google Antigravity Public Data Portal',
+  merchantUpiId: 'urbansarkari@upi',
+  merchantName: 'UrbanSarkari Portal',
   testPaperPrice: 49,
   adminPin: '2026',
   adminPassword: 'admin',
@@ -21,7 +21,7 @@ const DEFAULT_AFFILIATES = [
     title: 'Testbook Pass Pro 2026: Official Test Series',
     description: 'Full syllabus mock tests, previous 10-year papers, bilingual analysis & All-India ranks for UPSC, SSC, RRB & Banking.',
     ctaText: 'Claim 50% Discount Pass',
-    url: 'https://testbook.com?ref=antigravity_pseo',
+    url: 'https://testbook.com?ref=urbansarkari',
     category: 'exam',
     active: true,
     accentColor: '#6366f1'
@@ -32,7 +32,7 @@ const DEFAULT_AFFILIATES = [
     title: 'Adda247 Live Foundation Batches for Sarkari Jobs',
     description: 'Daily live classes with top Indian faculty, daily bilingual current affairs PDF, and chapter-wise speed tests.',
     ctaText: 'Explore Preparation Batches',
-    url: 'https://adda247.com?ref=antigravity_pseo',
+    url: 'https://adda247.com?ref=urbansarkari',
     category: 'exam',
     active: true,
     accentColor: '#dc2626'
@@ -43,7 +43,7 @@ const DEFAULT_AFFILIATES = [
     title: 'Annual AC & Appliance Protection Plan',
     description: 'Unlimited free gas top-ups, electrical servicing, and certified technician warranty across all Indian metros.',
     ctaText: 'Check Service Coverage',
-    url: 'https://urbancompany.com?ref=antigravity_pseo',
+    url: 'https://urbancompany.com?ref=urbansarkari',
     category: 'home-services',
     active: true,
     accentColor: '#ea580c'
@@ -54,7 +54,7 @@ const DEFAULT_AFFILIATES = [
     title: 'Fast GST Registration & Private Limited Incorporation',
     description: 'Connect with senior Chartered Accountants and corporate lawyers. Paperless filing completed in 3 working days.',
     ctaText: 'Start Business Registration',
-    url: 'https://indiafilings.com?ref=antigravity_pseo',
+    url: 'https://indiafilings.com?ref=urbansarkari',
     category: 'legal',
     active: true,
     accentColor: '#7c3aed'
@@ -65,7 +65,7 @@ const DEFAULT_AFFILIATES = [
     title: 'CultPass All-India Gym, Yoga & CrossFit Access',
     description: 'Work out across 500+ premium fitness centers in Delhi, Mumbai, Bengaluru, Chennai, and Coimbatore with one flexible pass.',
     ctaText: 'Claim 3-Day Free Trial',
-    url: 'https://cult.fit?ref=antigravity_pseo',
+    url: 'https://cult.fit?ref=urbansarkari',
     category: 'wellness',
     active: true,
     accentColor: '#10b981'
@@ -292,7 +292,7 @@ export function MonetizationProvider({ children }) {
       `⚡ *Service:* ${newLead.service}\n` +
       `🕒 *Slot:* ${newLead.slot === 'immediate' ? 'Urgent (15-Min Callback)' : newLead.slot}\n` +
       (newLead.notes ? `📝 *Notes:* ${newLead.notes}\n` : '') +
-      `\n🌐 _Submitted via Google Antigravity pSEO Portal_`
+      `\n🌐 _Submitted via UrbanSarkari Doorstep Portal_`
     );
 
     const waUrl = `https://wa.me/${settings.adminWhatsAppNumber}?text=${waText}`;
@@ -329,7 +329,7 @@ export function MonetizationProvider({ children }) {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `google_antigravity_leads_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute("download", `urbansarkari_leads_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -337,7 +337,7 @@ export function MonetizationProvider({ children }) {
 
   // UPI Transactions Methods
   const recordUpiTransaction = ({ examTitle, examOrg, amount, utrNumber, customerPhone }) => {
-    const orderId = `GA-ORD-${Math.floor(1000 + Math.random() * 9000)}`;
+    const orderId = `US-ORD-${Math.floor(1000 + Math.random() * 9000)}`;
     const now = new Date();
     const formattedDate = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + 
       now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });

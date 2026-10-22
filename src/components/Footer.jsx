@@ -19,10 +19,10 @@ export default function Footer({ navigate }) {
               <div className="brand-badge" style={{ width: '28px', height: '28px' }}>
                 <Zap size={16} />
               </div>
-              <span>Google Antigravity</span>
+              <span>UrbanSarkari</span>
             </div>
             <p style={{ lineHeight: 1.6, marginBottom: '1rem', fontSize: '0.825rem' }}>
-              India's premier programmatic public data aggregator. Real-time fuel price monitoring, live BIS 916 gold rates, and fast Sarkari examination schedules across Indian states.
+              India's premier Sarkari Result & verified doorstep services hub. Real-time official examination circulars, instant admit cards, and verified local home services across 750+ Indian districts.
             </p>
             <div style={{ display: 'flex', gap: '8px' }}>
               <span style={{ fontSize: '0.75rem', background: 'var(--bg-tertiary)', padding: '3px 8px', borderRadius: '4px' }}>
@@ -121,10 +121,10 @@ export default function Footer({ navigate }) {
             <strong>Public Service Information Notice:</strong>
           </div>
           <p>
-            Google Antigravity is an independent public programmatic aggregator and verified local business intelligence directory. We are not officially affiliated with the Government of India, the Union Public Service Commission, State Public Service Commissions, or listed commercial institutes. Examination candidates are advised to verify details with official government gazettes. Local service listings, reviews, and estimates are aggregated from registered regional providers.
+            UrbanSarkari is an independent public portal and verified local business intelligence directory. We are not officially affiliated with the Government of India, the Union Public Service Commission, State Public Service Commissions, or listed commercial institutes. Examination candidates are advised to verify details with official government gazettes. Local service listings, reviews, and estimates are aggregated from registered regional providers.
           </p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <span>© 2026 Google Antigravity (India Public Micro-Data & Services Directory). All rights reserved.</span>
+            <span>© 2026 UrbanSarkari (India Public Data & Doorstep Services Portal). All rights reserved.</span>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <button onClick={() => navigate('/exam-schedules')} style={{ color: 'inherit' }}>Sarkari Board</button>
               <button onClick={() => navigate('/home-services')} style={{ color: 'inherit' }}>Home Services</button>

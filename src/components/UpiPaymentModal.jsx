@@ -31,8 +31,8 @@ export default function UpiPaymentModal({ isOpen, onClose, exam }) {
   if (!isOpen || !exam) return null;
 
   const price = settings.testPaperPrice || 49;
-  const merchantUpi = settings.merchantUpiId || 'antigravity@upi';
-  const merchantName = settings.merchantName || 'Govt Exam Public Portal';
+  const merchantUpi = settings.merchantUpiId || 'urbansarkari@upi';
+  const merchantName = settings.merchantName || 'UrbanSarkari Portal';
   const examTitle = `${exam.org} ${exam.postName}`;
 
   // Standard UPI Intent String
@@ -73,7 +73,7 @@ export default function UpiPaymentModal({ isOpen, onClose, exam }) {
   const handleDownloadStudyPacket = () => {
     // Generate an instant study packet file
     const packetContent = `========================================================================
-GOOGLE ANTIGRAVITY - OFFICIAL 2026 EXAMINATION HIGH-YIELD STUDY PACKET
+URBANSARKARI - OFFICIAL 2026 EXAMINATION HIGH-YIELD STUDY PACKET
 ========================================================================
 Exam: ${exam.org} - ${exam.postName}
 Order ID: ${orderRecord?.id || 'GA-CONFIRMED'}
@@ -114,7 +114,7 @@ SECTION 2: 10 HIGH-PROBABILITY SOLVED REVISION QUESTIONS
 SECTION 3: OFFICIAL APPLICATION & VERIFICATION
 ------------------------------------------------------------------------
 Official Recruitment Portal: ${exam.officialNotificationPdf || exam.applyLink}
-Support Email: support@antigravity-pseo.internal
+Support Email: support@urbansarkari.in
 
 Good luck with your 2026 exam preparation!
 ========================================================================`;

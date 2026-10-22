@@ -497,7 +497,7 @@ export default function ServiceCityView({
       <section className="glass-panel" style={{ padding: '2rem', marginBottom: '3rem' }}>
         <h2 style={{ fontSize: '1.3rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Info size={20} style={{ color: 'var(--accent-blue)' }} />
-          <span>Why Choose Verified {shortServiceName} via Google Antigravity in {cityName}?</span>
+          <span>Why Choose Verified {shortServiceName} via UrbanSarkari in {cityName}?</span>
         </h2>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', fontSize: '0.875rem' }}>

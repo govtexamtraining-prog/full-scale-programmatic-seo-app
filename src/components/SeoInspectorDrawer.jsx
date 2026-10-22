@@ -127,7 +127,7 @@ export default function SeoInspectorDrawer({ isOpen, onClose, metadata, schemaDa
             >
               <div className="serp-url">
                 <span style={{ background: '#202124', color: 'white', borderRadius: '50%', width: '18px', height: '18px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px' }}>⚡</span>
-                <span style={{ color: '#202124', fontSize: '12px' }}>google-antigravity.in</span>
+                <span style={{ color: '#202124', fontSize: '12px' }}>urbansarkari.in</span>
                 <span style={{ color: '#70757a', fontSize: '12px' }}>› {currentRoute.replace(/^\//, '').replace(/\//g, ' › ')}</span>
               </div>
               <div className="serp-title">
@@ -210,7 +210,7 @@ export default function SeoInspectorDrawer({ isOpen, onClose, metadata, schemaDa
         {activeTab === 'variables' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              This page was generated through <strong>Google Antigravity's Programmatic SEO template</strong> without manual content writing.
+              This page was generated through <strong>UrbanSarkari's Automated Public Directory Engine</strong> without manual content writing.
             </div>
 
             <div style={{ background: 'var(--bg-tertiary)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--bg-card-border)' }}>

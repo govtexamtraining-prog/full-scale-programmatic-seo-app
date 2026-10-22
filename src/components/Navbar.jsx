@@ -55,21 +55,21 @@ export default function Navbar({
         </div>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>Google Antigravity</span>
+            <span style={{ fontWeight: 800, letterSpacing: '-0.03em', fontSize: '1.15rem' }}>UrbanSarkari</span>
             <span style={{ 
               fontSize: '0.62rem', 
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', 
+              background: 'linear-gradient(135deg, #dc2626, #2563eb)', 
               color: 'white', 
               padding: '1px 5px', 
               borderRadius: '4px',
               fontWeight: 800,
               letterSpacing: '0.04em'
             }}>
-              PRO
+              LIVE 2026
             </span>
           </div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-            India Public Data Engine
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+            Sarkari Result & Verified Services
           </div>
         </div>
       </div>

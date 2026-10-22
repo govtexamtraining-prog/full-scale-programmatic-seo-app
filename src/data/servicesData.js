@@ -58,7 +58,7 @@ export const NICHES = [
         ],
         faqs: [
           { q: "What is the minimum visiting fee for an electrician in {city}?", a: "The standard inspection fee in {city} is ₹199, which is usually waived or adjusted against the final service bill if you proceed with repairs." },
-          { q: "Are electricians in {city} licensed and police-verified?", a: "Yes, every partner electrician listed on Google Antigravity in {city} holds government wireman certification and has undergone identity and background verification." }
+          { q: "Are electricians in {city} licensed and police-verified?", a: "Yes, every partner electrician listed on UrbanSarkari in {city} holds government wireman certification and has undergone identity and background verification." }
         ]
       },
       {
@@ -381,7 +381,7 @@ export const NICHES = [
         ],
         faqs: [
           { q: "What are the typical operating hours of gyms in {city}?", a: "Most premium fitness centers in {city} open from 05:30 AM to 10:30 PM on weekdays, and 06:00 AM to 08:00 PM on Sundays." },
-          { q: "Can I get a free trial workout before paying in {city}?", a: "Yes, you can claim a free 1-Day Guest Pass through Google Antigravity to experience the machines, locker facilities, and training atmosphere." }
+          { q: "Can I get a free trial workout before paying in {city}?", a: "Yes, you can claim a free 1-Day Guest Pass through UrbanSarkari to experience the machines, locker facilities, and training atmosphere." }
         ]
       },
       {

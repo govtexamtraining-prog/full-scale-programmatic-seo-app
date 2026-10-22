@@ -1,53 +1,32 @@
-# Google Antigravity — India's Ultimate Programmatic SEO (pSEO) Public Data Portal
+# UrbanSarkari — India's #1 Sarkari Result & Verified Doorstep Services Hub
 
-[![pSEO Architecture](https://img.shields.io/badge/pSEO-Live%20Engine-brightgreen)]()
+[![Brand: UrbanSarkari](https://img.shields.io/badge/Brand-UrbanSarkari-red.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)]()
 [![Built with React & Vite](https://img.shields.io/badge/Stack-React%20%7C%20Vite%20%7C%20Vanilla%20CSS-61dafb.svg)]()
 
-**Google Antigravity** is a high-traffic, mobile-responsive, production-ready web application built to automatically generate thousands of hyper-local, search-engine-optimized landing pages targeting high-intent micro-keywords across India (Daily Fuel Rates, Live BIS 916 Gold Prices, and Sarkari Government Examinations).
+**UrbanSarkari** is a high-traffic, mobile-responsive, production-grade consumer portal inspired by top Indian industry leaders (**Urban Company** + **Sarkari Result**). It combines real-time statutory examination circulars, admit cards, and recruitment notices with background-verified local home utilities, coaching academies, legal/tax consultants, and wellness hubs across 750+ Indian districts.
 
 ---
 
 ## ⚡ Core Features & Architectural Pillars
 
-### 1. Programmatic SEO (pSEO) Routing Engine
-Automated page generation targeting long-tail Indian search intent queries without manual content writing:
-- **National Hub:** `/` (Aggregator dashboard with national tickers, 3-column Sarkari grid, and state directory)
-- **Vertical Landing Hubs:**
-  - `/fuel-prices` — State-wise comparison matrix, highest & lowest fuel rates in India
-  - `/gold-rates` — Live 22K/24K spot bullion prices, sovereign & tola calculators
-  - `/exam-schedules` — Central & State government recruitment notifications
-- **Hyper-Local pSEO Routes (`/[vertical]/[state]/[city]`):**
-  - `/fuel-prices/tamil-nadu/coimbatore`
-  - `/fuel-prices/maharashtra/mumbai`
-  - `/gold-rates/tamil-nadu/chennai`
-  - `/gold-rates/karnataka/bengaluru`
-  - *(Covers 30+ major Indian metropolitan cities across Tamil Nadu, Maharashtra, Karnataka, Delhi, Telangana, Gujarat, UP, West Bengal, Rajasthan, Kerala, and more)*
-- **Micro-Keyword Exam Routes (`/exam-schedules/[org]/[postSlug]`):**
-  - `/exam-schedules/upsc/civil-services-ias-prelims-2026`
-  - `/exam-schedules/ssc/cgl-tier-1-2026`
-  - `/exam-schedules/ibps/po-recruitment-2026`
-  - `/exam-schedules/rrb/assistant-loco-pilot-alp-2026`
-  - `/exam-schedules/tnpsc/group-4-services-vao-2026`
+### 1. The 5 Core Verticals
+- **Sarkari Result & Exam Board 2026 (`/exam-schedules`):** Official notifications, eligibility criteria, exam dates, syllabus breakdown, and instant ₹49 UPI test prep packets for UPSC, SSC, RRB, IBPS, and State PSCs.
+- **Home Services & Utilities (`/home-services`):** Transparent rate cards (starting ₹499) for AC Repair & Gas Refill, Electricians, and Plumbers with 30-min doorstep arrival.
+- **Coaching & Education Academies (`/coaching-institutes`):** UPSC, NEET, JEE, and Banking academy listings with faculty credentials and fee schedules.
+- **Professional Services (`/legal-tax-services`):** Verified Chartered Accountants and Advocates for GST registration, ITR filing, and business compliance.
+- **Wellness, Gyms & Lifestyle Hubs (`/wellness-fitness`):** Premium gym memberships, certified personal trainers, and free 1-day guest passes.
 
-### 2. Auto-Injected JSON-LD Schema & Meta Tags
-Every page dynamically injects rich structured microdata into the document `<head>`:
-- `Product` & `UnitPriceSpecification` for Petrol, Diesel, and 22K/24K Gold.
-- `LocalBusiness` & `GeoCoordinates` for municipal commodity territories.
-- `JobPosting` & `EducationEvent` for Sarkari Exam schedules, deadlines, salaries, and organizing bodies.
-- `BreadcrumbList` on every route for enhanced search engine breadcrumb trails.
+### 2. High-Traffic SEO, VEO & GEO Architecture
+- **592 Pre-Rendered XML URLs (`/sitemap.xml`):** Automated sitemap crawler discovery targeting 30+ major Indian cities.
+- **VEO (Voice Engine Optimization):** `SpeakableSpecification` schema and natural-language `.speakable-answer` blocks engineered for Google Assistant, Apple Siri, and Amazon Alexa.
+- **GEO (Generative Engine Optimization & Local SEO):** Direct ingestion directives for AI engines (`GPTBot`, `PerplexityBot`, `ClaudeBot`) and hyper-local geo tags (`geo.region`, `geo.placename`, `ICBM`).
 
-### 3. Advanced Features
-- **Live Google SERP & SEO Inspector:** Built-in drawer showing real-time mobile/desktop Google Search snippet previews, character counters, indexing signals, and a 1-click **Copy JSON-LD** schema button.
-- **Automated 06:00 AM IST Sync & Stale Fallback:** Simulates the daily public data feed refresh with a resilient fallback mechanism that warns users with a subtle notification ribbon during upstream outages rather than throwing 404/500 errors.
-- **Interactive Calculators:**
-  - *Gold & Jewellery Billing Calculator:* Computes making charges (5–25%), mandatory BIS hallmarking fee (₹45), and 3% GST breakdown.
-  - *Trip Fuel Cost & Mileage Calculator:* Computes required liters, cost-per-km, and fuel expenses.
-- **Cheaper Nearby Cities Widget:** Identifies neighboring municipalities with lower fuel taxes to help commuters and fleet operators save on bulk refueling.
-- **Universal Search Modal (Ctrl/Cmd + K):** Fuzzy search across all 30+ Indian cities, states, commodities, and examinations.
-- **Dynamic XML Sitemap (`/sitemap.xml`):** Generates valid XML output meeting the `sitemaps.org 0.9` protocol, complete with visual crawl-budget inventory explorer and one-click download.
-- **Zero Cumulative Layout Shift (CLS) Ad Placements:** Fixed-dimension containers for Leaderboard (728x90), Mid-content MPU (300x250), and Sticky Bottom bar.
-- **Dark / Light Theme Engine:** Smooth transitions with persistent local storage.
+### 3. Monetization Engine & Admin Suite
+- **Instant WhatsApp Lead Capture Modal:** Captures lead details and launches direct pre-filled WhatsApp click-to-chat links with local database persistence.
+- **Instant ₹49 UPI Test Pack Payment:** Dynamic Bharat QR generator (`upi://pay`), payment verification, and automated study pack downloads.
+- **Affiliate Card System:** High-converting affiliate partnerships for Testbook, Adda247, Urban Company, IndiaFilings, and Cult.fit.
+- **Master Admin Console (`/admin`, PIN: `2026`):** Real-time monitoring of WhatsApp leads, UPI purchases, CSV export, and dynamic affiliate commission URL management.
 
 ---
 
@@ -60,8 +39,6 @@ npm install
 # 2. Start the development server
 npm run dev
 
-# 3. Build production bundle
+# 3. Build for production (automatically regenerates sitemap.xml)
 npm run build
 ```
-
-Open `http://localhost:5173/` in your browser.

@@ -59,7 +59,7 @@ export default function GoldCityView({ stateSlug, citySlug, navigate }) {
   ).slice(0, 4);
 
   const handleShare = () => {
-    const shareText = `🪙 Today's Live Gold Rates in ${cityGold.cityName} (${cityGold.stateName}):\n22K (916): ₹${cityGold.gold22kPerGram}/g (₹${(cityGold.gold22kPerGram * 8).toLocaleString('en-IN')} per 8g Sovereign)\n24K Pure: ₹${cityGold.gold24kPerGram}/g\nSilver: ₹${cityGold.silverPerGram}/g\nAuto-synchronized at ${lastSyncTime || '06:00 AM IST'} via Google Antigravity. Check live: ${window.location.href}`;
+    const shareText = `🪙 Today's Live Gold Rates in ${cityGold.cityName} (${cityGold.stateName}):\n22K (916): ₹${cityGold.gold22kPerGram}/g (₹${(cityGold.gold22kPerGram * 8).toLocaleString('en-IN')} per 8g Sovereign)\n24K Pure: ₹${cityGold.gold24kPerGram}/g\nSilver: ₹${cityGold.silverPerGram}/g\nAuto-synchronized at ${lastSyncTime || '06:00 AM IST'} via UrbanSarkari. Check live: ${window.location.href}`;
     navigator.clipboard.writeText(shareText);
     setCopiedShare(true);
     setTimeout(() => setCopiedShare(false), 2500);

@@ -43,24 +43,24 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
   // 1. Home / National Hub
   if (currentPath === "/" || route === "home") {
     return {
-      title: `Google Antigravity: Sarkari Result 2026, Home Services, Coaching & Local Directory (${CURRENT_MONTH_YEAR})`,
+      title: `UrbanSarkari: Sarkari Result 2026, Home Services, Coaching & Local Directory (${CURRENT_MONTH_YEAR})`,
       metaDescription: `India's Centralized Public Portal for 2026 Sarkari Exam schedules, admit cards, verified Home Services (AC repair, plumbing), Coaching Academies, Legal & CA retainers, and Wellness Hubs across 750+ districts.`,
       canonicalUrl: `${APP_BASE_URL}/`,
       h1: "Sarkari Exam Board & Verified Public Services Directory",
       h2: "Official 2026 Recruitment Notifications, Verified Home Services & Local Professional Directory",
-      keywords: "sarkari result 2026, upsc prelims admit card, ssc cgl recruitment, ac repair service, coaching institutes, ca gst filing, top gyms india, public services directory",
+      keywords: "sarkari result 2026, upsc prelims admit card, ssc cgl recruitment, ac repair service, coaching institutes, ca gst filing, top gyms india, urbansarkari",
       ogType: "website",
       geo: defaultGeo,
       openGraph: {
-        title: `Google Antigravity: Sarkari Result 2026, Home Services, Coaching & Local Directory`,
+        title: `UrbanSarkari: Sarkari Result 2026, Home Services, Coaching & Local Directory`,
         description: `India's Centralized Public Portal for 2026 Sarkari Exam schedules, admit cards, verified Home Services, Coaching Academies, Legal & CA retainers.`,
         url: `${APP_BASE_URL}/`,
         type: "website",
-        siteName: "Google Antigravity: Sarkari Result & Services 2026"
+        siteName: "UrbanSarkari: Sarkari Result & Services 2026"
       },
       twitter: {
         card: "summary_large_image",
-        title: `Google Antigravity: Sarkari Result 2026, Home Services & Local Directory`,
+        title: `UrbanSarkari: Sarkari Result 2026, Home Services & Local Directory`,
         description: `India's Centralized Public Portal for 2026 Sarkari Exam schedules, admit cards, verified Home Services, Coaching Academies, Legal & CA retainers.`
       }
     };
@@ -152,7 +152,7 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
         description: `Official Notification: ${vacancies > 0 ? vacancies.toLocaleString('en-IN') + ' vacancies' : 'National exam'}. Deadline: ${lastDateToApply}. Direct Hall Ticket & Apply Link.`,
         url: canonical,
         type: "article",
-        siteName: "Google Antigravity & Sarkari Result Portal 2026"
+        siteName: "UrbanSarkari: Sarkari Result & Services 2026"
       },
       twitter: {
         card: "summary_large_image",
@@ -223,7 +223,7 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
         description: `Verified ${shortName} in ${cityName}, ${stateName}. Transparent rate cards starting ${priceRange}. Fast 30-min dispatch.`,
         url: canonical,
         type: "article",
-        siteName: "Google Antigravity & Sarkari Result Portal 2026"
+        siteName: "UrbanSarkari: Sarkari Result & Services 2026"
       },
       twitter: {
         card: "summary_large_image",
@@ -253,10 +253,10 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
   // 12. Dynamic XML Sitemap
   if (route === "sitemap" || currentPath === "/sitemap.xml") {
     return {
-      title: `Programmatic XML Sitemap Index - Google Antigravity Crawler Directory`,
+      title: `Programmatic XML Sitemap Index - UrbanSarkari Directory`,
       metaDescription: `Real-time dynamically generated XML and HTML sitemap containing all programmatic routes for Google Search Engine indexing and micro-keyword discovery.`,
       canonicalUrl: `${APP_BASE_URL}/sitemap.xml`,
-      h1: "Programmatic SEO XML Sitemap Engine",
+      h1: "UrbanSarkari XML Sitemap Engine",
       h2: "Dynamic Crawl-Budget Optimizer & Micro-Keyword Route Inventory",
       keywords: "sitemap.xml, programmatic seo urls, xml sitemap generator, crawl discovery",
       ogType: "website"
@@ -265,10 +265,10 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
 
   // Default fallback
   return {
-    title: `Google Antigravity - Real-time Public Data Portal`,
+    title: `UrbanSarkari - Sarkari Result & Doorstep Services Portal`,
     metaDescription: `India's Centralized Public Data & Micro-Keyword Portal.`,
     canonicalUrl: `${APP_BASE_URL}${currentPath}`,
-    h1: "Google Antigravity Portal",
+    h1: "UrbanSarkari Portal",
     h2: "Real-time Public Data Platform",
     keywords: "public data, india rates, sarkari results, fuel prices",
     ogType: "website"
@@ -297,9 +297,9 @@ export function generateJsonLdSchema(route, params = {}, data = {}) {
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Google Antigravity",
+        "name": "UrbanSarkari",
         "url": APP_BASE_URL,
-        "description": "India's Ultimate Centralized Public Data & Micro-Keyword Portal",
+        "description": "India's Premier Sarkari Result & Verified Doorstep Services Portal",
         "potentialAction": {
           "@type": "SearchAction",
           "target": `${APP_BASE_URL}/?search={search_term_string}`,
@@ -621,7 +621,7 @@ export function generateJsonLdSchema(route, params = {}, data = {}) {
       {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Google Antigravity Services Directory",
+        "name": "UrbanSarkari Services Directory",
         "url": `${APP_BASE_URL}/services`,
         "description": "All-India verified local services directory for Home Services, Coaching, Legal, Tax, and Wellness."
       },
@@ -645,10 +645,10 @@ export function generateAllProgrammaticUrls() {
   // 1. Static Core Hubs
   urls.push({
     loc: `${APP_BASE_URL}/`,
-    lastmod: "2026-10-20",
+    lastmod: "2026-10-22",
     changefreq: "hourly",
     priority: "1.0",
-    title: "Google Antigravity Aggregator Hub",
+    title: "UrbanSarkari Aggregator Hub",
     vertical: "Core"
   });
 

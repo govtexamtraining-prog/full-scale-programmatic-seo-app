@@ -256,7 +256,7 @@ export default function SitemapView({ navigate }) {
               </thead>
               <tbody>
                 {filteredUrls.map((u, idx) => {
-                  const relativePath = u.loc.replace('https://google-antigravity.in', '');
+                  const relativePath = u.loc.replace(/^https?:\/\/[^/]+(\/full-scale-programmatic-seo-app)?/, '');
                   return (
                     <tr key={idx}>
                       <td style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>

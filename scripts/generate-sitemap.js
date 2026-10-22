@@ -58,7 +58,7 @@ const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  <!-- Google Antigravity Programmatic SEO Engine Sitemap -->
+  <!-- UrbanSarkari Programmatic Engine Sitemap -->
   <!-- Total High-Traffic Indexed URLs: ${urls.length} -->
 ${xmlEntries}
 </urlset>`;
@@ -69,4 +69,4 @@ if (!fs.existsSync(publicDir)) {
 }
 
 fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemapXml, 'utf-8');
-console.log(`[pSEO Sitemap Generator] Generated ${urls.length} URLs in public/sitemap.xml successfully!`);
+console.log(`[UrbanSarkari Sitemap Generator] Generated ${urls.length} URLs in public/sitemap.xml successfully!`);

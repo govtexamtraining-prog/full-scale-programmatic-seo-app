@@ -55,7 +55,7 @@ export default function FuelCityView({ stateSlug, citySlug, navigate }) {
   });
 
   const handleShare = () => {
-    const shareText = `⛽ Today's Live Fuel Rates in ${cityFuel.cityName} (${cityFuel.stateName}):\nPetrol: ₹${cityFuel.petrolPrice.toFixed(2)}/L\nDiesel: ₹${cityFuel.dieselPrice.toFixed(2)}/L\nAuto-synchronized at ${lastSyncTime || '06:00 AM IST'} via Google Antigravity. Check live: ${window.location.href}`;
+    const shareText = `⛽ Today's Live Fuel Rates in ${cityFuel.cityName} (${cityFuel.stateName}):\nPetrol: ₹${cityFuel.petrolPrice.toFixed(2)}/L\nDiesel: ₹${cityFuel.dieselPrice.toFixed(2)}/L\nAuto-synchronized at ${lastSyncTime || '06:00 AM IST'} via UrbanSarkari. Check live: ${window.location.href}`;
     navigator.clipboard.writeText(shareText);
     setCopiedShare(true);
     setTimeout(() => setCopiedShare(false), 2500);

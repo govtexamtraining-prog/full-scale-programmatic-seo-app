@@ -1,4 +1,4 @@
-# Advanced Robots.txt for Google Antigravity & Sarkari Result Portal
+# Advanced Robots.txt for UrbanSarkari - Sarkari Result & Doorstep Services Portal
 # Designed for High-Traffic Crawlers, Voice Assistants & AI Search Engines (SEO, VEO, GEO)
 
 User-agent: *
