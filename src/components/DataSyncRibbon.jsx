@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, CheckCircle, RefreshCw, Clock, Zap, Radio } from 'lucide-react';
+import { AlertTriangle, RefreshCw, Radio, Sparkles } from 'lucide-react';
 import { useLiveData } from '../context/LiveDataContext';
 
 export default function DataSyncRibbon() {
@@ -8,43 +8,42 @@ export default function DataSyncRibbon() {
     lastSyncTime, 
     liveDataSource, 
     isStaleFallback, 
-    autoSyncCount,
     fetchLiveData, 
     toggleFallbackMode 
   } = useLiveData();
 
   if (isStaleFallback) {
     return (
-      <div className="sync-ribbon stale">
+      <div className="sync-ribbon stale" style={{ background: 'rgba(244, 63, 94, 0.08)', padding: '6px 1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <AlertTriangle size={15} />
-          <span>
-            <strong>Stale Data Fallback Notice:</strong> Upstream public API feeds simulated outage. Serving cached historical records verified as of {lastSyncTime}.
+          <AlertTriangle size={13} style={{ color: 'var(--red-primary)' }} />
+          <span style={{ fontSize: '0.78rem' }}>
+            <strong>Upstream Fallback:</strong> Displaying cached historical records verified as of {lastSyncTime}.
           </span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <button 
             onClick={() => fetchLiveData(true)}
             style={{ 
-              background: '#e11d48', 
+              background: 'var(--red-primary)', 
               color: 'white', 
               padding: '2px 8px', 
               borderRadius: '4px',
-              fontSize: '0.75rem',
-              fontWeight: 600,
+              fontSize: '0.72rem',
+              fontWeight: 700,
               display: 'flex',
               alignItems: 'center',
               gap: '4px'
             }}
           >
-            <RefreshCw size={11} className={isLoadingLive ? 'spin-anim' : ''} />
-            Retry Live Connection
+            <RefreshCw size={10} className={isLoadingLive ? 'spin-anim' : ''} />
+            Retry
           </button>
           <button
             onClick={toggleFallbackMode}
-            style={{ textDecoration: 'underline', color: 'inherit', fontSize: '0.75rem' }}
+            style={{ color: 'var(--text-muted)', fontSize: '0.72rem', textDecoration: 'underline' }}
           >
-            Dismiss Simulation
+            Dismiss
           </button>
         </div>
       </div>
@@ -52,13 +51,13 @@ export default function DataSyncRibbon() {
   }
 
   return (
-    <div className="sync-ribbon live">
+    <div className="sync-ribbon live" style={{ background: 'rgba(16, 185, 129, 0.05)', padding: '5px 1.5rem', borderBottom: '1px solid var(--bg-card-border)' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
         {isLoadingLive ? (
           <>
-            <RefreshCw size={14} className="spin-anim" style={{ color: 'var(--accent-blue)' }} />
-            <span>
-              <strong>Auto-Fetching Live Data:</strong> Synchronizing latest Indian bullion spot rates & OMC fuel prices...
+            <RefreshCw size={12} className="spin-anim" style={{ color: 'var(--accent-blue)' }} />
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+              Auto-Synchronizing Indian bullion spot rates & OMC fuel feeds...
             </span>
           </>
         ) : (
@@ -67,23 +66,25 @@ export default function DataSyncRibbon() {
               display: 'inline-flex', 
               alignItems: 'center', 
               gap: '4px', 
-              background: 'var(--green-primary)', 
-              color: 'white', 
+              background: 'rgba(16, 185, 129, 0.15)', 
+              color: 'var(--green-primary)', 
               padding: '1px 6px', 
-              borderRadius: '4px', 
-              fontSize: '0.7rem', 
-              fontWeight: 800 
+              borderRadius: 'var(--radius-full)', 
+              fontSize: '0.68rem', 
+              fontWeight: 800,
+              letterSpacing: '0.04em'
             }}>
-              <Radio size={11} className="spin-anim" /> LIVE AUTO-FETCHED
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green-primary)', boxShadow: '0 0 6px var(--green-primary)' }} />
+              LIVE TICKER
             </span>
-            <span>
-              <strong>Real-Time Data Synchronized:</strong> Live fuel rates & gold spot prices updated automatically at <strong>{lastSyncTime || 'Just Now'}</strong> ({liveDataSource}).
+            <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
+              Daily fuel rates & gold spot prices synchronized live ({liveDataSource} • <strong>{lastSyncTime || '07:45 AM IST'}</strong>).
             </span>
           </>
         )}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.78rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.75rem' }}>
         <button
           onClick={() => fetchLiveData(true)}
           disabled={isLoadingLive}
@@ -91,24 +92,24 @@ export default function DataSyncRibbon() {
             display: 'flex',
             alignItems: 'center',
             gap: '4px',
-            background: 'var(--bg-secondary)',
-            border: '1px solid rgba(16, 185, 129, 0.3)',
+            background: 'transparent',
             color: 'var(--green-primary)',
-            padding: '2px 8px',
-            borderRadius: '4px',
+            fontSize: '0.72rem',
             fontWeight: 700,
-            cursor: 'pointer'
+            cursor: 'pointer',
+            padding: '2px 6px',
+            borderRadius: '4px'
           }}
-          title="Click to manually re-fetch live rates from public feeds"
+          title="Manual refresh"
         >
-          <RefreshCw size={11} className={isLoadingLive ? 'spin-anim' : ''} />
-          <span>{isLoadingLive ? "Fetching..." : "Fetch Latest Now"}</span>
+          <RefreshCw size={10} className={isLoadingLive ? 'spin-anim' : ''} />
+          <span>{isLoadingLive ? "Syncing..." : "Refresh"}</span>
         </button>
 
         <button
           onClick={toggleFallbackMode}
-          style={{ textDecoration: 'underline', color: 'inherit', fontSize: '0.75rem', opacity: 0.8 }}
-          title="Simulate upstream failure to inspect resilient fallback ribbon"
+          style={{ color: 'var(--text-muted)', fontSize: '0.7rem' }}
+          title="Simulate upstream failure"
         >
           [Simulate Fallback]
         </button>

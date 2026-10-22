@@ -39,39 +39,39 @@ export default function Navbar({
     { label: "Gold Rates", route: "/gold-rates", icon: Coins },
     { label: "Sarkari Exams", route: "/exam-schedules", icon: GraduationCap },
     { label: "Services Hub", route: "/services", icon: Wrench },
-    { label: "XML Sitemap", route: "/sitemap.xml", icon: FileCode }
+    { label: "Sitemap", route: "/sitemap.xml", icon: FileCode }
   ];
 
   return (
     <header className="navbar">
+      {/* Brand */}
       <div className="nav-brand" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
         <div className="brand-badge">
-          <Zap size={20} />
+          <Zap size={18} />
         </div>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span>Google Antigravity</span>
+            <span style={{ fontWeight: 800, letterSpacing: '-0.03em' }}>Google Antigravity</span>
             <span style={{ 
-              fontSize: '0.65rem', 
-              background: 'linear-gradient(135deg, #10b981, #059669)', 
+              fontSize: '0.62rem', 
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', 
               color: 'white', 
-              padding: '1px 6px', 
+              padding: '1px 5px', 
               borderRadius: '4px',
               fontWeight: 800,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '3px'
+              letterSpacing: '0.04em'
             }}>
-              <Radio size={9} className="spin-anim" /> AUTO-LIVE
+              PRO
             </span>
           </div>
-          <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 500 }}>
-            India Public Data & Rates Portal
+          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 500 }}>
+            India Public Data Engine
           </div>
         </div>
       </div>
 
-      <nav className="nav-links" style={{ display: 'flex', gap: '4px' }}>
+      {/* Center Nav Pill Dock */}
+      <nav className="nav-links">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = currentRoute === item.route || (item.route !== '/' && currentRoute.startsWith(item.route));
@@ -81,107 +81,75 @@ export default function Navbar({
               onClick={() => navigate(item.route)}
               className={`nav-item ${isActive ? 'active' : ''}`}
             >
-              <Icon size={16} />
+              <Icon size={14} />
               <span>{item.label}</span>
             </button>
           );
         })}
       </nav>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-        {/* Quick Search Button */}
-        <button className="search-trigger-btn" onClick={onOpenSearch}>
-          <Search size={15} />
-          <span style={{ display: 'inline-block' }}>Search 30+ Cities & Exams</span>
-          <span className="kbd-shortcut">Ctrl+K</span>
+      {/* Right Controls */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+        {/* Sleek Search Button */}
+        <button 
+          className="search-trigger-btn" 
+          onClick={onOpenSearch}
+          title="Search 30+ Indian cities, commodities, exams and services (Ctrl+K)"
+        >
+          <Search size={14} />
+          <span style={{ display: 'inline-block' }}>Search...</span>
+          <span className="kbd-shortcut">⌘K</span>
         </button>
 
-        {/* Live Auto-Sync Status Badge */}
+        {/* Live Status Pill */}
         <div 
           onClick={() => toggleFallbackMode()}
-          title="Click to toggle simulated live vs stale fallback mode"
+          title="Live auto-fetch status (click to toggle simulated outage)"
           style={{ 
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             gap: '5px',
-            fontSize: '0.78rem',
+            fontSize: '0.75rem',
             fontWeight: 700,
-            padding: '4px 8px',
-            borderRadius: '6px',
-            border: `1px solid ${isStaleFallback ? '#fca5a5' : '#86efac'}`,
+            padding: '4px 9px',
+            borderRadius: 'var(--radius-full)',
+            border: isStaleFallback ? '1px solid rgba(244, 63, 94, 0.4)' : '1px solid rgba(16, 185, 129, 0.3)',
             background: isStaleFallback ? 'var(--red-bg)' : 'var(--green-bg)',
             color: isStaleFallback ? 'var(--red-primary)' : 'var(--green-primary)'
           }}
         >
-          {isStaleFallback ? (
-            <>
-              <AlertTriangle size={13} />
-              <span>Stale Cache</span>
-            </>
-          ) : (
-            <>
-              <CheckCircle2 size={13} />
-              <span>{lastSyncTime ? `Live ${lastSyncTime.split(' ')[0]}` : "Auto-Live"}</span>
-            </>
-          )}
+          <span style={{ 
+            width: '6px', 
+            height: '6px', 
+            borderRadius: '50%', 
+            background: isStaleFallback ? 'var(--red-primary)' : 'var(--green-primary)',
+            boxShadow: isStaleFallback ? '0 0 8px var(--red-primary)' : '0 0 8px var(--green-primary)'
+          }} />
+          <span>{isStaleFallback ? "Fallback" : "Live"}</span>
         </div>
 
-        {/* Manual Re-fetch Live Button */}
-        <button 
-          onClick={() => fetchLiveData(true)}
-          disabled={isLoadingLive}
-          title="Re-fetch live data immediately from public feeds"
+        {/* Theme Toggle Button */}
+        <button
+          onClick={onToggleTheme}
+          title={theme === 'dark' ? "Switch to Porcelain Light Mode" : "Switch to Void Dark Mode"}
           style={{
-            padding: '6px 8px',
-            borderRadius: '6px',
+            padding: '7px',
+            borderRadius: 'var(--radius-full)',
             border: '1px solid var(--bg-card-border)',
             background: 'var(--bg-tertiary)',
             color: 'var(--text-secondary)',
             display: 'flex',
             alignItems: 'center',
-            gap: '4px',
-            fontSize: '0.75rem',
-            fontWeight: 600
+            justifyContent: 'center',
+            cursor: 'pointer'
           }}
         >
-          <RefreshCw size={13} className={isLoadingLive ? 'spin-anim' : ''} />
-          <span style={{ display: 'none', sm: 'inline' }}>{isLoadingLive ? 'Syncing...' : 'Sync'}</span>
-        </button>
-
-        {/* SEO Inspector Trigger */}
-        <button
-          onClick={onOpenInspector}
-          title="Inspect Programmatic SEO & SERP Schema"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-            padding: '5px 10px',
-            borderRadius: '6px',
-            background: 'linear-gradient(135deg, #059669, #0d9488)',
-            color: 'white',
-            fontSize: '0.78rem',
-            fontWeight: 700
-          }}
-        >
-          <SlidersHorizontal size={13} />
-          <span>SEO Inspector</span>
-        </button>
-
-        {/* Theme Toggle */}
-        <button
-          onClick={onToggleTheme}
-          title="Toggle Dark / Light Mode"
-          style={{
-            padding: '6px',
-            borderRadius: '6px',
-            border: '1px solid var(--bg-card-border)',
-            background: 'var(--bg-tertiary)',
-            color: 'var(--text-secondary)'
-          }}
-        >
-          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          {theme === 'dark' ? (
+            <Sun size={15} style={{ color: 'var(--gold-primary)' }} />
+          ) : (
+            <Moon size={15} style={{ color: 'var(--accent-blue)' }} />
+          )}
         </button>
       </div>
     </header>

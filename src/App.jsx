@@ -25,7 +25,7 @@ import { SlidersHorizontal } from 'lucide-react';
 
 function AppContent() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname || '/');
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isInspectorOpen, setIsInspectorOpen] = useState(false);
 
