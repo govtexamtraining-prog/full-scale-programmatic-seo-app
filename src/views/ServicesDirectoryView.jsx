@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Wrench, 
   GraduationCap, 
@@ -24,6 +24,14 @@ export default function ServicesDirectoryView({ navigate, initialNicheSlug = nul
   const [selectedNiche, setSelectedNiche] = useState(initialNicheSlug || 'all');
   const [selectedCitySlug, setSelectedCitySlug] = useState('chennai');
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (initialNicheSlug) {
+      setSelectedNiche(initialNicheSlug);
+    } else {
+      setSelectedNiche('all');
+    }
+  }, [initialNicheSlug]);
 
   // Selected city object
   const currentCity = ALL_CITIES.find(c => c.slug === selectedCitySlug) || ALL_CITIES[0];

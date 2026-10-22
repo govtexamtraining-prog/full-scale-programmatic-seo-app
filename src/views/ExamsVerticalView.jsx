@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { GraduationCap, ArrowRight, Search, Filter, Calendar, Users, Briefcase, ExternalLink, Download } from 'lucide-react';
-import { SARKARI_EXAMS } from '../data/examData';
+import { GraduationCap, ArrowRight, Search, Filter, Calendar, Users, Briefcase, ExternalLink, Download, Bell, Radio, Sparkles } from 'lucide-react';
+import { SARKARI_EXAMS, SARKARI_NEWS_ALERTS } from '../data/examData';
 import Breadcrumbs from '../components/Breadcrumbs';
 import AdSlot from '../components/AdSlot';
 
@@ -37,6 +37,81 @@ export default function ExamsVerticalView({ navigate }) {
           Central and State Government recruitment notifications for UPSC, SSC, IBPS Banking, Indian Railways (RRB), and State PSCs. Fast Sarkari format with direct registration links and PDF circulars.
         </p>
       </div>
+
+      {/* LIVE 2026 SARKARI BREAKING BULLETINS & CIRCULARS */}
+      <section style={{ 
+        background: 'var(--bg-secondary)', 
+        border: '1px solid var(--bg-card-border)', 
+        borderRadius: '16px', 
+        padding: '1.25rem 1.5rem', 
+        marginBottom: '2rem',
+        boxShadow: 'var(--shadow-sm)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '4px', 
+              background: 'rgba(220, 38, 38, 0.15)', 
+              color: '#dc2626', 
+              padding: '3px 8px', 
+              borderRadius: '6px', 
+              fontSize: '0.75rem', 
+              fontWeight: 800 
+            }}>
+              <Radio size={12} className="spin-anim" />
+              LIVE 2026 BULLETINS
+            </span>
+            <strong style={{ fontSize: '0.95rem' }}>Latest Official Recruitment Circulars & Exam Calendar</strong>
+          </div>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Updated Today (22 Oct 2026)</span>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem' }}>
+          {SARKARI_NEWS_ALERTS.map(news => (
+            <a
+              key={news.id}
+              href={news.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                background: 'var(--bg-tertiary)',
+                border: '1px solid var(--bg-card-border)',
+                borderRadius: '10px',
+                padding: '0.85rem',
+                textDecoration: 'none',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                gap: '0.4rem',
+                transition: 'transform 0.15s ease'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ 
+                  background: 'rgba(255,255,255,0.06)', 
+                  color: 'var(--accent-indigo)', 
+                  fontSize: '0.7rem', 
+                  fontWeight: 800, 
+                  padding: '2px 6px', 
+                  borderRadius: '4px' 
+                }}>
+                  [{news.org}] {news.badge}
+                </span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{news.date}</span>
+              </div>
+              <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4, margin: 0 }}>
+                {news.title}
+              </p>
+              <div style={{ fontSize: '0.75rem', color: 'var(--accent-indigo)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px', marginTop: '2px' }}>
+                <span>Official Authority Circular</span>
+                <ExternalLink size={11} />
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
 
       {/* Filter and Search Bar */}
       <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
