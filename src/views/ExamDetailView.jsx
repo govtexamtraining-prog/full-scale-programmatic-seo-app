@@ -21,11 +21,14 @@ import { useLiveData } from '../context/LiveDataContext';
 import { getExamByOrgAndSlug, SARKARI_EXAMS } from '../data/examData';
 import Breadcrumbs from '../components/Breadcrumbs';
 import AdSlot from '../components/AdSlot';
+import UpiPaymentModal from '../components/UpiPaymentModal';
+import AffiliateBanner from '../components/AffiliateBanner';
 
 export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
   const { getExam, examsData } = useLiveData();
   const exam = getExam(orgSlug, postSlug) || getExamByOrgAndSlug(orgSlug, postSlug);
   const [copiedShare, setCopiedShare] = useState(false);
+  const [isUpiModalOpen, setIsUpiModalOpen] = useState(false);
 
   if (!exam) {
     return (
@@ -234,6 +237,67 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
             <span>Admit Card Status: <strong>{exam.admitCardStatus}</strong></span>
           </div>
         </div>
+
+        {/* Digital Solved Test Papers UPI Purchase Banner */}
+        <div style={{
+          marginTop: '1.5rem',
+          padding: '1.25rem 1.5rem',
+          borderRadius: '14px',
+          background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%)',
+          border: '1px solid rgba(99, 102, 241, 0.25)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '1.25rem'
+        }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.25rem' }}>
+              <span style={{ 
+                fontSize: '0.68rem', 
+                fontWeight: 800, 
+                background: 'var(--accent-indigo)', 
+                color: 'white', 
+                padding: '2px 7px', 
+                borderRadius: '4px',
+                letterSpacing: '0.04em'
+              }}>
+                2026 DIGITAL PREP PACK
+              </span>
+              <span style={{ fontSize: '0.75rem', color: 'var(--green-primary)', fontWeight: 600 }}>
+                ⚡ Instant Unlock via UPI
+              </span>
+            </div>
+            <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+              {exam.org} Official Solved Papers & Quick Revision Cheatsheet
+            </h3>
+            <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
+              Includes 10-Year Solved Papers, High-Yield Formula Sheets & Cut-off Predictions (PDF Bundle).
+            </p>
+          </div>
+
+          <button
+            onClick={() => setIsUpiModalOpen(true)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
+              color: 'white',
+              padding: '11px 20px',
+              borderRadius: '10px',
+              fontWeight: 800,
+              fontSize: '0.9rem',
+              border: 'none',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              boxShadow: '0 4px 16px rgba(99, 102, 241, 0.35)'
+            }}
+          >
+            <IndianRupee size={16} />
+            <span>Instant UPI Pay & Download (₹49)</span>
+          </button>
+        </div>
       </div>
 
       {/* Structured Details Matrix */}
@@ -409,6 +473,9 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
       {/* Fixed Ad Placement */}
       <AdSlot slotType="mpu" slotId="exam-detail-mpu" />
 
+      {/* Verified Sarkari Exam Preparation Affiliate Banners */}
+      <AffiliateBanner category="exam" limit={2} variant="bento" />
+
       {/* Cross-linking to other Sarkari exams */}
       <section className="crosslink-section">
         <h2 style={{ fontSize: '1.2rem', marginBottom: '0.25rem' }}>
@@ -438,6 +505,13 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
           </button>
         </div>
       </section>
+
+      {/* UPI Payment Modal */}
+      <UpiPaymentModal 
+        isOpen={isUpiModalOpen}
+        onClose={() => setIsUpiModalOpen(false)}
+        exam={exam}
+      />
     </div>
   );
 }

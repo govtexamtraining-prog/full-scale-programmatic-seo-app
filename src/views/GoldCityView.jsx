@@ -19,6 +19,7 @@ import { getCityBySlugs, ALL_CITIES } from '../data/cities';
 import Breadcrumbs from '../components/Breadcrumbs';
 import GoldCalculator from '../components/Calculators/GoldCalculator';
 import AdSlot from '../components/AdSlot';
+import AffiliateBanner from '../components/AffiliateBanner';
 
 export default function GoldCityView({ stateSlug, citySlug, navigate }) {
   const { getGoldForCity, goldData, lastSyncTime, liveDataSource } = useLiveData();
@@ -252,6 +253,9 @@ export default function GoldCityView({ stateSlug, citySlug, navigate }) {
           <li>✓ <strong>Live Feed Source:</strong> {liveDataSource} & {cityGold.jewellersAssociation}.</li>
         </ul>
       </section>
+
+      {/* Verified Gold Loan & 24K Digital Gold Affiliate Offers */}
+      <AffiliateBanner category="gold" limit={2} variant="bento" />
 
       {/* Internal Cross-Linking Grid */}
       <section className="crosslink-section">

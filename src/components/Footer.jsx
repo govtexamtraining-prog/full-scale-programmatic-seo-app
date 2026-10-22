@@ -112,11 +112,12 @@ export default function Footer({ navigate }) {
           </p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
             <span>© 2026 Google Antigravity (India Public Micro-Data Engine). All rights reserved.</span>
-            <div style={{ display: 'flex', gap: '1rem' }}>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <button onClick={() => navigate('/sitemap.xml')} style={{ color: 'inherit' }}>Sitemap XML</button>
               <button onClick={() => navigate('/fuel-prices')} style={{ color: 'inherit' }}>Fuel Matrix</button>
               <button onClick={() => navigate('/gold-rates')} style={{ color: 'inherit' }}>Gold Index</button>
               <button onClick={() => navigate('/exam-schedules')} style={{ color: 'inherit' }}>Sarkari Grid</button>
+              <button onClick={() => navigate('/admin')} style={{ color: 'var(--accent-indigo)', fontWeight: 800 }}>⚡ Admin Console</button>
             </div>
           </div>
         </div>

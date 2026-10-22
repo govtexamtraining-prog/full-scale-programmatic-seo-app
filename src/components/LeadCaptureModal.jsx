@@ -11,8 +11,10 @@ import {
   User,
   MapPin,
   Calendar,
+  MessageCircle,
   FileText
 } from 'lucide-react';
+import { useMonetization } from '../context/MonetizationContext';
 
 export default function LeadCaptureModal({ 
   isOpen, 
@@ -22,6 +24,8 @@ export default function LeadCaptureModal({
   city, 
   provider 
 }) {
+  const { addLead, settings } = useMonetization();
+
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -31,12 +35,13 @@ export default function LeadCaptureModal({
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [leadId, setLeadId] = useState('');
+  const [leadResult, setLeadResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
 
   if (!isOpen) return null;
 
   const cityName = city?.name || "Your City";
+  const stateName = city?.state || "India";
   const serviceName = service?.name || niche?.name || "Service";
 
   const getModalTitles = () => {
@@ -64,10 +69,10 @@ export default function LeadCaptureModal({
         };
       default: // lead-call / home-services
         return {
-          title: `Get Instant Callback in 15 Mins`,
-          subtitle: `Zero booking fee. Verified technician dispatched to your doorstep in ${cityName}`,
-          ctaButton: "Send Instant Callback Request",
-          iconBadge: "⚡ 30-Min Rapid Dispatch"
+          title: `Book Instant Doorstep Service`,
+          subtitle: `Zero booking advance. Verified specialist dispatched to your doorstep in ${cityName}`,
+          ctaButton: "Confirm & Request Callback",
+          iconBadge: "⚡ 15-Min Rapid Callback"
         };
     }
   };
@@ -90,16 +95,30 @@ export default function LeadCaptureModal({
     setIsSubmitting(true);
 
     setTimeout(() => {
-      const generatedId = `GA-${Math.floor(100000 + Math.random() * 900000)}`;
-      setLeadId(generatedId);
+      // Save lead to shared database & generate WhatsApp payload
+      const result = addLead({
+        fullName: formData.fullName,
+        phone: formData.phone,
+        locality: formData.locality || cityName,
+        city: cityName,
+        state: stateName,
+        service: serviceName,
+        niche: niche?.slug || 'home-services',
+        slot: formData.preferredSlot,
+        notes: formData.notes
+      });
+
+      setLeadResult(result);
       setIsSubmitting(false);
       setIsSuccess(true);
-    }, 600);
+    }, 500);
   };
 
   const handleReset = () => {
     setIsSuccess(false);
     setFormData({ fullName: '', phone: '', locality: '', preferredSlot: 'immediate', notes: '' });
+    setErrorMsg('');
+    setLeadResult(null);
     onClose();
   };
 
@@ -116,8 +135,9 @@ export default function LeadCaptureModal({
           maxWidth: '520px', 
           background: 'var(--bg-secondary)', 
           padding: '2rem', 
-          borderRadius: '16px',
-          boxShadow: '0 24px 48px rgba(0,0,0,0.3)',
+          borderRadius: '20px',
+          border: '1px solid var(--bg-card-border)',
+          boxShadow: '0 24px 60px rgba(0,0,0,0.4)',
           maxHeight: '92vh',
           overflowY: 'auto'
         }}
@@ -130,18 +150,19 @@ export default function LeadCaptureModal({
               display: 'inline-flex', 
               alignItems: 'center', 
               gap: '6px', 
-              background: niche?.bgColor || 'var(--accent-blue-light)', 
-              color: niche?.color || 'var(--accent-blue)', 
+              background: niche?.bgColor || 'rgba(99, 102, 241, 0.15)', 
+              color: niche?.color || 'var(--accent-indigo)', 
               fontSize: '0.75rem', 
               fontWeight: 700, 
               padding: '3px 8px', 
-              borderRadius: '4px',
-              marginBottom: '0.4rem'
+              borderRadius: '6px',
+              marginBottom: '0.4rem',
+              border: '1px solid rgba(255,255,255,0.06)'
             }}>
               <Sparkles size={12} />
               <span>{meta.iconBadge}</span>
             </div>
-            <h2 style={{ fontSize: '1.35rem', lineHeight: 1.3 }}>{meta.title}</h2>
+            <h2 style={{ fontSize: '1.35rem', lineHeight: 1.3, fontWeight: 800 }}>{meta.title}</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginTop: '0.25rem' }}>
               {meta.subtitle}
             </p>
@@ -160,7 +181,7 @@ export default function LeadCaptureModal({
           border: '1px solid var(--bg-card-border)', 
           borderRadius: '10px', 
           padding: '0.75rem 1rem', 
-          marginBottom: '1.5rem',
+          marginBottom: '1.25rem',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -170,7 +191,7 @@ export default function LeadCaptureModal({
             <span style={{ color: 'var(--text-muted)' }}>Target Service: </span>
             <strong>{serviceName}</strong>
           </div>
-          <div style={{ color: 'var(--accent-blue)', fontWeight: 600 }}>
+          <div style={{ color: 'var(--accent-indigo)', fontWeight: 600 }}>
             📍 {cityName}
           </div>
         </div>
@@ -192,7 +213,7 @@ export default function LeadCaptureModal({
             {/* Name */}
             <div>
               <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.35rem' }}>
-                Your Full Name <span style={{ color: '#dc2626' }}>*</span>
+                Your Full Name <span style={{ color: '#f43f5e' }}>*</span>
               </label>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-primary)', border: '1px solid var(--bg-card-border)', borderRadius: '8px', padding: '0.65rem 0.85rem' }}>
                 <User size={16} style={{ color: 'var(--text-muted)' }} />
@@ -209,7 +230,7 @@ export default function LeadCaptureModal({
             {/* Phone */}
             <div>
               <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.35rem' }}>
-                10-Digit Mobile Number (For Call / WhatsApp Confirmation) <span style={{ color: '#dc2626' }}>*</span>
+                10-Digit Mobile Number (For Call & WhatsApp Confirmation) <span style={{ color: '#f43f5e' }}>*</span>
               </label>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-primary)', border: '1px solid var(--bg-card-border)', borderRadius: '8px', padding: '0.65rem 0.85rem' }}>
                 <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-muted)' }}>+91</span>
@@ -244,7 +265,7 @@ export default function LeadCaptureModal({
             {/* Preferred Slot */}
             <div>
               <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.35rem' }}>
-                Preferred Callback / Appointment Timing
+                Preferred Callback Timing
               </label>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
                 {[
@@ -259,15 +280,15 @@ export default function LeadCaptureModal({
                     style={{
                       padding: '8px 4px',
                       fontSize: '0.78rem',
-                      borderRadius: '6px',
+                      borderRadius: '8px',
                       border: formData.preferredSlot === slot.id 
-                        ? `2px solid ${niche?.color || 'var(--accent-blue)'}` 
+                        ? `2px solid ${niche?.color || 'var(--accent-indigo)'}` 
                         : '1px solid var(--bg-card-border)',
                       background: formData.preferredSlot === slot.id 
-                        ? (niche?.bgColor || 'var(--accent-blue-light)') 
+                        ? (niche?.bgColor || 'rgba(99, 102, 241, 0.15)') 
                         : 'var(--bg-primary)',
                       color: formData.preferredSlot === slot.id 
-                        ? (niche?.color || 'var(--accent-blue)') 
+                        ? (niche?.color || 'var(--accent-indigo)') 
                         : 'var(--text-primary)',
                       fontWeight: 600
                     }}
@@ -278,13 +299,36 @@ export default function LeadCaptureModal({
               </div>
             </div>
 
+            {/* Optional Notes */}
+            <div>
+              <label style={{ display: 'block', fontSize: '0.825rem', fontWeight: 600, marginBottom: '0.35rem' }}>
+                Specific Requirement / Notes (Optional)
+              </label>
+              <textarea
+                rows={2}
+                placeholder="Describe your issue or questions (e.g. 1.5 ton split AC, or need fee details)..."
+                value={formData.notes}
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                style={{
+                  width: '100%',
+                  background: 'var(--bg-primary)',
+                  border: '1px solid var(--bg-card-border)',
+                  borderRadius: '8px',
+                  padding: '0.65rem 0.85rem',
+                  color: 'var(--text-primary)',
+                  fontSize: '0.85rem',
+                  resize: 'none'
+                }}
+              />
+            </div>
+
             {/* Trust Points */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.75rem', color: 'var(--text-muted)', margin: '0.25rem 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <ShieldCheck size={14} style={{ color: 'var(--green-primary)' }} /> Zero Spam Call Policy
+                <ShieldCheck size={14} style={{ color: 'var(--green-primary)' }} /> Zero Spam Policy
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                <Clock size={14} style={{ color: 'var(--accent-blue)' }} /> 30-Day Guarantee
+                <Clock size={14} style={{ color: 'var(--accent-indigo)' }} /> Fast Verified Response
               </span>
             </div>
 
@@ -294,11 +338,11 @@ export default function LeadCaptureModal({
               disabled={isSubmitting}
               style={{
                 marginTop: '0.5rem',
-                padding: '12px',
-                borderRadius: '8px',
-                background: niche?.color || 'var(--accent-blue)',
+                padding: '13px',
+                borderRadius: '10px',
+                background: niche?.color || 'var(--accent-indigo)',
                 color: 'white',
-                fontWeight: 700,
+                fontWeight: 800,
                 fontSize: '0.95rem',
                 border: 'none',
                 cursor: 'pointer',
@@ -306,11 +350,11 @@ export default function LeadCaptureModal({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                boxShadow: '0 4px 16px rgba(0,0,0,0.2)'
               }}
             >
               {isSubmitting ? (
-                <span>Dispatching Your Request...</span>
+                <span>Routing to Verified Specialist...</span>
               ) : (
                 <>
                   <span>{meta.ctaButton}</span>
@@ -321,39 +365,43 @@ export default function LeadCaptureModal({
           </form>
         ) : (
           /* Success Screen */
-          <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+          <div style={{ textAlign: 'center', padding: '1.25rem 0' }}>
             <div style={{ 
-              width: '56px', 
-              height: '56px', 
+              width: '60px', 
+              height: '60px', 
               borderRadius: '50%', 
               background: 'var(--green-bg)', 
               color: 'var(--green-primary)', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center', 
-              margin: '0 auto 1rem' 
+              margin: '0 auto 1.25rem',
+              border: '2px solid rgba(16, 185, 129, 0.4)'
             }}>
-              <CheckCircle2 size={32} />
+              <CheckCircle2 size={34} />
             </div>
 
-            <h3 style={{ fontSize: '1.3rem', marginBottom: '0.35rem' }}>Request Confirmed!</h3>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1.25rem' }}>
-              Your verified enquiry has been dispatched. A verified specialist in <strong>{cityName}</strong> is reviewing your request.
+            <h3 style={{ fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.35rem' }}>Request Confirmed!</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '1.25rem' }}>
+              Your enquiry has been dispatched. A verified specialist in <strong>{cityName}</strong> is reviewing your ticket.
             </p>
 
             <div style={{ 
               background: 'var(--bg-tertiary)', 
-              borderRadius: '8px', 
+              borderRadius: '12px', 
               padding: '1rem', 
               marginBottom: '1.5rem',
               display: 'flex',
               flexDirection: 'column',
               gap: '0.5rem',
-              fontSize: '0.85rem'
+              fontSize: '0.85rem',
+              textAlign: 'left'
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Lead Tracking ID:</span>
-                <strong style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-blue)' }}>{leadId}</strong>
+                <strong style={{ fontFamily: 'var(--font-mono)', color: 'var(--accent-indigo)' }}>
+                  {leadResult?.leadId}
+                </strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: 'var(--text-muted)' }}>Customer Name:</span>
@@ -364,10 +412,37 @@ export default function LeadCaptureModal({
                 <strong>+91 {formData.phone}</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Expected Response:</span>
+                <span style={{ color: 'var(--text-muted)' }}>Expected Callback:</span>
                 <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>Within 15 minutes</span>
               </div>
             </div>
+
+            {/* Direct WhatsApp Hotlink */}
+            {leadResult?.waUrl && (
+              <a
+                href={leadResult.waUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  background: '#25D366',
+                  color: 'white',
+                  padding: '12px 18px',
+                  borderRadius: '10px',
+                  fontWeight: 800,
+                  fontSize: '0.95rem',
+                  textDecoration: 'none',
+                  marginBottom: '1rem',
+                  boxShadow: '0 4px 16px rgba(37, 211, 102, 0.35)'
+                }}
+              >
+                <MessageCircle size={18} />
+                <span>Open Instant Chat on WhatsApp</span>
+              </a>
+            )}
 
             {/* Direct Call Hotlink */}
             {provider?.phoneCall && (
@@ -378,18 +453,19 @@ export default function LeadCaptureModal({
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  background: 'var(--green-primary)',
-                  color: 'white',
+                  background: 'var(--bg-tertiary)',
+                  border: '1px solid var(--bg-card-border)',
+                  color: 'var(--text-primary)',
                   padding: '10px 16px',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   fontWeight: 700,
-                  fontSize: '0.9rem',
+                  fontSize: '0.85rem',
                   textDecoration: 'none',
                   marginBottom: '1rem'
                 }}
               >
-                <Phone size={16} />
-                <span>Call {provider.name} Directly</span>
+                <Phone size={15} />
+                <span>Call {provider.name} Directly (+91)</span>
               </a>
             )}
 
@@ -404,7 +480,7 @@ export default function LeadCaptureModal({
                 textDecoration: 'underline'
               }}
             >
-              Done & Return to Page
+              Done & Return to Directory
             </button>
           </div>
         )}

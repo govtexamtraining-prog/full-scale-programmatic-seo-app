@@ -23,6 +23,7 @@ import { ALL_CITIES, STATES_AND_CITIES } from '../data/cities';
 import { NICHES } from '../data/servicesData';
 import { useLiveData } from '../context/LiveDataContext';
 import AdSlot from '../components/AdSlot';
+import AffiliateBanner from '../components/AffiliateBanner';
 
 export default function HomeView({ navigate }) {
   const [selectedState, setSelectedState] = useState('tamil-nadu');
@@ -413,6 +414,9 @@ export default function HomeView({ navigate }) {
           </div>
         </div>
       </section>
+
+      {/* Verified Partner Monetization Offers (Gold Loan, Digital Gold, Mock Tests) */}
+      <AffiliateBanner category="all" limit={2} variant="bento" />
 
       {/* TRAFFIC DENSITY MATRIX & HIGH-TRAFFIC NICHES SECTION */}
       <section style={{ marginTop: '3.5rem' }}>

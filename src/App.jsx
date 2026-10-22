@@ -16,8 +16,10 @@ import ExamDetailView from './views/ExamDetailView';
 import ServicesDirectoryView from './views/ServicesDirectoryView';
 import ServiceCityView from './views/ServiceCityView';
 import SitemapView from './views/SitemapView';
+import AdminView from './views/AdminView';
 
 import { LiveDataProvider, useLiveData } from './context/LiveDataContext';
+import { MonetizationProvider } from './context/MonetizationContext';
 import { generateSeoMetadata, generateJsonLdSchema } from './services/pseoEngine';
 import { NICHES, getNicheBySlug, getServiceBySlugs } from './data/servicesData';
 import { getCityBySlugs, getStateBySlug } from './data/cities';
@@ -66,6 +68,7 @@ function AppContent() {
     if (clean === '/gold-rates') return { view: 'gold-hub', params: {} };
     if (clean === '/exam-schedules') return { view: 'exam-hub', params: {} };
     if (clean === '/services' || clean === '/directory') return { view: 'services-hub', params: {} };
+    if (clean === '/admin') return { view: 'admin', params: {} };
     if (clean === '/sitemap.xml') return { view: 'sitemap', params: {} };
 
     const validNicheSlugs = ['home-services', 'coaching-institutes', 'legal-tax-services', 'wellness-fitness'];
@@ -250,6 +253,7 @@ function AppContent() {
           />
         )}
         {routeInfo.view === 'sitemap' && <SitemapView navigate={navigate} />}
+        {routeInfo.view === 'admin' && <AdminView navigate={navigate} />}
       </main>
 
       {/* High-Intent SEO Footer */}
@@ -290,7 +294,9 @@ function AppContent() {
 export default function App() {
   return (
     <LiveDataProvider>
-      <AppContent />
+      <MonetizationProvider>
+        <AppContent />
+      </MonetizationProvider>
     </LiveDataProvider>
   );
 }

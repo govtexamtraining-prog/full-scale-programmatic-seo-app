@@ -13,7 +13,8 @@ import {
   AlertTriangle,
   RefreshCw,
   SlidersHorizontal,
-  Radio
+  Radio,
+  Lock
 } from 'lucide-react';
 import { useLiveData } from '../context/LiveDataContext';
 
@@ -150,6 +151,25 @@ export default function Navbar({
           ) : (
             <Moon size={15} style={{ color: 'var(--accent-blue)' }} />
           )}
+        </button>
+
+        {/* Admin Master Console Trigger */}
+        <button
+          onClick={() => navigate('/admin')}
+          title="Admin Master Console (/admin)"
+          style={{
+            padding: '7px',
+            borderRadius: 'var(--radius-full)',
+            border: currentRoute === '/admin' ? '1px solid var(--accent-indigo)' : '1px solid var(--bg-card-border)',
+            background: currentRoute === '/admin' ? 'rgba(99, 102, 241, 0.2)' : 'var(--bg-tertiary)',
+            color: currentRoute === '/admin' ? 'var(--accent-indigo)' : 'var(--text-secondary)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer'
+          }}
+        >
+          <Lock size={14} />
         </button>
       </div>
     </header>
