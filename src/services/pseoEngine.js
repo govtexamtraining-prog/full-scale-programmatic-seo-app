@@ -250,6 +250,28 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
     };
   }
 
+  // Legal & Trust Compliance Pages (Google AdSense Mandatory)
+  if (route === "legal" || ["/privacy-policy", "/terms-of-service", "/about-us", "/contact-us", "/disclaimer"].includes(currentPath)) {
+    const pageKey = params.page || currentPath.replace('/', '');
+    const titles = {
+      'privacy-policy': 'Privacy Policy & DART Cookie Disclosure - UrbanSarkari',
+      'terms-of-service': 'Terms of Service & Usage Conditions - UrbanSarkari',
+      'about-us': 'About Us & Editorial Standards - UrbanSarkari',
+      'contact-us': 'Contact Us & Editorial Grievance Officer - UrbanSarkari',
+      'disclaimer': 'Statutory Notice & Disclaimer - UrbanSarkari'
+    };
+    const title = titles[pageKey] || 'Legal & Trust Policies - UrbanSarkari';
+    return {
+      title,
+      metaDescription: `Official transparency, cookie disclosure, and compliance policies for UrbanSarkari - India's premier Sarkari Result and verified doorstep services portal.`,
+      canonicalUrl: `${APP_BASE_URL}/${pageKey}`,
+      h1: title,
+      h2: "UrbanSarkari Official Transparency & Governance Policies",
+      keywords: "privacy policy, terms of service, about us, contact us, disclaimer, urbansarkari",
+      ogType: "website"
+    };
+  }
+
   // 12. Dynamic XML Sitemap
   if (route === "sitemap" || currentPath === "/sitemap.xml") {
     return {

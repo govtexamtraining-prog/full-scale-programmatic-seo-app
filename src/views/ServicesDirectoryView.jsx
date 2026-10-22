@@ -283,6 +283,9 @@ export default function ServicesDirectoryView({ navigate, initialNicheSlug = nul
         </div>
       </section>
 
+      {/* High-CTR Native In-Feed Ad Unit */}
+      <AdSlot slotType="in-feed" slotId="services-directory-mid-feed" />
+
       {/* SERVICES GRID ORGANIZED BY NICHE */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', marginBottom: '3rem' }}>
         {filteredNiches.map(niche => {

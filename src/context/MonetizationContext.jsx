@@ -11,7 +11,19 @@ const DEFAULT_SETTINGS = {
   adminPassword: 'admin',
   enableAffiliates: true,
   enableUpiPayments: true,
-  enableWhatsAppLeadRouting: true
+  enableWhatsAppLeadRouting: true,
+  // Google AdSense Monetization Suite
+  enableAdSense: true,
+  adSenseClientId: '', // e.g. 'ca-pub-1234567890123456'
+  adSenseLeaderboardSlotId: '', // e.g. '1234567890'
+  adSenseMpuSlotId: '', // e.g. '2345678901'
+  adSenseStickySlotId: '', // e.g. '3456789012'
+  adSenseInFeedSlotId: '', // e.g. '4567890123'
+  enableStickyAd: true,
+  enableInFeedAds: true,
+  autoAdsEnabled: true,
+  estimatedDailyPageviews: 25000,
+  targetRpmInr: 140
 };
 
 const DEFAULT_AFFILIATES = [

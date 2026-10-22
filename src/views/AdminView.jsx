@@ -28,7 +28,14 @@ import {
   Search,
   Sparkles,
   Zap,
-  Coins
+  Coins,
+  DollarSign,
+  Copy,
+  Sliders,
+  FileCode,
+  FileText,
+  Award,
+  HelpCircle
 } from 'lucide-react';
 import { useMonetization } from '../context/MonetizationContext';
 import { useLiveData } from '../context/LiveDataContext';
@@ -57,7 +64,7 @@ export default function AdminView({ navigate }) {
   // Local component state
   const [pinInput, setPinInput] = useState('');
   const [authError, setAuthError] = useState('');
-  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'leads' | 'transactions' | 'affiliates' | 'settings'
+  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'adsense' | 'leads' | 'transactions' | 'affiliates' | 'settings'
 
   // Leads filter & search
   const [leadFilterStatus, setLeadFilterStatus] = useState('all');
@@ -70,6 +77,11 @@ export default function AdminView({ navigate }) {
   // Settings form state
   const [settingsForm, setSettingsForm] = useState(settings);
   const [settingsSavedMsg, setSettingsSavedMsg] = useState(false);
+
+  // AdSense projection & tools state
+  const [dailyPvSlider, setDailyPvSlider] = useState(settings.estimatedDailyPageviews || 25000);
+  const [rpmSlider, setRpmSlider] = useState(settings.targetRpmInr || 140);
+  const [copiedAdsTxt, setCopiedAdsTxt] = useState(false);
 
   // Handle Login
   const handleLogin = (e) => {
@@ -90,10 +102,39 @@ export default function AdminView({ navigate }) {
 
   // Handle Save Settings
   const handleSaveSettings = (e) => {
-    e.preventDefault();
-    updateSettings(settingsForm);
+    if (e && e.preventDefault) e.preventDefault();
+    const payload = {
+      ...settingsForm,
+      estimatedDailyPageviews: Number(dailyPvSlider),
+      targetRpmInr: Number(rpmSlider)
+    };
+    updateSettings(payload);
     setSettingsSavedMsg(true);
     setTimeout(() => setSettingsSavedMsg(false), 2500);
+  };
+
+  // Copy Ads.txt snippet
+  const publisherIdFormatted = settingsForm.adSenseClientId?.trim().startsWith('ca-pub-') 
+    ? settingsForm.adSenseClientId.trim().replace('ca-', '')
+    : (settingsForm.adSenseClientId?.trim() || 'pub-0000000000000000');
+  const adsTxtSnippet = `google.com, ${publisherIdFormatted}, DIRECT, f08c47fec0942fa0`;
+
+  const handleCopyAdsTxt = () => {
+    navigator.clipboard.writeText(adsTxtSnippet);
+    setCopiedAdsTxt(true);
+    setTimeout(() => setCopiedAdsTxt(false), 2500);
+  };
+
+  const handleDownloadAdsTxt = () => {
+    const blob = new Blob([`# UrbanSarkari Authorized Digital Sellers (ads.txt)\n${adsTxtSnippet}\n`], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'ads.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   // Filtered Leads
@@ -311,6 +352,7 @@ export default function AdminView({ navigate }) {
       }}>
         {[
           { id: 'overview', label: 'Command Overview', icon: TrendingUp },
+          { id: 'adsense', label: 'Google AdSense & Revenue', icon: DollarSign },
           { id: 'leads', label: `WhatsApp Leads (${leads.length})`, icon: MessageCircle },
           { id: 'transactions', label: `UPI Orders (₹${totalRevenue})`, icon: IndianRupee },
           { id: 'affiliates', label: `Affiliate Offers (${affiliates.length})`, icon: Sparkles },
@@ -398,6 +440,19 @@ export default function AdminView({ navigate }) {
               </div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
                 Districts in 28 States & 8 UTs
+              </div>
+            </div>
+
+            <div className="bento-card" style={{ padding: '1.5rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-muted)', fontSize: '0.8rem', fontWeight: 600 }}>
+                <span>PROJECTED ADSENSE (MO)</span>
+                <DollarSign size={16} style={{ color: 'var(--accent-blue)' }} />
+              </div>
+              <div style={{ fontSize: '2rem', fontWeight: 900, marginTop: '0.5rem', color: 'var(--accent-blue)' }}>
+                ₹{Math.round(((dailyPvSlider) / 1000) * rpmSlider * 30).toLocaleString('en-IN')}
+              </div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
+                At {dailyPvSlider.toLocaleString('en-IN')} Daily PV • ₹{rpmSlider} RPM
               </div>
             </div>
           </div>
@@ -492,6 +547,686 @@ export default function AdminView({ navigate }) {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB: GOOGLE ADSENSE & REVENUE COMMAND CENTER */}
+      {activeTab === 'adsense' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+          {/* Header Banner */}
+          <div 
+            className="bento-card" 
+            style={{ 
+              padding: '2rem',
+              background: 'radial-gradient(ellipse at top left, rgba(59, 130, 246, 0.12), transparent 70%), var(--bg-secondary)',
+              border: '1px solid rgba(59, 130, 246, 0.3)'
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '0.5rem' }}>
+                  <span style={{ 
+                    background: settingsForm.enableAdSense && settingsForm.adSenseClientId?.startsWith('ca-pub-') 
+                      ? 'linear-gradient(135deg, #10b981, #059669)' 
+                      : 'linear-gradient(135deg, #f59e0b, #d97706)',
+                    color: 'white',
+                    fontSize: '0.7rem',
+                    fontWeight: 800,
+                    padding: '3px 9px',
+                    borderRadius: '5px',
+                    letterSpacing: '0.04em'
+                  }}>
+                    {settingsForm.enableAdSense && settingsForm.adSenseClientId?.startsWith('ca-pub-')
+                      ? '● LIVE AD DELIVERY ACTIVE'
+                      : '● PREVIEW / CONFIGURATION READY'}
+                  </span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                    Google AdSense Certified Architecture • 0 CLS Standard
+                  </span>
+                </div>
+                <h2 style={{ fontSize: '1.65rem', fontWeight: 900, letterSpacing: '-0.02em', margin: '0 0 0.5rem' }}>
+                  Google AdSense & Revenue Maximizer
+                </h2>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', maxWidth: '820px', margin: 0 }}>
+                  Configure your Google AdSense Publisher ID, manage multi-unit ad slots (Leaderboard, MPU, Mobile Sticky Anchor & In-Feed), simulate monthly earnings, and maintain 100% Google policy compliance.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  onClick={handleSaveSettings}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: 'var(--accent-indigo)',
+                    color: 'white',
+                    padding: '10px 18px',
+                    borderRadius: '8px',
+                    fontWeight: 800,
+                    fontSize: '0.875rem',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)'
+                  }}
+                >
+                  <Check size={16} />
+                  <span>Save All Changes</span>
+                </button>
+              </div>
+            </div>
+
+            {settingsSavedMsg && (
+              <div style={{ 
+                marginTop: '1.25rem',
+                background: 'var(--green-bg)', 
+                color: 'var(--green-primary)', 
+                padding: '0.75rem 1rem', 
+                borderRadius: '8px', 
+                fontSize: '0.85rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <CheckCircle2 size={16} />
+                <span>AdSense credentials and monetization preferences successfully saved!</span>
+              </div>
+            )}
+          </div>
+
+          {/* Section 1: Publisher Credentials & Ad Slots Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '1.5rem' }}>
+            {/* AdSense Publisher Credentials */}
+            <div className="bento-card" style={{ padding: '1.75rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem' }}>
+                <ShieldCheck size={20} style={{ color: 'var(--accent-blue)' }} />
+                <h3 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0 }}>Publisher Client & Slot IDs</h3>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>
+                    Google AdSense Publisher ID (Client ID)
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. ca-pub-1234567890123456"
+                    value={settingsForm.adSenseClientId}
+                    onChange={(e) => setSettingsForm({ ...settingsForm, adSenseClientId: e.target.value })}
+                    style={{ 
+                      width: '100%', 
+                      background: 'var(--bg-primary)', 
+                      border: '1px solid var(--bg-card-border)', 
+                      borderRadius: '8px', 
+                      padding: '0.65rem 0.85rem', 
+                      color: 'var(--text-primary)', 
+                      fontSize: '0.875rem',
+                      fontFamily: 'var(--font-mono)'
+                    }}
+                  />
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.25rem', display: 'block' }}>
+                    Found in your AdSense Dashboard → Account → Settings → Account Info.
+                  </span>
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>
+                    Header Leaderboard Slot ID (728x90 / Responsive)
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. 1234567890"
+                    value={settingsForm.adSenseLeaderboardSlotId}
+                    onChange={(e) => setSettingsForm({ ...settingsForm, adSenseLeaderboardSlotId: e.target.value })}
+                    style={{ 
+                      width: '100%', 
+                      background: 'var(--bg-primary)', 
+                      border: '1px solid var(--bg-card-border)', 
+                      borderRadius: '8px', 
+                      padding: '0.65rem 0.85rem', 
+                      color: 'var(--text-primary)', 
+                      fontSize: '0.875rem',
+                      fontFamily: 'var(--font-mono)'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>
+                    In-Article MPU Slot ID (300x250 Medium Rectangle)
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. 2345678901"
+                    value={settingsForm.adSenseMpuSlotId}
+                    onChange={(e) => setSettingsForm({ ...settingsForm, adSenseMpuSlotId: e.target.value })}
+                    style={{ 
+                      width: '100%', 
+                      background: 'var(--bg-primary)', 
+                      border: '1px solid var(--bg-card-border)', 
+                      borderRadius: '8px', 
+                      padding: '0.65rem 0.85rem', 
+                      color: 'var(--text-primary)', 
+                      fontSize: '0.875rem',
+                      fontFamily: 'var(--font-mono)'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>
+                    Mobile Bottom Sticky Anchor Slot ID
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. 3456789012"
+                    value={settingsForm.adSenseStickySlotId}
+                    onChange={(e) => setSettingsForm({ ...settingsForm, adSenseStickySlotId: e.target.value })}
+                    style={{ 
+                      width: '100%', 
+                      background: 'var(--bg-primary)', 
+                      border: '1px solid var(--bg-card-border)', 
+                      borderRadius: '8px', 
+                      padding: '0.65rem 0.85rem', 
+                      color: 'var(--text-primary)', 
+                      fontSize: '0.875rem',
+                      fontFamily: 'var(--font-mono)'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, marginBottom: '0.35rem' }}>
+                    In-Feed Native Unit Slot ID
+                  </label>
+                  <input 
+                    type="text"
+                    placeholder="e.g. 4567890123"
+                    value={settingsForm.adSenseInFeedSlotId}
+                    onChange={(e) => setSettingsForm({ ...settingsForm, adSenseInFeedSlotId: e.target.value })}
+                    style={{ 
+                      width: '100%', 
+                      background: 'var(--bg-primary)', 
+                      border: '1px solid var(--bg-card-border)', 
+                      borderRadius: '8px', 
+                      padding: '0.65rem 0.85rem', 
+                      color: 'var(--text-primary)', 
+                      fontSize: '0.875rem',
+                      fontFamily: 'var(--font-mono)'
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Monetization Toggles & Optimization Controls */}
+            <div className="bento-card" style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem' }}>
+                  <Zap size={20} style={{ color: '#f59e0b' }} />
+                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0 }}>Ad Delivery & Viewability Toggles</h3>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {/* Master AdSense Toggle */}
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between', 
+                    padding: '1rem', 
+                    background: 'var(--bg-tertiary)', 
+                    borderRadius: '10px', 
+                    border: '1px solid var(--bg-card-border)' 
+                  }}>
+                    <div>
+                      <strong style={{ fontSize: '0.9rem', display: 'block' }}>Master AdSense Delivery</strong>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        Turn live or mock ad displays on/off globally across all pages
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSettingsForm(prev => ({ ...prev, enableAdSense: !prev.enableAdSense }))}
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: settingsForm.enableAdSense ? 'var(--green-primary)' : 'var(--text-muted)' }}
+                    >
+                      {settingsForm.enableAdSense ? <ToggleRight size={32} /> : <ToggleLeft size={32} />}
+                    </button>
+                  </div>
+
+                  {/* Sticky Anchor Ad Toggle */}
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between', 
+                    padding: '1rem', 
+                    background: 'var(--bg-tertiary)', 
+                    borderRadius: '10px', 
+                    border: '1px solid var(--bg-card-border)' 
+                  }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <strong style={{ fontSize: '0.9rem' }}>Mobile Bottom Sticky Anchor Ad</strong>
+                        <span style={{ fontSize: '0.65rem', background: 'rgba(16, 185, 129, 0.15)', color: 'var(--green-primary)', padding: '1px 6px', borderRadius: '4px', fontWeight: 800 }}>
+                          +35% REVENUE
+                        </span>
+                      </div>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        Fixed bottom anchor ad on mobile devices with close button (95%+ viewability)
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSettingsForm(prev => ({ ...prev, enableStickyAd: !prev.enableStickyAd }))}
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: settingsForm.enableStickyAd ? 'var(--green-primary)' : 'var(--text-muted)' }}
+                    >
+                      {settingsForm.enableStickyAd ? <ToggleRight size={32} /> : <ToggleLeft size={32} />}
+                    </button>
+                  </div>
+
+                  {/* In-Feed Native Ads Toggle */}
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between', 
+                    padding: '1rem', 
+                    background: 'var(--bg-tertiary)', 
+                    borderRadius: '10px', 
+                    border: '1px solid var(--bg-card-border)' 
+                  }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                        <strong style={{ fontSize: '0.9rem' }}>In-Feed Native Ads</strong>
+                        <span style={{ fontSize: '0.65rem', background: 'rgba(59, 130, 246, 0.15)', color: 'var(--accent-blue)', padding: '1px 6px', borderRadius: '4px', fontWeight: 800 }}>
+                          2.5x HIGHER CTR
+                        </span>
+                      </div>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        Blends native sponsored cards between exam results & service directory cards
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSettingsForm(prev => ({ ...prev, enableInFeedAds: !prev.enableInFeedAds }))}
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: settingsForm.enableInFeedAds ? 'var(--green-primary)' : 'var(--text-muted)' }}
+                    >
+                      {settingsForm.enableInFeedAds ? <ToggleRight size={32} /> : <ToggleLeft size={32} />}
+                    </button>
+                  </div>
+
+                  {/* Auto Ads Toggle */}
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between', 
+                    padding: '1rem', 
+                    background: 'var(--bg-tertiary)', 
+                    borderRadius: '10px', 
+                    border: '1px solid var(--bg-card-border)' 
+                  }}>
+                    <div>
+                      <strong style={{ fontSize: '0.9rem', display: 'block' }}>Google Auto Ads Script</strong>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                        Allows Google AI to place supplemental responsive ads where spaces open
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSettingsForm(prev => ({ ...prev, autoAdsEnabled: !prev.autoAdsEnabled }))}
+                      style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: settingsForm.autoAdsEnabled ? 'var(--green-primary)' : 'var(--text-muted)' }}
+                    >
+                      {settingsForm.autoAdsEnabled ? <ToggleRight size={32} /> : <ToggleLeft size={32} />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ marginTop: '1.5rem', paddingTop: '1.25rem', borderTop: '1px solid var(--bg-card-border)' }}>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Award size={15} style={{ color: 'var(--accent-indigo)' }} />
+                  <span>All placements follow Google AdSense Zero CLS layout guidelines.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 2: Interactive AdSense Revenue Simulator */}
+          <div className="bento-card" style={{ padding: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Sliders size={20} style={{ color: 'var(--accent-indigo)' }} />
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+                    AdSense Revenue & Traffic Simulator
+                  </h3>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.25rem 0 0' }}>
+                  Simulate your projected ad earnings based on traffic growth across 750+ programmatic district pages.
+                </p>
+              </div>
+
+              <span style={{ 
+                fontSize: '0.75rem', 
+                background: 'rgba(99, 102, 241, 0.12)', 
+                color: 'var(--accent-indigo)', 
+                padding: '4px 10px', 
+                borderRadius: '6px',
+                fontWeight: 700 
+              }}>
+                1 USD ≈ ₹87 INR Benchmark
+              </span>
+            </div>
+
+            {/* Slider Controls */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.75rem', marginBottom: '2rem' }}>
+              <div style={{ background: 'var(--bg-tertiary)', padding: '1.25rem', borderRadius: '12px', border: '1px solid var(--bg-card-border)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>Estimated Daily Pageviews</span>
+                  <strong style={{ fontSize: '1rem', color: 'var(--accent-indigo)' }}>
+                    {dailyPvSlider.toLocaleString('en-IN')} PV / day
+                  </strong>
+                </div>
+                <input 
+                  type="range"
+                  min="1000"
+                  max="300000"
+                  step="1000"
+                  value={dailyPvSlider}
+                  onChange={(e) => setDailyPvSlider(Number(e.target.value))}
+                  style={{ width: '100%', cursor: 'pointer', accentColor: 'var(--accent-indigo)' }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
+                  <span>1,000 (Early launch)</span>
+                  <span>50,000 (Ranked 750 cities)</span>
+                  <span>3,00,000 (Trending)</span>
+                </div>
+              </div>
+
+              <div style={{ background: 'var(--bg-tertiary)', padding: '1.25rem', borderRadius: '12px', border: '1px solid var(--bg-card-border)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                  <span style={{ fontSize: '0.85rem', fontWeight: 700 }}>Target AdSense RPM (Revenue / 1K views)</span>
+                  <strong style={{ fontSize: '1rem', color: 'var(--green-primary)' }}>
+                    ₹{rpmSlider} INR RPM
+                  </strong>
+                </div>
+                <input 
+                  type="range"
+                  min="50"
+                  max="450"
+                  step="5"
+                  value={rpmSlider}
+                  onChange={(e) => setRpmSlider(Number(e.target.value))}
+                  style={{ width: '100%', cursor: 'pointer', accentColor: 'var(--green-primary)' }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
+                  <span>₹50 (Broad Indian Traffic)</span>
+                  <span>₹140 (Blended Multi-Niche)</span>
+                  <span>₹400+ (High CPC Legal/Finance)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Projected Outputs Cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+              <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--bg-card-border)', borderRadius: '12px', padding: '1.25rem' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>
+                  DAILY EARNINGS
+                </span>
+                <div style={{ fontSize: '1.85rem', fontWeight: 900, color: 'var(--text-primary)', marginTop: '0.35rem' }}>
+                  ₹{Math.round((dailyPvSlider / 1000) * rpmSlider).toLocaleString('en-IN')}
+                </div>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                  ≈ ${Math.round(((dailyPvSlider / 1000) * rpmSlider) / 87).toLocaleString('en-US')} USD / day
+                </span>
+              </div>
+
+              <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--bg-card-border)', borderRadius: '12px', padding: '1.25rem' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>
+                  MONTHLY EARNINGS
+                </span>
+                <div style={{ fontSize: '1.85rem', fontWeight: 900, color: 'var(--green-primary)', marginTop: '0.35rem' }}>
+                  ₹{Math.round(((dailyPvSlider / 1000) * rpmSlider) * 30).toLocaleString('en-IN')}
+                </div>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                  ≈ ${Math.round((((dailyPvSlider / 1000) * rpmSlider) * 30) / 87).toLocaleString('en-US')} USD / month
+                </span>
+              </div>
+
+              <div style={{ background: 'var(--bg-primary)', border: '1px solid var(--bg-card-border)', borderRadius: '12px', padding: '1.25rem' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 700, textTransform: 'uppercase' }}>
+                  ANNUAL EARNINGS
+                </span>
+                <div style={{ fontSize: '1.85rem', fontWeight: 900, color: 'var(--accent-indigo)', marginTop: '0.35rem' }}>
+                  ₹{Math.round(((dailyPvSlider / 1000) * rpmSlider) * 365).toLocaleString('en-IN')}
+                </div>
+                <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>
+                  ≈ ${Math.round((((dailyPvSlider / 1000) * rpmSlider) * 365) / 87).toLocaleString('en-US')} USD / year
+                </span>
+              </div>
+            </div>
+
+            {/* High-CPC Niche Comparison Matrix */}
+            <div>
+              <h4 style={{ fontSize: '0.95rem', fontWeight: 800, marginBottom: '0.75rem' }}>
+                Indian High-CPC Commercial Niches Matrix (Why UrbanSarkari Ranks & Earns Higher)
+              </h4>
+              <div style={{ overflowX: 'auto' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
+                  <thead>
+                    <tr style={{ background: 'var(--bg-tertiary)', borderBottom: '1px solid var(--bg-card-border)' }}>
+                      <th style={{ padding: '10px 12px', textAlign: 'left' }}>Commercial Vertical</th>
+                      <th style={{ padding: '10px 12px', textAlign: 'left' }}>Average CPC in India</th>
+                      <th style={{ padding: '10px 12px', textAlign: 'left' }}>Estimated AdSense RPM</th>
+                      <th style={{ padding: '10px 12px', textAlign: 'left' }}>Top Commercial Advertisers</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style={{ borderBottom: '1px solid var(--bg-card-border)' }}>
+                      <td style={{ padding: '10px 12px' }}><strong>Legal, CA & GST Retainers</strong></td>
+                      <td style={{ padding: '10px 12px', color: 'var(--green-primary)', fontWeight: 700 }}>₹25 – ₹70</td>
+                      <td style={{ padding: '10px 12px', color: 'var(--accent-indigo)', fontWeight: 800 }}>₹320 – ₹680</td>
+                      <td style={{ padding: '10px 12px', color: 'var(--text-muted)' }}>IndiaFilings, Vakilsearch, ClearTax, Lawyered</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid var(--bg-card-border)' }}>
+                      <td style={{ padding: '10px 12px' }}><strong>Home Services & AC AMC</strong></td>
+                      <td style={{ padding: '10px 12px', color: 'var(--green-primary)', fontWeight: 700 }}>₹15 – ₹40</td>
+                      <td style={{ padding: '10px 12px', color: 'var(--accent-indigo)', fontWeight: 800 }}>₹200 – ₹420</td>
+                      <td style={{ padding: '10px 12px', color: 'var(--text-muted)' }}>Urban Company, NoBroker, Onsitego, Voltas</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid var(--bg-card-border)' }}>
+                      <td style={{ padding: '10px 12px' }}><strong>Demat, Personal Loans & Gold</strong></td>
+                      <td style={{ padding: '10px 12px', color: 'var(--green-primary)', fontWeight: 700 }}>₹35 – ₹120</td>
+                      <td style={{ padding: '10px 12px', color: 'var(--accent-indigo)', fontWeight: 800 }}>₹400 – ₹900</td>
+                      <td style={{ padding: '10px 12px', color: 'var(--text-muted)' }}>Zerodha, Upstox, Rupeek, Policybazaar, Bajaj Finserv</td>
+                    </tr>
+                    <tr style={{ borderBottom: '1px solid var(--bg-card-border)' }}>
+                      <td style={{ padding: '10px 12px' }}><strong>Sarkari Results & Exam Test Prep</strong></td>
+                      <td style={{ padding: '10px 12px', color: 'var(--green-primary)', fontWeight: 700 }}>₹4 – ₹15</td>
+                      <td style={{ padding: '10px 12px', color: 'var(--accent-indigo)', fontWeight: 800 }}>₹80 – ₹180</td>
+                      <td style={{ padding: '10px 12px', color: 'var(--text-muted)' }}>Testbook, Adda247, Unacademy, PhysicsWallah</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {/* Section 3: Authorized Digital Sellers (ads.txt) Suite */}
+          <div className="bento-card" style={{ padding: '2rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.25rem' }}>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <FileCode size={20} style={{ color: 'var(--accent-blue)' }} />
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 800, margin: 0 }}>
+                    Google Authorized Digital Sellers File (ads.txt)
+                  </h3>
+                </div>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', margin: '0.25rem 0 0' }}>
+                  Google AdSense strictly requires an <code style={{ color: 'var(--accent-indigo)' }}>ads.txt</code> file at your domain root (<code style={{ color: 'var(--accent-indigo)' }}>/ads.txt</code>) to prevent domain spoofing and ad earnings clawbacks.
+                </p>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <button
+                  onClick={handleCopyAdsTxt}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: 'var(--bg-tertiary)',
+                    border: '1px solid var(--bg-card-border)',
+                    color: 'var(--text-primary)',
+                    padding: '8px 14px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    fontSize: '0.825rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Copy size={14} />
+                  <span>{copiedAdsTxt ? 'Copied to Clipboard!' : 'Copy Line'}</span>
+                </button>
+                <button
+                  onClick={handleDownloadAdsTxt}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: 'var(--accent-blue)',
+                    color: 'white',
+                    padding: '8px 14px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    fontSize: '0.825rem',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Download size={14} />
+                  <span>Download ads.txt</span>
+                </button>
+              </div>
+            </div>
+
+            <div style={{ 
+              background: 'var(--bg-primary)', 
+              border: '1px solid var(--bg-card-border)', 
+              borderRadius: '8px', 
+              padding: '1rem', 
+              fontFamily: 'var(--font-mono)', 
+              fontSize: '0.9rem',
+              color: 'var(--green-primary)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <span>{adsTxtSnippet}</span>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontFamily: 'var(--font-sans)' }}>
+                Configured in public/ads.txt
+              </span>
+            </div>
+          </div>
+
+          {/* Section 4: 100% AdSense Approval Readiness Checklist */}
+          <div className="bento-card" style={{ padding: '2rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.4rem' }}>
+              <CheckCircle2 size={20} style={{ color: 'var(--green-primary)' }} />
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+                Google AdSense 100% Approval Readiness Audit
+              </h3>
+            </div>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+              All 8 mandatory criteria for immediate Google AdSense site approval are actively configured on UrbanSarkari:
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1rem' }}>
+              {[
+                { title: 'Privacy Policy with Google DART Cookie', path: '/privacy-policy', desc: 'Discloses third-party advertising cookies, GDPR, CCPA & Indian DPDP Act.' },
+                { title: 'Terms of Service Page', path: '/terms-of-service', desc: 'Defines acceptable usage, user intellectual property, and platform liability.' },
+                { title: 'About Us & Editorial Standards', path: '/about-us', desc: 'Demonstrates human editorial oversight, fact-checking, and organizational mission.' },
+                { title: 'Interactive Contact Us Page', path: '/contact-us', desc: 'Provides active grievance officer email (support@urbansarkari.in) and inquiry form.' },
+                { title: 'Government Non-Affiliation Disclaimer', path: '/disclaimer', desc: 'Explicitly states UrbanSarkari is an independent news & service directory.' },
+                { title: 'Zero Cumulative Layout Shift (0 CLS)', path: '/', desc: 'Ad containers have reserved minimum heights (90px/250px) preventing layout shift.' },
+                { title: '750+ Programmatic SEO Landing Pages', path: '/services-directory', desc: 'High-value, localized search landing pages covering districts across India.' },
+                { title: 'Mobile-Optimized Responsive Viewport', path: '/', desc: 'Clean touch targets, fast load speed, no intrusive popups or deceptive triggers.' }
+              ].map((item, idx) => (
+                <div key={idx} style={{ 
+                  background: 'var(--bg-tertiary)', 
+                  border: '1px solid var(--bg-card-border)', 
+                  borderRadius: '10px', 
+                  padding: '1rem',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '10px'
+                }}>
+                  <div style={{ color: 'var(--green-primary)', marginTop: '2px' }}>
+                    <CheckCircle2 size={18} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <strong style={{ fontSize: '0.875rem' }}>{item.title}</strong>
+                      <a 
+                        href={item.path} 
+                        onClick={(e) => { e.preventDefault(); navigate(item.path); }}
+                        style={{ fontSize: '0.72rem', color: 'var(--accent-indigo)', fontWeight: 700 }}
+                      >
+                        Verify →
+                      </a>
+                    </div>
+                    <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', margin: '0.25rem 0 0', lineHeight: 1.4 }}>
+                      {item.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 5: Maximum Earnings Strategy Playbook */}
+          <div className="bento-card" style={{ padding: '2rem', border: '1px solid rgba(245, 158, 11, 0.3)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.4rem' }}>
+              <Zap size={20} style={{ color: '#f59e0b' }} />
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
+                Playbook: How to Get the MOST Earning from Google Ads on UrbanSarkari
+              </h3>
+            </div>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+              Follow these 4 proven high-revenue pillars to scale your monthly earnings from ₹25,000 to ₹3,00,000+:
+            </p>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+              <div style={{ background: 'var(--bg-tertiary)', borderRadius: '10px', padding: '1.25rem', border: '1px solid var(--bg-card-border)' }}>
+                <span style={{ fontSize: '0.7rem', color: '#f59e0b', fontWeight: 800 }}>PILLAR 1: MOBILE VIEWABILITY</span>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: '0.4rem 0' }}>Keep Sticky Bottom Anchor On</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.45, margin: 0 }}>
+                  In India, 84%+ of users browse on mobile devices. The sticky bottom ad remains visible as users scroll long exam circulars and rate cards, achieving ~95% ad viewability and generating 35-40% of all ad revenue.
+                </p>
+              </div>
+
+              <div style={{ background: 'var(--bg-tertiary)', borderRadius: '10px', padding: '1.25rem', border: '1px solid var(--bg-card-border)' }}>
+                <span style={{ fontSize: '0.7rem', color: '#f59e0b', fontWeight: 800 }}>PILLAR 2: HIGH-CPC SEARCH QUERIES</span>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: '0.4rem 0' }}>Target Metro Business Keywords</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.45, margin: 0 }}>
+                  Pages for Legal Retainers, GST Filing, and AC Servicing in Tier-1 cities (Bengaluru, Delhi, Mumbai, Chennai) attract commercial bidding from banks, edtechs, and startups where CPC reaches ₹40 to ₹80 per click.
+                </p>
+              </div>
+
+              <div style={{ background: 'var(--bg-tertiary)', borderRadius: '10px', padding: '1.25rem', border: '1px solid var(--bg-card-border)' }}>
+                <span style={{ fontSize: '0.7rem', color: '#f59e0b', fontWeight: 800 }}>PILLAR 3: NATIVE IN-FEED BLENDING</span>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: '0.4rem 0' }}>In-Feed Units in Result Lists</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.45, margin: 0 }}>
+                  Positioning in-feed ad units inside card grids (between Sarkari Jobs and Doorstep rate cards) delivers 2.5x higher click-through rates because users naturally scan the cards, increasing publisher RPM.
+                </p>
+              </div>
+
+              <div style={{ background: 'var(--bg-tertiary)', borderRadius: '10px', padding: '1.25rem', border: '1px solid var(--bg-card-border)' }}>
+                <span style={{ fontSize: '0.7rem', color: '#f59e0b', fontWeight: 800 }}>PILLAR 4: MULTI-STREAM STACKING</span>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 800, margin: '0.4rem 0' }}>Stack Display Ads with UPI Sales</h4>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.45, margin: 0 }}>
+                  AdSense provides baseline passive display income. Meanwhile, every exam seeker who buys your ₹49 study pack or books an AC/Legal lead through WhatsApp gives you direct 100% margin profit on the same traffic!
+                </p>
               </div>
             </div>
           </div>

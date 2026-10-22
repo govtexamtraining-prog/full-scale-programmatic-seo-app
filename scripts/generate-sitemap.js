@@ -22,7 +22,12 @@ urls.push(
   { loc: `${BASE_URL}/home-services`, priority: '0.90', changefreq: 'daily' },
   { loc: `${BASE_URL}/coaching-institutes`, priority: '0.90', changefreq: 'daily' },
   { loc: `${BASE_URL}/legal-tax-services`, priority: '0.90', changefreq: 'daily' },
-  { loc: `${BASE_URL}/wellness-fitness`, priority: '0.90', changefreq: 'daily' }
+  { loc: `${BASE_URL}/wellness-fitness`, priority: '0.90', changefreq: 'daily' },
+  { loc: `${BASE_URL}/privacy-policy`, priority: '0.80', changefreq: 'monthly' },
+  { loc: `${BASE_URL}/terms-of-service`, priority: '0.80', changefreq: 'monthly' },
+  { loc: `${BASE_URL}/about-us`, priority: '0.80', changefreq: 'monthly' },
+  { loc: `${BASE_URL}/contact-us`, priority: '0.80', changefreq: 'monthly' },
+  { loc: `${BASE_URL}/disclaimer`, priority: '0.80', changefreq: 'monthly' }
 );
 
 // 2. Sarkari Exam 2026 Micro-Pages

@@ -124,7 +124,6 @@ export default function Footer({ navigate }) {
             UrbanSarkari is an independent public portal and verified local business intelligence directory. We are not officially affiliated with the Government of India, the Union Public Service Commission, State Public Service Commissions, or listed commercial institutes. Examination candidates are advised to verify details with official government gazettes. Local service listings, reviews, and estimates are aggregated from registered regional providers.
           </p>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
-            <span>© 2026 UrbanSarkari (India Public Data & Doorstep Services Portal). All rights reserved.</span>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
               <button onClick={() => navigate('/exam-schedules')} style={{ color: 'inherit' }}>Sarkari Board</button>
               <button onClick={() => navigate('/home-services')} style={{ color: 'inherit' }}>Home Services</button>
@@ -133,6 +132,18 @@ export default function Footer({ navigate }) {
               <button onClick={() => navigate('/wellness-fitness')} style={{ color: 'inherit' }}>Wellness Hub</button>
               <button onClick={() => navigate('/admin')} style={{ color: 'var(--accent-indigo)', fontWeight: 800 }}>⚡ Admin Console</button>
             </div>
+          </div>
+
+          {/* AdSense Compliance Trust Links */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.75rem', borderTop: '1px solid var(--bg-card-border)', paddingTop: '0.75rem', fontSize: '0.75rem' }}>
+            <div style={{ display: 'flex', gap: '1.25rem', flexWrap: 'wrap' }}>
+              <button onClick={() => navigate('/privacy-policy')} style={{ color: 'var(--text-muted)' }}>Privacy Policy</button>
+              <button onClick={() => navigate('/terms-of-service')} style={{ color: 'var(--text-muted)' }}>Terms of Service</button>
+              <button onClick={() => navigate('/about-us')} style={{ color: 'var(--text-muted)' }}>About Us</button>
+              <button onClick={() => navigate('/contact-us')} style={{ color: 'var(--text-muted)' }}>Contact Us</button>
+              <button onClick={() => navigate('/disclaimer')} style={{ color: 'var(--text-muted)' }}>Disclaimer</button>
+            </div>
+            <span style={{ color: 'var(--text-muted)' }}>© 2026 UrbanSarkari (India Public Data & Doorstep Services Portal). All rights reserved.</span>
           </div>
         </div>
       </div>

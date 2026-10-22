@@ -388,6 +388,9 @@ export default function ExamsVerticalView({ navigate }) {
           </div>
         )}
       </div>
+
+      {/* High-CTR Native In-Feed Ad Unit */}
+      <AdSlot slotType="in-feed" slotId="exams-feed-mid-ad" />
     </div>
   );
 }

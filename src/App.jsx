@@ -17,6 +17,7 @@ import ServicesDirectoryView from './views/ServicesDirectoryView';
 import ServiceCityView from './views/ServiceCityView';
 import SitemapView from './views/SitemapView';
 import AdminView from './views/AdminView';
+import LegalPagesView from './views/LegalPagesView';
 
 import { LiveDataProvider, useLiveData } from './context/LiveDataContext';
 import { MonetizationProvider } from './context/MonetizationContext';
@@ -92,6 +93,11 @@ function AppContent() {
     if (clean === '/services' || clean === '/directory') return { view: 'services-hub', params: {} };
     if (clean === '/admin') return { view: 'admin', params: {} };
     if (clean === '/sitemap.xml') return { view: 'sitemap', params: {} };
+    if (clean === '/privacy-policy') return { view: 'legal', params: { page: 'privacy-policy' } };
+    if (clean === '/terms-of-service') return { view: 'legal', params: { page: 'terms-of-service' } };
+    if (clean === '/about-us') return { view: 'legal', params: { page: 'about-us' } };
+    if (clean === '/contact-us') return { view: 'legal', params: { page: 'contact-us' } };
+    if (clean === '/disclaimer') return { view: 'legal', params: { page: 'disclaimer' } };
 
     const validNicheSlugs = ['home-services', 'coaching-institutes', 'legal-tax-services', 'wellness-fitness'];
 
@@ -309,6 +315,7 @@ function AppContent() {
         )}
         {routeInfo.view === 'sitemap' && <SitemapView navigate={navigate} />}
         {routeInfo.view === 'admin' && <AdminView navigate={navigate} />}
+        {routeInfo.view === 'legal' && <LegalPagesView page={routeInfo.params.page} navigate={navigate} />}
       </main>
 
       {/* High-Intent SEO Footer */}
