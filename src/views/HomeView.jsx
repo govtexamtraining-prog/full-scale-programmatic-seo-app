@@ -51,37 +51,39 @@ export default function HomeView({ navigate }) {
 
       {/* Hero Banner */}
       <section className="hero-banner">
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '1rem' }}>
-          <div className="hero-tag" style={{ margin: 0 }}>
-            <Zap size={14} />
-            <span>Public Services, Sarkari Exams & Local Business Intelligence</span>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '1.25rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div className="hero-tag" style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: '0.72rem', letterSpacing: '0.08em' }}>
+            <Zap size={13} style={{ color: '#00f0ff' }} />
+            <span>SARKARI QUEST ENGINE 2026</span>
           </div>
           <div style={{ 
             display: 'inline-flex', 
             alignItems: 'center', 
-            gap: '5px', 
-            background: 'var(--green-bg)', 
-            color: 'var(--green-primary)', 
-            border: '1px solid rgba(16, 185, 129, 0.3)',
-            padding: '0.35rem 0.8rem',
+            gap: '6px', 
+            background: 'rgba(0, 255, 157, 0.1)', 
+            color: '#00ff9d', 
+            border: '1px solid rgba(0, 255, 157, 0.35)',
+            padding: '0.35rem 0.85rem',
             borderRadius: '9999px',
-            fontSize: '0.75rem',
-            fontWeight: 700
+            fontSize: '0.72rem',
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 800,
+            letterSpacing: '0.05em'
           }}>
-            <Radio size={12} className="spin-anim" />
-            <span>Live 2026 Board Active</span>
+            <span className="radar-beacon" style={{ color: '#00ff9d' }} />
+            <span>RADAR_ACTIVE // 750+ DISTRICTS</span>
           </div>
         </div>
 
-        <h1 className="hero-title">
-          Sarkari Exam Board & Verified Public Services Directory
+        <h1 className="hero-title" style={{ maxWidth: '960px', margin: '0 auto 1rem' }}>
+          Sarkari Exam Board & Verified Public Directory
         </h1>
         <p className="hero-subtitle">
-          Centralized public directory for official 2026 Sarkari exam circulars, admit cards, and verified local professionals across 750+ Indian districts.
+          Centralized tactical portal for 2026 Sarkari exam notifications, hall tickets, results, and verified local professionals across India.
         </p>
 
-        {/* 5 Core Vertical Switchers */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
+        {/* 5 Core Vertical Switchers - Gamer HUD Dock */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
           <button 
             onClick={() => navigate('/exam-schedules')} 
             className="glass-panel"
@@ -89,13 +91,14 @@ export default function HomeView({ navigate }) {
               display: 'flex', 
               alignItems: 'center', 
               gap: '8px', 
-              padding: '0.7rem 1.15rem', 
+              padding: '0.75rem 1.25rem', 
               fontWeight: 700,
               fontSize: '0.85rem',
-              borderColor: 'rgba(220, 38, 38, 0.3)'
+              borderColor: 'rgba(255, 42, 109, 0.4)',
+              background: 'rgba(255, 42, 109, 0.06)'
             }}
           >
-            <GraduationCap size={17} style={{ color: '#dc2626' }} />
+            <GraduationCap size={17} style={{ color: '#ff2a6d' }} />
             <span>Sarkari Result & Exams</span>
           </button>
 
@@ -106,13 +109,14 @@ export default function HomeView({ navigate }) {
               display: 'flex', 
               alignItems: 'center', 
               gap: '8px', 
-              padding: '0.7rem 1.15rem', 
+              padding: '0.75rem 1.25rem', 
               fontWeight: 700,
               fontSize: '0.85rem',
-              borderColor: 'rgba(234, 88, 12, 0.3)'
+              borderColor: 'rgba(245, 158, 11, 0.4)',
+              background: 'rgba(245, 158, 11, 0.06)'
             }}
           >
-            <Wrench size={16} style={{ color: '#ea580c' }} />
+            <Wrench size={16} style={{ color: '#f59e0b' }} />
             <span>Home Services & Utilities</span>
           </button>
 
@@ -123,13 +127,14 @@ export default function HomeView({ navigate }) {
               display: 'flex', 
               alignItems: 'center', 
               gap: '8px', 
-              padding: '0.7rem 1.15rem', 
+              padding: '0.75rem 1.25rem', 
               fontWeight: 700,
               fontSize: '0.85rem',
-              borderColor: 'rgba(37, 99, 235, 0.3)'
+              borderColor: 'rgba(99, 102, 241, 0.4)',
+              background: 'rgba(99, 102, 241, 0.06)'
             }}
           >
-            <Briefcase size={16} style={{ color: '#2563eb' }} />
+            <Briefcase size={16} style={{ color: '#6366f1' }} />
             <span>Coaching Academies</span>
           </button>
 
@@ -140,13 +145,14 @@ export default function HomeView({ navigate }) {
               display: 'flex', 
               alignItems: 'center', 
               gap: '8px', 
-              padding: '0.7rem 1.15rem', 
+              padding: '0.75rem 1.25rem', 
               fontWeight: 700,
               fontSize: '0.85rem',
-              borderColor: 'rgba(124, 58, 237, 0.3)'
+              borderColor: 'rgba(168, 85, 247, 0.4)',
+              background: 'rgba(168, 85, 247, 0.06)'
             }}
           >
-            <FileText size={16} style={{ color: '#7c3aed' }} />
+            <FileText size={16} style={{ color: '#a855f7' }} />
             <span>Legal, Tax & CA</span>
           </button>
 
@@ -157,19 +163,20 @@ export default function HomeView({ navigate }) {
               display: 'flex', 
               alignItems: 'center', 
               gap: '8px', 
-              padding: '0.7rem 1.15rem', 
+              padding: '0.75rem 1.25rem', 
               fontWeight: 700,
               fontSize: '0.85rem',
-              borderColor: 'rgba(16, 185, 129, 0.3)'
+              borderColor: 'rgba(0, 255, 157, 0.4)',
+              background: 'rgba(0, 255, 157, 0.06)'
             }}
           >
-            <HeartPulse size={16} style={{ color: '#10b981' }} />
+            <HeartPulse size={16} style={{ color: '#00ff9d' }} />
             <span>Wellness, Gyms & Spas</span>
           </button>
         </div>
       </section>
 
-      {/* 4 Pillars National KPI Metrics Bento Strip */}
+      {/* 4 Pillars National KPI Metrics Bento Strip with Micro Gamer Meters */}
       <div className="metrics-grid">
         {/* Pillar 1: Sarkari Exams Active */}
         <div 
@@ -178,15 +185,18 @@ export default function HomeView({ navigate }) {
           onClick={() => navigate('/exam-schedules')}
         >
           <div className="metric-header">
-            <span>Sarkari Result & Exam Board</span>
-            <GraduationCap size={16} style={{ color: '#dc2626' }} />
+            <span style={{ fontFamily: 'var(--font-mono)' }}>[01] SARKARI EXAM BOARD</span>
+            <GraduationCap size={16} style={{ color: '#ff2a6d' }} />
           </div>
-          <div className="metric-val" style={{ color: '#dc2626' }}>
-            {examsData.length} Active 2026 Notices
+          <div className="metric-val" style={{ color: '#ff2a6d' }}>
+            {examsData.length} Active Notices
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div className="gamer-meter">
+            <div className="gamer-meter-fill" style={{ width: '92%', background: 'linear-gradient(90deg, #ff2a6d, #ff6b8b)', boxShadow: '0 0 8px rgba(255, 42, 109, 0.8)' }}></div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.25rem' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>UPSC, SSC, IBPS, RRB & TNPSC</span>
-            <span className="metric-change down">● Live Notifications</span>
+            <span className="metric-change down" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem' }}>● LIVE RECRUITMENT</span>
           </div>
         </div>
 
@@ -197,15 +207,18 @@ export default function HomeView({ navigate }) {
           onClick={() => navigate('/home-services')}
         >
           <div className="metric-header">
-            <span>Home Services & Utilities</span>
-            <Wrench size={16} style={{ color: '#ea580c' }} />
+            <span style={{ fontFamily: 'var(--font-mono)' }}>[02] HOME SERVICES</span>
+            <Wrench size={16} style={{ color: '#f59e0b' }} />
           </div>
-          <div className="metric-val" style={{ color: '#ea580c' }}>
+          <div className="metric-val" style={{ color: '#f59e0b' }}>
             ₹499 Starting
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div className="gamer-meter">
+            <div className="gamer-meter-fill" style={{ width: '85%', background: 'linear-gradient(90deg, #f59e0b, #fbbf24)', boxShadow: '0 0 8px rgba(245, 158, 11, 0.8)' }}></div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.25rem' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>AC Repair, Plumbing & Electrical</span>
-            <span className="metric-change up">⚡ 15-Min Dispatch</span>
+            <span className="metric-change up" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem' }}>⚡ 15-MIN DISPATCH</span>
           </div>
         </div>
 
@@ -216,15 +229,18 @@ export default function HomeView({ navigate }) {
           onClick={() => navigate('/coaching-institutes')}
         >
           <div className="metric-header">
-            <span>Coaching & Education Hubs</span>
-            <Briefcase size={16} style={{ color: '#2563eb' }} />
+            <span style={{ fontFamily: 'var(--font-mono)' }}>[03] COACHING HUBS</span>
+            <Briefcase size={16} style={{ color: '#6366f1' }} />
           </div>
-          <div className="metric-val" style={{ color: '#2563eb' }}>
+          <div className="metric-val" style={{ color: '#6366f1' }}>
             2026 Batches Open
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div className="gamer-meter">
+            <div className="gamer-meter-fill" style={{ width: '78%', background: 'linear-gradient(90deg, #6366f1, #a855f7)', boxShadow: '0 0 8px rgba(99, 102, 241, 0.8)' }}></div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.25rem' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>NEET, JEE, IAS & Bank Exam</span>
-            <span className="metric-change up">🎓 Free Counseling</span>
+            <span className="metric-change up" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem' }}>🎓 FREE ADVICE</span>
           </div>
         </div>
 
@@ -235,25 +251,28 @@ export default function HomeView({ navigate }) {
           onClick={() => navigate('/legal-tax-services')}
         >
           <div className="metric-header">
-            <span>Professional Legal & Tax CA</span>
-            <FileText size={16} style={{ color: '#7c3aed' }} />
+            <span style={{ fontFamily: 'var(--font-mono)' }}>[04] LEGAL & TAX CA</span>
+            <FileText size={16} style={{ color: '#00ff9d' }} />
           </div>
-          <div className="metric-val" style={{ color: '#7c3aed' }}>
-            Verified Advocates & CAs
+          <div className="metric-val" style={{ color: '#00ff9d' }}>
+            Verified Advocates
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div className="gamer-meter">
+            <div className="gamer-meter-fill" style={{ width: '95%', background: 'linear-gradient(90deg, #00ff9d, #00f0ff)', boxShadow: '0 0 8px rgba(0, 255, 157, 0.8)' }}></div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.25rem' }}>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>GST, Property Law & Trademark</span>
-            <span className="metric-change up">⚖️ Confidential</span>
+            <span className="metric-change up" style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem' }}>⚖️ CONFIDENTIAL</span>
           </div>
         </div>
       </div>
 
-      {/* SARKARI EXAM 3-COLUMN LEGACY GRID */}
+      {/* SARKARI EXAM 3-COLUMN GAMER HUD QUEST GRID */}
       <section style={{ marginTop: '3rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
           <div>
             <h2 style={{ fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <GraduationCap style={{ color: '#dc2626' }} />
+              <GraduationCap style={{ color: '#ff2a6d' }} />
               <span>Sarkari Result & Exam Board 2026</span>
             </h2>
             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
@@ -262,26 +281,31 @@ export default function HomeView({ navigate }) {
           </div>
           <button 
             onClick={() => navigate('/exam-schedules')}
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '4px', 
-              color: 'var(--accent-blue)', 
-              fontWeight: 600,
-              fontSize: '0.875rem' 
-            }}
+            className="btn-gamer-action indigo"
+            style={{ fontSize: '0.75rem', padding: '6px 12px' }}
           >
-            <span>View All Exams</span>
-            <ArrowRight size={14} />
+            <span>VIEW ALL 2026 EXAMS</span>
+            <ArrowRight size={13} />
           </button>
         </div>
 
         <div className="sarkari-grid">
-          {/* Column 1: Latest Jobs */}
+          {/* Column 1: Latest Jobs (Quests) */}
           <div className="sarkari-col">
             <div className="sarkari-col-header">
-              <span>LATEST JOBS (ACTIVE)</span>
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span className="radar-beacon" style={{ color: '#ff2a6d' }} />
+                <span>LATEST JOBS (ACTIVE)</span>
+              </span>
+              <span style={{ 
+                fontFamily: 'var(--font-mono)', 
+                fontSize: '0.7rem', 
+                background: 'rgba(255, 42, 109, 0.2)', 
+                color: '#ff4d82', 
+                padding: '2px 7px', 
+                borderRadius: '4px',
+                border: '1px solid rgba(255, 42, 109, 0.4)'
+              }}>
                 {jobsList.length} Active
               </span>
             </div>
@@ -294,49 +318,31 @@ export default function HomeView({ navigate }) {
                     style={{ textDecoration: 'none', display: 'block' }}
                   >
                     <div className="sarkari-item-title">
-                      <span style={{ color: '#dc2626', fontWeight: 800 }}>[{job.org}]</span> {job.postName}
+                      <span style={{ color: '#ff2a6d', fontWeight: 800 }}>[{job.org}]</span> {job.postName}
                     </div>
                     <div className="sarkari-item-meta" style={{ flexWrap: 'wrap' }}>
-                      <span>Last Date: <strong>{job.lastDateToApply}</strong></span>
+                      <span>Last Date: <strong style={{ color: 'var(--text-primary)' }}>{job.lastDateToApply}</strong></span>
                       <span>• {job.vacancies.toLocaleString('en-IN')} Posts</span>
                     </div>
                   </a>
                   
-                  {/* Direct Official Action Links */}
-                  <div style={{ display: 'flex', gap: '8px', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                  {/* Direct Tactical Action Links */}
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '0.65rem', flexWrap: 'wrap' }}>
                     <a
                       href={job.applyLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        background: '#dc2626',
-                        color: 'white',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '3px'
-                      }}
+                      className="btn-gamer-action crimson"
                     >
                       <span>Apply Online</span>
-                      <ArrowRight size={10} />
+                      <ArrowRight size={11} />
                     </a>
                     <a
                       href={`/exam-schedules/${job.orgSlug}/${job.postSlug}`}
                       onClick={(e) => { e.preventDefault(); navigate(`/exam-schedules/${job.orgSlug}/${job.postSlug}`); }}
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        background: 'var(--bg-tertiary)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--bg-card-border)',
-                        padding: '3px 8px',
-                        borderRadius: '4px'
-                      }}
+                      className="btn-gamer-action indigo"
                     >
-                      Eligibility & Fee
+                      <span>Eligibility & Fee</span>
                     </a>
                   </div>
                 </div>
@@ -347,9 +353,20 @@ export default function HomeView({ navigate }) {
           {/* Column 2: Admit Card */}
           <div className="sarkari-col">
             <div className="sarkari-col-header">
-              <span>ADMIT CARD / HALL TICKET</span>
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
-                Live
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span className="radar-beacon" style={{ color: '#6366f1' }} />
+                <span>ADMIT CARD / HALL TICKET</span>
+              </span>
+              <span style={{ 
+                fontFamily: 'var(--font-mono)', 
+                fontSize: '0.7rem', 
+                background: 'rgba(99, 102, 241, 0.2)', 
+                color: '#a5b4fc', 
+                padding: '2px 7px', 
+                borderRadius: '4px',
+                border: '1px solid rgba(99, 102, 241, 0.4)'
+              }}>
+                Live Unlocked
               </span>
             </div>
             <div className="sarkari-item-list">
@@ -361,48 +378,30 @@ export default function HomeView({ navigate }) {
                     style={{ textDecoration: 'none', display: 'block' }}
                   >
                     <div className="sarkari-item-title">
-                      <span style={{ color: '#1e40af', fontWeight: 800 }}>[{card.org}]</span> {card.postName}
+                      <span style={{ color: '#818cf8', fontWeight: 800 }}>[{card.org}]</span> {card.postName}
                     </div>
                     <div className="sarkari-item-meta">
-                      <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>● {card.admitCardStatus}</span>
+                      <span style={{ color: '#00ff9d', fontWeight: 600 }}>● {card.admitCardStatus}</span>
                     </div>
                   </a>
 
-                  {/* Direct Official Action Links */}
-                  <div style={{ display: 'flex', gap: '8px', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                  {/* Direct Tactical Action Links */}
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '0.65rem', flexWrap: 'wrap' }}>
                     <a
                       href={card.applyLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        background: '#1e40af',
-                        color: 'white',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '3px'
-                      }}
+                      className="btn-gamer-action cyan"
                     >
                       <span>Download Hall Ticket</span>
-                      <ArrowRight size={10} />
+                      <ArrowRight size={11} />
                     </a>
                     <a
                       href={`/exam-schedules/${card.orgSlug}/${card.postSlug}`}
                       onClick={(e) => { e.preventDefault(); navigate(`/exam-schedules/${card.orgSlug}/${card.postSlug}`); }}
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        background: 'var(--bg-tertiary)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--bg-card-border)',
-                        padding: '3px 8px',
-                        borderRadius: '4px'
-                      }}
+                      className="btn-gamer-action indigo"
                     >
-                      Exam Dates
+                      <span>Exam Dates</span>
                     </a>
                   </div>
                 </div>
@@ -413,8 +412,19 @@ export default function HomeView({ navigate }) {
           {/* Column 3: Results */}
           <div className="sarkari-col">
             <div className="sarkari-col-header">
-              <span>RESULTS & MERIT LIST</span>
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span className="radar-beacon" style={{ color: '#00ff9d' }} />
+                <span>RESULTS & MERIT LIST</span>
+              </span>
+              <span style={{ 
+                fontFamily: 'var(--font-mono)', 
+                fontSize: '0.7rem', 
+                background: 'rgba(0, 255, 157, 0.2)', 
+                color: '#00ff9d', 
+                padding: '2px 7px', 
+                borderRadius: '4px',
+                border: '1px solid rgba(0, 255, 157, 0.4)'
+              }}>
                 Declared
               </span>
             </div>
@@ -427,48 +437,30 @@ export default function HomeView({ navigate }) {
                     style={{ textDecoration: 'none', display: 'block' }}
                   >
                     <div className="sarkari-item-title">
-                      <span style={{ color: '#065f46', fontWeight: 800 }}>[{result.org}]</span> {result.postName}
+                      <span style={{ color: '#00ff9d', fontWeight: 800 }}>[{result.org}]</span> {result.postName}
                     </div>
                     <div className="sarkari-item-meta">
-                      <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>● {result.resultStatus}</span>
+                      <span style={{ color: '#00ff9d', fontWeight: 600 }}>● {result.resultStatus}</span>
                     </div>
                   </a>
 
-                  {/* Direct Official Action Links */}
-                  <div style={{ display: 'flex', gap: '8px', marginTop: '0.5rem', flexWrap: 'wrap' }}>
+                  {/* Direct Tactical Action Links */}
+                  <div style={{ display: 'flex', gap: '8px', marginTop: '0.65rem', flexWrap: 'wrap' }}>
                     <a
                       href={result.applyLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        background: '#065f46',
-                        color: 'white',
-                        padding: '3px 8px',
-                        borderRadius: '4px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '3px'
-                      }}
+                      className="btn-gamer-action emerald"
                     >
                       <span>Check Scorecard</span>
-                      <ArrowRight size={10} />
+                      <ArrowRight size={11} />
                     </a>
                     <a
                       href={`/exam-schedules/${result.orgSlug}/${result.postSlug}`}
                       onClick={(e) => { e.preventDefault(); navigate(`/exam-schedules/${result.orgSlug}/${result.postSlug}`); }}
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        background: 'var(--bg-tertiary)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--bg-card-border)',
-                        padding: '3px 8px',
-                        borderRadius: '4px'
-                      }}
+                      className="btn-gamer-action indigo"
                     >
-                      Cutoff Marks
+                      <span>Merit Cutoffs</span>
                     </a>
                   </div>
                 </div>

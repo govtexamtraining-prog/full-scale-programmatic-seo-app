@@ -1,45 +1,46 @@
-/* UrbanSarkari — Advanced Neo-Minimalist Gen Z Design System */
+/* UrbanSarkari — Creative Gamer Minimalist Design System */
 :root {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Outfit', 'Space Grotesk', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Color Tokens - Default Dark Mode (Void Obsidian / Cyber Minimalist) */
-  --bg-primary: #09090b;
-  --bg-secondary: #121217;
-  --bg-tertiary: #181820;
-  --bg-card: rgba(18, 18, 24, 0.72);
+  --bg-primary: #07090e;
+  --bg-secondary: #0e111a;
+  --bg-tertiary: #141824;
+  --bg-card: rgba(14, 17, 26, 0.75);
   --bg-card-border: rgba(255, 255, 255, 0.08);
-  --bg-card-hover-border: rgba(99, 102, 241, 0.4);
-  --bg-glass: rgba(9, 9, 11, 0.78);
+  --bg-card-hover-border: rgba(99, 102, 241, 0.5);
+  --bg-glass: rgba(7, 9, 14, 0.82);
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
-  --text-inverse: #09090b;
+  --text-inverse: #07090e;
 
-  /* Neon & Cyber Accents (Gen Z Palette) */
+  /* Neon & Cyber Gamer Accents */
   --accent-blue: #6366f1; /* Electric Indigo */
   --accent-blue-hover: #818cf8;
   --accent-blue-light: rgba(99, 102, 241, 0.15);
-  --accent-cyan: #06b6d4; /* Cyber Cyan */
-  --accent-violet: #8b5cf6; /* Cyber Violet */
+  --accent-cyan: #00f0ff; /* Cyber Cyan Laser */
+  --accent-violet: #a855f7; /* Cyber Ultraviolet */
 
   --gold-primary: #fbbf24; /* Solar Gold */
-  --gold-glow: rgba(251, 191, 36, 0.22);
+  --gold-glow: rgba(251, 191, 36, 0.28);
   --gold-bg: rgba(251, 191, 36, 0.1);
 
-  --green-primary: #10b981; /* Hyper Emerald */
-  --green-bg: rgba(16, 185, 129, 0.12);
-  --green-glow: rgba(16, 185, 129, 0.25);
+  --green-primary: #00ff9d; /* Matrix / Emerald Glow */
+  --green-bg: rgba(0, 255, 157, 0.1);
+  --green-glow: rgba(0, 255, 157, 0.35);
 
-  --red-primary: #f43f5e; /* Electric Coral / Rose */
-  --red-bg: rgba(244, 63, 94, 0.12);
+  --red-primary: #ff2a6d; /* Neon Crimson / Coral */
+  --red-bg: rgba(255, 42, 109, 0.12);
 
-  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
-  --shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08);
-  --shadow-glow: 0 0 35px rgba(99, 102, 241, 0.2);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 4px 16px -2px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  --shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --shadow-glow: 0 0 35px rgba(99, 102, 241, 0.3);
+  --shadow-neon-cyan: 0 0 25px rgba(0, 240, 255, 0.35);
 
   --radius-xs: 6px;
   --radius-sm: 8px;
@@ -52,17 +53,17 @@
   --transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Light Mode Overrides (Porcelain Minimalist) */
+/* Light Mode Overrides (Mecha Clean Minimalist) */
 [data-theme="light"] {
   --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
   --bg-tertiary: #f1f5f9;
-  --bg-card: rgba(255, 255, 255, 0.88);
-  --bg-card-border: rgba(15, 23, 42, 0.08);
-  --bg-card-hover-border: rgba(99, 102, 241, 0.35);
-  --bg-glass: rgba(255, 255, 255, 0.82);
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-card-border: rgba(15, 23, 42, 0.09);
+  --bg-card-hover-border: rgba(99, 102, 241, 0.4);
+  --bg-glass: rgba(255, 255, 255, 0.85);
 
-  --text-primary: #09090b;
+  --text-primary: #07090e;
   --text-secondary: #475569;
   --text-muted: #64748b;
   --text-inverse: #ffffff;
@@ -84,7 +85,7 @@
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
   --shadow-md: 0 4px 14px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
   --shadow-lg: 0 14px 28px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
-  --shadow-glow: 0 0 25px rgba(79, 70, 229, 0.12);
+  --shadow-glow: 0 0 25px rgba(79, 70, 229, 0.15);
 }
 
 /* Base Reset & Core Styles */
@@ -101,6 +102,14 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.22), transparent 70%),
+    radial-gradient(circle at 10% 25%, rgba(6, 182, 212, 0.08), transparent 35%),
+    radial-gradient(circle at 90% 75%, rgba(168, 85, 247, 0.08), transparent 35%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+  background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -110,24 +119,16 @@ body {
   position: relative;
 }
 
-/* Subtle Spatial Background Light (Gen Z Ambient Sheen) */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 550px;
-  background: radial-gradient(circle at 50% -10%, rgba(99, 102, 241, 0.16) 0%, rgba(139, 92, 246, 0.08) 35%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
+[data-theme="light"] body {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.1), transparent 70%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 32px 32px, 32px 32px;
 }
 
-[data-theme="light"] body::before {
-  background: radial-gradient(circle at 50% -10%, rgba(99, 102, 241, 0.08) 0%, rgba(6, 182, 212, 0.04) 40%, transparent 70%);
-}
-
-/* Custom Minimalist Scrollbar */
+/* Custom Gamer Minimalist Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -136,11 +137,12 @@ body::before {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-card-border);
+  background: rgba(99, 102, 241, 0.35);
   border-radius: var(--radius-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--accent-blue);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.7);
 }
 
 /* Typography Hierarchy */
@@ -499,7 +501,7 @@ button {
   background: rgba(0, 0, 0, 0.02);
 }
 
-/* Modern Gen-Z Sarkari 3-Column Grid */
+/* Modern Gamer Minimalist Sarkari 3-Column Quest Board */
 .sarkari-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -515,7 +517,8 @@ button {
 
 .sarkari-col {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border-radius: var(--radius-xl);
   border: 1px solid var(--bg-card-border);
   overflow: hidden;
@@ -523,30 +526,63 @@ button {
   display: flex;
   flex-direction: column;
   transition: var(--transition);
+  position: relative;
+}
+
+/* Glowing top laser border per column */
+.sarkari-col::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ff2a6d, transparent);
+  box-shadow: 0 0 12px rgba(255, 42, 109, 0.8);
+  z-index: 2;
+}
+
+.sarkari-col:nth-child(2)::before {
+  background: linear-gradient(90deg, transparent, #6366f1, transparent);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.8);
+}
+
+.sarkari-col:nth-child(3)::before {
+  background: linear-gradient(90deg, transparent, #00ff9d, transparent);
+  box-shadow: 0 0 12px rgba(0, 255, 157, 0.8);
 }
 
 .sarkari-col:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(99, 102, 241, 0.2);
+  transform: translateY(-2px);
 }
 
 .sarkari-col-header {
-  padding: 1rem 1.25rem;
-  background: linear-gradient(135deg, rgba(244, 63, 94, 0.9), rgba(225, 29, 72, 0.95));
+  padding: 1.1rem 1.35rem;
+  background: rgba(14, 17, 26, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   color: #ffffff;
+  font-family: var(--font-display);
   font-weight: 800;
   font-size: 0.85rem;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+}
+
+.sarkari-col:nth-child(1) .sarkari-col-header {
+  border-left: 3px solid #ff2a6d;
 }
 
 .sarkari-col:nth-child(2) .sarkari-col-header {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(79, 70, 229, 0.95));
+  border-left: 3px solid #6366f1;
 }
 
 .sarkari-col:nth-child(3) .sarkari-col-header {
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.95));
+  border-left: 3px solid #00ff9d;
 }
 
 .sarkari-item-list {
@@ -555,10 +591,11 @@ button {
 }
 
 .sarkari-item {
-  padding: 1rem 1.25rem;
+  padding: 1.15rem 1.35rem;
   border-bottom: 1px solid var(--bg-card-border);
   transition: var(--transition);
   display: block;
+  position: relative;
 }
 
 .sarkari-item:last-child {
@@ -566,23 +603,147 @@ button {
 }
 
 .sarkari-item:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: linear-gradient(90deg, rgba(99, 102, 241, 0.06), transparent);
 }
 
 .sarkari-item-title {
   font-weight: 700;
-  font-size: 0.925rem;
+  font-size: 0.94rem;
   color: var(--text-primary);
-  margin-bottom: 0.35rem;
-  line-height: 1.35;
+  margin-bottom: 0.45rem;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  transition: color 0.15s ease;
+}
+
+.sarkari-item:hover .sarkari-item-title {
+  color: #ffffff;
 }
 
 .sarkari-item-meta {
-  font-size: 0.775rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
   color: var(--text-muted);
   display: flex;
   align-items: center;
   gap: 0.75rem;
+}
+
+/* Tactical HUD Buttons */
+.btn-gamer-action {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-gamer-action.crimson {
+  background: rgba(255, 42, 109, 0.15);
+  color: #ff4d82;
+  border-color: rgba(255, 42, 109, 0.4);
+}
+
+.btn-gamer-action.crimson:hover {
+  background: #ff2a6d;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(255, 42, 109, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-gamer-action.cyan {
+  background: rgba(0, 240, 255, 0.12);
+  color: #00f0ff;
+  border-color: rgba(0, 240, 255, 0.35);
+}
+
+.btn-gamer-action.cyan:hover {
+  background: #00f0ff;
+  color: #07090e;
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-gamer-action.emerald {
+  background: rgba(0, 255, 157, 0.12);
+  color: #00ff9d;
+  border-color: rgba(0, 255, 157, 0.35);
+}
+
+.btn-gamer-action.emerald:hover {
+  background: #00ff9d;
+  color: #07090e;
+  box-shadow: 0 0 14px rgba(0, 255, 157, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-gamer-action.indigo {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.btn-gamer-action.indigo:hover {
+  background: #6366f1;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(99, 102, 241, 0.6);
+  transform: translateY(-1px);
+}
+
+/* Radar Ping Beacon */
+.radar-beacon {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+}
+
+.radar-beacon::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.radar-beacon::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  animation: radar-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes radar-ping {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Micro Gamer Meter / Stat Bar */
+.gamer-meter {
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+  margin-top: 0.4rem;
+}
+
+.gamer-meter-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.6s ease;
 }
 
 /* Badges */

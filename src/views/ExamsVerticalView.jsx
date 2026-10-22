@@ -39,33 +39,32 @@ export default function ExamsVerticalView({ navigate }) {
       </div>
 
       {/* LIVE 2026 SARKARI BREAKING BULLETINS & CIRCULARS */}
-      <section style={{ 
-        background: 'var(--bg-secondary)', 
-        border: '1px solid var(--bg-card-border)', 
-        borderRadius: '16px', 
+      <section className="glass-panel" style={{ 
         padding: '1.25rem 1.5rem', 
         marginBottom: '2rem',
-        boxShadow: 'var(--shadow-sm)'
+        borderColor: 'rgba(99, 102, 241, 0.3)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ 
               display: 'inline-flex', 
               alignItems: 'center', 
-              gap: '4px', 
-              background: 'rgba(220, 38, 38, 0.15)', 
-              color: '#dc2626', 
-              padding: '3px 8px', 
-              borderRadius: '6px', 
-              fontSize: '0.75rem', 
+              gap: '6px', 
+              background: 'rgba(255, 42, 109, 0.15)', 
+              color: '#ff4d82', 
+              border: '1px solid rgba(255, 42, 109, 0.4)',
+              padding: '3px 9px', 
+              borderRadius: '4px', 
+              fontSize: '0.72rem', 
+              fontFamily: 'var(--font-mono)',
               fontWeight: 800 
             }}>
-              <Radio size={12} className="spin-anim" />
+              <span className="radar-beacon" style={{ color: '#ff2a6d' }} />
               LIVE 2026 BULLETINS
             </span>
             <strong style={{ fontSize: '0.95rem' }}>Latest Official Recruitment Circulars & Exam Calendar</strong>
           </div>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>Updated Today (22 Oct 2026)</span>
+          <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>Updated Today (22 Oct 2026)</span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '0.75rem' }}>
@@ -76,35 +75,45 @@ export default function ExamsVerticalView({ navigate }) {
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                background: 'var(--bg-tertiary)',
+                background: 'rgba(14, 17, 26, 0.7)',
                 border: '1px solid var(--bg-card-border)',
-                borderRadius: '10px',
+                borderRadius: '8px',
                 padding: '0.85rem',
                 textDecoration: 'none',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 gap: '0.4rem',
-                transition: 'transform 0.15s ease'
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = 'rgba(0, 240, 255, 0.5)';
+                e.currentTarget.style.boxShadow = '0 0 15px rgba(0, 240, 255, 0.15)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = 'var(--bg-card-border)';
+                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ 
-                  background: 'rgba(255,255,255,0.06)', 
-                  color: 'var(--accent-indigo)', 
-                  fontSize: '0.7rem', 
+                  fontFamily: 'var(--font-mono)',
+                  background: 'rgba(99, 102, 241, 0.15)', 
+                  color: '#a5b4fc', 
+                  border: '1px solid rgba(99, 102, 241, 0.3)',
+                  fontSize: '0.68rem', 
                   fontWeight: 800, 
                   padding: '2px 6px', 
                   borderRadius: '4px' 
                 }}>
                   [{news.org}] {news.badge}
                 </span>
-                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>{news.date}</span>
+                <span style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>{news.date}</span>
               </div>
               <p style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4, margin: 0 }}>
                 {news.title}
               </p>
-              <div style={{ fontSize: '0.75rem', color: 'var(--accent-indigo)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px', marginTop: '2px' }}>
+              <div style={{ fontSize: '0.72rem', color: '#00f0ff', fontFamily: 'var(--font-mono)', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '3px', marginTop: '2px' }}>
                 <span>Official Authority Circular</span>
                 <ExternalLink size={11} />
               </div>
@@ -116,23 +125,23 @@ export default function ExamsVerticalView({ navigate }) {
       {/* Filter and Search Bar */}
       <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-secondary)', border: '1px solid var(--bg-card-border)', borderRadius: '8px', padding: '0.5rem 1rem', flex: 1, minWidth: '240px' }}>
-          <Search size={16} style={{ color: 'var(--text-muted)' }} />
+          <Search size={16} style={{ color: '#00f0ff' }} />
           <input 
             type="text" 
             placeholder="Search exam, post title, or qualification..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            style={{ border: 'none', background: 'transparent', outline: 'none', color: 'var(--text-primary)', width: '100%' }}
+            style={{ border: 'none', background: 'transparent', outline: 'none', color: 'var(--text-primary)', width: '100%', fontSize: '0.9rem' }}
           />
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
           <Filter size={16} style={{ color: 'var(--text-muted)' }} />
           <select 
             className="form-select"
             value={filterOrg} 
             onChange={(e) => setFilterOrg(e.target.value)}
-            style={{ width: 'auto', minWidth: '160px' }}
+            style={{ width: 'auto', minWidth: '150px' }}
           >
             <option value="all">All Organizations</option>
             <option value="upsc">UPSC</option>
@@ -149,7 +158,7 @@ export default function ExamsVerticalView({ navigate }) {
             onChange={(e) => setFilterCategory(e.target.value)}
             style={{ width: 'auto', minWidth: '160px' }}
           >
-            <option value="all">All 3 Legacy Columns</option>
+            <option value="all">All 3 Quest Columns</option>
             <option value="jobs">Latest Jobs Only</option>
             <option value="admit-card">Admit Card Only</option>
             <option value="results">Results Only</option>
@@ -157,15 +166,26 @@ export default function ExamsVerticalView({ navigate }) {
         </div>
       </div>
 
-      {/* 3-COLUMN SARKARI GRID */}
+      {/* 3-COLUMN GAMER HUD SARKARI GRID */}
       <div className="sarkari-grid">
         {/* Column 1: Latest Jobs */}
         {(filterCategory === 'all' || filterCategory === 'jobs') && (
           <div className="sarkari-col">
             <div className="sarkari-col-header">
-              <span>LATEST JOBS (ACTIVE NOTIFICATIONS)</span>
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
-                {jobsList.length}
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span className="radar-beacon" style={{ color: '#ff2a6d' }} />
+                <span>LATEST JOBS (ACTIVE NOTIFICATIONS)</span>
+              </span>
+              <span style={{ 
+                fontFamily: 'var(--font-mono)', 
+                fontSize: '0.7rem', 
+                background: 'rgba(255, 42, 109, 0.2)', 
+                color: '#ff4d82', 
+                padding: '2px 7px', 
+                borderRadius: '4px',
+                border: '1px solid rgba(255, 42, 109, 0.4)'
+              }}>
+                {jobsList.length} Active
               </span>
             </div>
             <div className="sarkari-item-list">
@@ -177,10 +197,10 @@ export default function ExamsVerticalView({ navigate }) {
                     style={{ textDecoration: 'none', display: 'block' }}
                   >
                     <div className="sarkari-item-title">
-                      <span style={{ color: '#dc2626', fontWeight: 800 }}>[{job.org}]</span> {job.postName}
+                      <span style={{ color: '#ff2a6d', fontWeight: 800 }}>[{job.org}]</span> {job.postName}
                     </div>
                     <div className="sarkari-item-meta" style={{ flexWrap: 'wrap' }}>
-                      <span>Last Date: <strong>{job.lastDateToApply}</strong></span>
+                      <span>Last Date: <strong style={{ color: 'var(--text-primary)' }}>{job.lastDateToApply}</strong></span>
                       <span>• {job.vacancies > 0 ? `${job.vacancies.toLocaleString('en-IN')} Vacancies` : 'Exam'}</span>
                     </div>
                     <div style={{ marginTop: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
@@ -194,17 +214,7 @@ export default function ExamsVerticalView({ navigate }) {
                       href={job.applyLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        background: '#dc2626',
-                        color: 'white',
-                        padding: '4px 9px',
-                        borderRadius: '4px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '3px'
-                      }}
+                      className="btn-gamer-action crimson"
                     >
                       <span>Apply Online Direct</span>
                       <ExternalLink size={11} />
@@ -212,17 +222,9 @@ export default function ExamsVerticalView({ navigate }) {
                     <a
                       href={`/exam-schedules/${job.orgSlug}/${job.postSlug}`}
                       onClick={(e) => { e.preventDefault(); navigate(`/exam-schedules/${job.orgSlug}/${job.postSlug}`); }}
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        background: 'var(--bg-tertiary)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--bg-card-border)',
-                        padding: '4px 9px',
-                        borderRadius: '4px'
-                      }}
+                      className="btn-gamer-action indigo"
                     >
-                      Full Details
+                      <span>Full Details</span>
                     </a>
                   </div>
                 </div>
@@ -240,9 +242,20 @@ export default function ExamsVerticalView({ navigate }) {
         {(filterCategory === 'all' || filterCategory === 'admit-card') && (
           <div className="sarkari-col">
             <div className="sarkari-col-header">
-              <span>ADMIT CARD / HALL TICKET</span>
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
-                {admitCardList.length}
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span className="radar-beacon" style={{ color: '#6366f1' }} />
+                <span>ADMIT CARD / HALL TICKET</span>
+              </span>
+              <span style={{ 
+                fontFamily: 'var(--font-mono)', 
+                fontSize: '0.7rem', 
+                background: 'rgba(99, 102, 241, 0.2)', 
+                color: '#a5b4fc', 
+                padding: '2px 7px', 
+                borderRadius: '4px',
+                border: '1px solid rgba(99, 102, 241, 0.4)'
+              }}>
+                {admitCardList.length} Live
               </span>
             </div>
             <div className="sarkari-item-list">
@@ -254,10 +267,10 @@ export default function ExamsVerticalView({ navigate }) {
                     style={{ textDecoration: 'none', display: 'block' }}
                   >
                     <div className="sarkari-item-title">
-                      <span style={{ color: '#1e40af', fontWeight: 800 }}>[{card.org}]</span> {card.postName}
+                      <span style={{ color: '#818cf8', fontWeight: 800 }}>[{card.org}]</span> {card.postName}
                     </div>
                     <div className="sarkari-item-meta">
-                      <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>● {card.admitCardStatus}</span>
+                      <span style={{ color: '#00ff9d', fontWeight: 600 }}>● {card.admitCardStatus}</span>
                     </div>
                     <div style={{ marginTop: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                       Exam Date: {card.examDate}
@@ -270,17 +283,7 @@ export default function ExamsVerticalView({ navigate }) {
                       href={card.applyLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        background: '#1e40af',
-                        color: 'white',
-                        padding: '4px 9px',
-                        borderRadius: '4px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '3px'
-                      }}
+                      className="btn-gamer-action cyan"
                     >
                       <span>Download Hall Ticket</span>
                       <Download size={11} />
@@ -288,17 +291,9 @@ export default function ExamsVerticalView({ navigate }) {
                     <a
                       href={`/exam-schedules/${card.orgSlug}/${card.postSlug}`}
                       onClick={(e) => { e.preventDefault(); navigate(`/exam-schedules/${card.orgSlug}/${card.postSlug}`); }}
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        background: 'var(--bg-tertiary)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--bg-card-border)',
-                        padding: '4px 9px',
-                        borderRadius: '4px'
-                      }}
+                      className="btn-gamer-action indigo"
                     >
-                      Exam Timetable
+                      <span>Exam Timetable</span>
                     </a>
                   </div>
                 </div>
@@ -316,9 +311,20 @@ export default function ExamsVerticalView({ navigate }) {
         {(filterCategory === 'all' || filterCategory === 'results') && (
           <div className="sarkari-col">
             <div className="sarkari-col-header">
-              <span>RESULTS & SCORE CARDS</span>
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>
-                {resultsList.length}
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span className="radar-beacon" style={{ color: '#00ff9d' }} />
+                <span>RESULTS & SCORE CARDS</span>
+              </span>
+              <span style={{ 
+                fontFamily: 'var(--font-mono)', 
+                fontSize: '0.7rem', 
+                background: 'rgba(0, 255, 157, 0.2)', 
+                color: '#00ff9d', 
+                padding: '2px 7px', 
+                borderRadius: '4px',
+                border: '1px solid rgba(0, 255, 157, 0.4)'
+              }}>
+                {resultsList.length} Declared
               </span>
             </div>
             <div className="sarkari-item-list">
@@ -330,10 +336,10 @@ export default function ExamsVerticalView({ navigate }) {
                     style={{ textDecoration: 'none', display: 'block' }}
                   >
                     <div className="sarkari-item-title">
-                      <span style={{ color: '#065f46', fontWeight: 800 }}>[{result.org}]</span> {result.postName}
+                      <span style={{ color: '#00ff9d', fontWeight: 800 }}>[{result.org}]</span> {result.postName}
                     </div>
                     <div className="sarkari-item-meta">
-                      <span style={{ color: 'var(--green-primary)', fontWeight: 600 }}>● {result.resultStatus}</span>
+                      <span style={{ color: '#00ff9d', fontWeight: 600 }}>● {result.resultStatus}</span>
                     </div>
                     <div style={{ marginTop: '0.4rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                       Total Posts: {result.vacancies.toLocaleString('en-IN')}
@@ -346,17 +352,7 @@ export default function ExamsVerticalView({ navigate }) {
                       href={result.applyLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 700,
-                        background: '#065f46',
-                        color: 'white',
-                        padding: '4px 9px',
-                        borderRadius: '4px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '3px'
-                      }}
+                      className="btn-gamer-action emerald"
                     >
                       <span>Check Scorecard</span>
                       <ExternalLink size={11} />
@@ -364,17 +360,9 @@ export default function ExamsVerticalView({ navigate }) {
                     <a
                       href={`/exam-schedules/${result.orgSlug}/${result.postSlug}`}
                       onClick={(e) => { e.preventDefault(); navigate(`/exam-schedules/${result.orgSlug}/${result.postSlug}`); }}
-                      style={{
-                        fontSize: '0.72rem',
-                        fontWeight: 600,
-                        background: 'var(--bg-tertiary)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--bg-card-border)',
-                        padding: '4px 9px',
-                        borderRadius: '4px'
-                      }}
+                      className="btn-gamer-action indigo"
                     >
-                      Cut-off Marks
+                      <span>Cut-off Marks</span>
                     </a>
                   </div>
                 </div>

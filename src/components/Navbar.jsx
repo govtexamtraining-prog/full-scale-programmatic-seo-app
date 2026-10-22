@@ -50,26 +50,43 @@ export default function Navbar({
     <header className="navbar">
       {/* Brand */}
       <div className="nav-brand" style={{ cursor: 'pointer' }} onClick={() => navigate('/')}>
-        <div className="brand-badge">
-          <Zap size={18} />
+        <div className="brand-badge" style={{
+          background: 'linear-gradient(135deg, #6366f1, #00f0ff)',
+          boxShadow: '0 0 20px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.3)',
+          border: '1px solid rgba(0, 240, 255, 0.5)'
+        }}>
+          <Zap size={18} style={{ color: '#07090e', filter: 'drop-shadow(0 0 2px white)' }} />
         </div>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontWeight: 800, letterSpacing: '-0.03em', fontSize: '1.15rem' }}>UrbanSarkari</span>
+            <span style={{ 
+              fontWeight: 900, 
+              letterSpacing: '-0.035em', 
+              fontSize: '1.2rem',
+              background: 'linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
+              UrbanSarkari
+            </span>
             <span style={{ 
               fontSize: '0.62rem', 
-              background: 'linear-gradient(135deg, #dc2626, #2563eb)', 
-              color: 'white', 
-              padding: '1px 5px', 
+              fontFamily: 'var(--font-mono)',
+              background: 'rgba(0, 240, 255, 0.12)', 
+              color: '#00f0ff', 
+              border: '1px solid rgba(0, 240, 255, 0.4)',
+              padding: '1px 6px', 
               borderRadius: '4px',
               fontWeight: 800,
-              letterSpacing: '0.04em'
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase'
             }}>
-              LIVE 2026
+              PRO HUD
             </span>
           </div>
-          <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 600 }}>
-            Sarkari Result & Verified Services
+          <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: 600, letterSpacing: '0.02em', display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#00ff9d' }}></span>
+            <span>Sarkari Result & Verified Public Services</span>
           </div>
         </div>
       </div>
@@ -84,8 +101,12 @@ export default function Navbar({
               key={item.route}
               onClick={() => navigate(item.route)}
               className={`nav-item ${isActive ? 'active' : ''}`}
+              style={isActive ? {
+                boxShadow: '0 0 15px rgba(99, 102, 241, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.15)',
+                border: '1px solid rgba(99, 102, 241, 0.6)'
+              } : {}}
             >
-              <Icon size={14} />
+              <Icon size={14} style={isActive ? { color: '#00f0ff' } : {}} />
               <span>{item.label}</span>
             </button>
           );
@@ -99,13 +120,17 @@ export default function Navbar({
           className="search-trigger-btn" 
           onClick={onOpenSearch}
           title="Search 30+ Indian cities, commodities, exams and services (Ctrl+K)"
+          style={{
+            background: 'rgba(14, 17, 26, 0.7)',
+            borderColor: 'rgba(255, 255, 255, 0.1)'
+          }}
         >
-          <Search size={14} />
+          <Search size={14} style={{ color: '#00f0ff' }} />
           <span style={{ display: 'inline-block' }}>Search...</span>
-          <span className="kbd-shortcut">⌘K</span>
+          <span className="kbd-shortcut" style={{ borderColor: 'rgba(0, 240, 255, 0.3)', color: '#00f0ff' }}>⌘K</span>
         </button>
 
-        {/* Live Status Pill */}
+        {/* Live Status Pill with Radar Beacon */}
         <div 
           onClick={() => toggleFallbackMode()}
           title="Live auto-fetch status (click to toggle simulated outage)"
@@ -113,24 +138,20 @@ export default function Navbar({
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
-            gap: '5px',
-            fontSize: '0.75rem',
-            fontWeight: 700,
-            padding: '4px 9px',
+            gap: '6px',
+            fontSize: '0.72rem',
+            fontFamily: 'var(--font-mono)',
+            fontWeight: 800,
+            padding: '4px 10px',
             borderRadius: 'var(--radius-full)',
-            border: isStaleFallback ? '1px solid rgba(244, 63, 94, 0.4)' : '1px solid rgba(16, 185, 129, 0.3)',
-            background: isStaleFallback ? 'var(--red-bg)' : 'var(--green-bg)',
-            color: isStaleFallback ? 'var(--red-primary)' : 'var(--green-primary)'
+            border: isStaleFallback ? '1px solid rgba(255, 42, 109, 0.5)' : '1px solid rgba(0, 255, 157, 0.4)',
+            background: isStaleFallback ? 'rgba(255, 42, 109, 0.12)' : 'rgba(0, 255, 157, 0.1)',
+            color: isStaleFallback ? '#ff2a6d' : '#00ff9d',
+            letterSpacing: '0.04em'
           }}
         >
-          <span style={{ 
-            width: '6px', 
-            height: '6px', 
-            borderRadius: '50%', 
-            background: isStaleFallback ? 'var(--red-primary)' : 'var(--green-primary)',
-            boxShadow: isStaleFallback ? '0 0 8px var(--red-primary)' : '0 0 8px var(--green-primary)'
-          }} />
-          <span>{isStaleFallback ? "Fallback" : "Live"}</span>
+          <span className="radar-beacon" style={{ color: isStaleFallback ? '#ff2a6d' : '#00ff9d' }} />
+          <span>{isStaleFallback ? "SIM_FALLBACK" : "LIVE_NODE"}</span>
         </div>
 
         {/* Theme Toggle Button */}
