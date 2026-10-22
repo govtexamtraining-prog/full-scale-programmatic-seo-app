@@ -162,9 +162,23 @@ export default function ServiceCityView({
               {serviceName} in {cityName}
             </h1>
 
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '780px', lineHeight: 1.6 }}>
+            <p className="speakable-summary" style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '780px', lineHeight: 1.6 }}>
               Looking for top-rated, certified <strong>{shortServiceName}</strong> in {cityName}? Compare verified local specialists, transparent rate cards, and book immediate service or free counseling with a 30-day guarantee.
             </p>
+
+            {/* VEO & GEO Quick Answer Box: Engineered for Voice Assistant Snippets & Generative AI Overviews */}
+            <div className="speakable-answer" style={{
+              marginTop: '0.85rem',
+              padding: '0.8rem 1rem',
+              background: 'rgba(37, 99, 235, 0.08)',
+              borderLeft: '4px solid var(--accent-blue)',
+              borderRadius: '0 8px 8px 0',
+              fontSize: '0.88rem',
+              lineHeight: 1.5,
+              color: 'var(--text-primary)'
+            }}>
+              <strong>Voice & Search Summary ({cityName}):</strong> {shortServiceName} in {cityName} starts from <strong>{service?.basePriceRange || 'competitive market rates'}</strong> with an average doorstep response of {service?.avgResponseTime || '30-45 minutes'}. All specialists are 100% background-verified with 30-day warranty across all localities in {cityName}, {stateName}.
+            </div>
 
             {/* Key Trust Badges */}
             <div style={{ 

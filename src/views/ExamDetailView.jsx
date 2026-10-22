@@ -120,9 +120,23 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
               {exam.org} {exam.postName}
             </h1>
 
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '750px' }}>
-              Official Sarkari Public Notification. Total Vacancies: <strong>{exam.vacancies > 0 ? exam.vacancies.toLocaleString('en-IN') : 'Eligibility Entrance'}</strong>.
+            <p className="speakable-summary" style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', maxWidth: '750px', lineHeight: 1.5 }}>
+              Official Sarkari Public Notification. Total Vacancies: <strong>{exam.vacancies > 0 ? exam.vacancies.toLocaleString('en-IN') : 'Eligibility Entrance'}</strong>. Last Date to Apply: <strong>{exam.lastDateToApply}</strong>. Minimum Qualification: <strong>{exam.qualification}</strong>.
             </p>
+
+            {/* VEO & GEO Quick Answer Box: Engineered for Voice Assistant Snippets & Generative AI Overviews */}
+            <div className="speakable-answer" style={{
+              marginTop: '0.75rem',
+              padding: '0.75rem 1rem',
+              background: 'rgba(220, 38, 38, 0.08)',
+              borderLeft: '4px solid #dc2626',
+              borderRadius: '0 8px 8px 0',
+              fontSize: '0.86rem',
+              lineHeight: 1.5,
+              color: 'var(--text-primary)'
+            }}>
+              <strong>Voice & Search Summary:</strong> {exam.org} is recruiting for {exam.postName} with {exam.vacancies > 0 ? `${exam.vacancies.toLocaleString('en-IN')} vacancies` : 'national entrance eligibility'}. The scheduled exam date is <strong>{exam.examDate}</strong>. Application status: <strong>{exam.admitCardStatus || 'Live'}</strong>. Official registration is active at {exam.officialWebsite}.
+            </div>
           </div>
 
           {/* Action CTAs with Direct Links */}

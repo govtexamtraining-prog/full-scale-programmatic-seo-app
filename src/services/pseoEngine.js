@@ -7,15 +7,38 @@ import { GOLD_DATA, NATIONAL_GOLD_AVERAGES } from '../data/goldData';
 import { SARKARI_EXAMS } from '../data/examData';
 import { NICHES, getNicheBySlug, getServiceBySlugs } from '../data/servicesData';
 
-export const APP_BASE_URL = "https://google-antigravity.in";
+export const APP_BASE_URL = typeof window !== 'undefined' && window.location.origin 
+  ? (window.location.origin + (window.location.pathname.startsWith('/full-scale-programmatic-seo-app') ? '/full-scale-programmatic-seo-app' : ''))
+  : "https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app";
 export const CURRENT_MONTH_YEAR = "October 2026";
-export const CURRENT_DATE_STRING = "20 October 2026";
+export const CURRENT_DATE_STRING = "22 October 2026";
+
+export const STATE_CODE_MAP = {
+  "tamil-nadu": "IN-TN",
+  "maharashtra": "IN-MH",
+  "karnataka": "IN-KA",
+  "delhi": "IN-DL",
+  "telangana": "IN-TG",
+  "gujarat": "IN-GJ",
+  "uttar-pradesh": "IN-UP",
+  "west-bengal": "IN-WB",
+  "kerala": "IN-KL",
+  "rajasthan": "IN-RJ"
+};
 
 /**
- * Generate comprehensive SEO Metadata for any route
+ * Generate comprehensive SEO, VEO & GEO Metadata for any route
  */
 export function generateSeoMetadata(route, params = {}, data = {}) {
   const currentPath = route || "/";
+
+  // National India Baseline GEO Coordinates
+  const defaultGeo = {
+    region: "IN",
+    placename: "India",
+    position: "20.5937;78.9629",
+    icbm: "20.5937, 78.9629"
+  };
 
   // 1. Home / National Hub
   if (currentPath === "/" || route === "home") {
@@ -26,7 +49,20 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
       h1: "Sarkari Exam Board & Verified Public Services Directory",
       h2: "Official 2026 Recruitment Notifications, Verified Home Services & Local Professional Directory",
       keywords: "sarkari result 2026, upsc prelims admit card, ssc cgl recruitment, ac repair service, coaching institutes, ca gst filing, top gyms india, public services directory",
-      ogType: "website"
+      ogType: "website",
+      geo: defaultGeo,
+      openGraph: {
+        title: `Google Antigravity: Sarkari Result 2026, Home Services, Coaching & Local Directory`,
+        description: `India's Centralized Public Portal for 2026 Sarkari Exam schedules, admit cards, verified Home Services, Coaching Academies, Legal & CA retainers.`,
+        url: `${APP_BASE_URL}/`,
+        type: "website",
+        siteName: "Google Antigravity: Sarkari Result & Services 2026"
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `Google Antigravity: Sarkari Result 2026, Home Services & Local Directory`,
+        description: `India's Centralized Public Portal for 2026 Sarkari Exam schedules, admit cards, verified Home Services, Coaching Academies, Legal & CA retainers.`
+      }
     };
   }
 
@@ -100,14 +136,29 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
   // 7. Micro-Keyword Exam Detail: /exam-schedules/[org]/[slug]
   if (route === "exam-detail" && data) {
     const { org, postName, vacancies, lastDateToApply, qualification } = data;
+    const canonical = `${APP_BASE_URL}/exam-schedules/${data.orgSlug}/${data.postSlug}`;
+
     return {
       title: `${org} ${postName} - Notification, Apply Online, Admit Card & Result 2026`,
       metaDescription: `${org} has announced recruitment for ${postName} with ${vacancies > 0 ? vacancies.toLocaleString('en-IN') + ' vacancies' : 'eligibility exam'}. Last date to apply is ${lastDateToApply}. Qualification: ${qualification}. Check eligibility, age limits & direct links.`,
-      canonicalUrl: `${APP_BASE_URL}/exam-schedules/${data.orgSlug}/${data.postSlug}`,
+      canonicalUrl: canonical,
       h1: `${org} ${postName}`,
       h2: `Official Recruitment Notification, Eligibility, Exam Date & Selection Process`,
       keywords: `${org.toLowerCase()} ${data.postSlug.replace(/-/g, ' ')}, ${org.toLowerCase()} exam date 2026, ${org.toLowerCase()} admit card, ${org.toLowerCase()} result link`,
-      ogType: "article"
+      ogType: "article",
+      geo: defaultGeo,
+      openGraph: {
+        title: `${org} ${postName} (2026 Notification & Apply Online)`,
+        description: `Official Notification: ${vacancies > 0 ? vacancies.toLocaleString('en-IN') + ' vacancies' : 'National exam'}. Deadline: ${lastDateToApply}. Direct Hall Ticket & Apply Link.`,
+        url: canonical,
+        type: "article",
+        siteName: "Google Antigravity & Sarkari Result Portal 2026"
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${org} ${postName} (2026 Notification)`,
+        description: `Official Notification: ${vacancies > 0 ? vacancies.toLocaleString('en-IN') + ' vacancies' : 'National exam'}. Deadline: ${lastDateToApply}.`
+      }
     };
   }
 
@@ -120,7 +171,8 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
       h1: "Verified Services & High-Traffic Niches Directory",
       h2: "National Traffic Density Matrix, Fixed Rate Cards & Local Pro Dispatch",
       keywords: "home services india, coaching institutes near me, gst ca consultants, best gyms india, ac repair charges",
-      ogType: "website"
+      ogType: "website",
+      geo: defaultGeo
     };
   }
 
@@ -134,7 +186,8 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
       h1: `${niche.name} Across India`,
       h2: `Verified Service Providers, Standard Rate Cards & Doorstep Dispatch`,
       keywords: `${niche.slug.replace(/-/g, ' ')}, ${niche.shortName.toLowerCase()} india, verified ${niche.shortName.toLowerCase()}`,
-      ogType: "website"
+      ogType: "website",
+      geo: defaultGeo
     };
   }
 
@@ -147,14 +200,36 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
     const shortName = service ? service.shortName : niche?.shortName;
     const priceRange = service?.basePriceRange || "Best Market Rates";
 
+    const cityGeo = {
+      region: STATE_CODE_MAP[city?.stateSlug] || "IN-TN",
+      placename: `${cityName}, ${stateName}`,
+      position: `${city?.lat || 13.0827};${city?.lng || 80.2707}`,
+      icbm: `${city?.lat || 13.0827}, ${city?.lng || 80.2707}`
+    };
+
+    const canonical = `${APP_BASE_URL}/${niche?.slug}/${service?.slug}/${city?.stateSlug}/${city?.slug}`;
+
     return {
       title: `${serviceName} in ${cityName} (${CURRENT_MONTH_YEAR}) - Charges ${priceRange} & Verified Pros`,
       metaDescription: `Looking for ${shortName} in ${cityName}, ${stateName}? Rates start at ${priceRange}. 100% background-checked pros, 30-min doorstep arrival, transparent rate card & 30-day warranty. Book now or call directly!`,
-      canonicalUrl: `${APP_BASE_URL}/${niche?.slug}/${service?.slug}/${city?.stateSlug}/${city?.slug}`,
+      canonicalUrl: canonical,
       h1: `${serviceName} in ${cityName}`,
       h2: `Verified Specialists, Standardized Price Matrix & Rapid Booking in ${cityName}, ${stateName}`,
       keywords: `${shortName.toLowerCase()} in ${cityName.toLowerCase()}, best ${shortName.toLowerCase()} ${cityName.toLowerCase()}, ${shortName.toLowerCase()} charges in ${cityName.toLowerCase()}, ${service?.searchIntent?.replace(/{city}/g, cityName.toLowerCase())}`,
-      ogType: "article"
+      ogType: "article",
+      geo: cityGeo,
+      openGraph: {
+        title: `${serviceName} in ${cityName} (${CURRENT_MONTH_YEAR}) - Charges ${priceRange}`,
+        description: `Verified ${shortName} in ${cityName}, ${stateName}. Transparent rate cards starting ${priceRange}. Fast 30-min dispatch.`,
+        url: canonical,
+        type: "article",
+        siteName: "Google Antigravity & Sarkari Result Portal 2026"
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${serviceName} in ${cityName} (${CURRENT_MONTH_YEAR})`,
+        description: `Verified ${shortName} in ${cityName}, ${stateName}. Transparent rate cards starting ${priceRange}.`
+      }
     };
   }
 
@@ -363,7 +438,7 @@ export function generateJsonLdSchema(route, params = {}, data = {}) {
     ];
   }
 
-  // 4. Sarkari Exam Schema (JobPosting & EducationEvent)
+  // 4. Sarkari Exam Schema (JobPosting, EducationEvent & Voice FAQ)
   if (route === "exam-detail" && data) {
     return [
       {
@@ -374,6 +449,10 @@ export function generateJsonLdSchema(route, params = {}, data = {}) {
         "datePosted": data.notificationDate || "2026-01-01",
         "validThrough": data.lastDateIso || "2026-12-31T23:59:59+05:30",
         "employmentType": "FULL_TIME",
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": [".speakable-summary", ".speakable-answer", "h1"]
+        },
         "hiringOrganization": {
           "@type": "Organization",
           "name": data.orgFullName,
@@ -410,6 +489,36 @@ export function generateJsonLdSchema(route, params = {}, data = {}) {
           "url": data.officialWebsite
         }
       },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": `What is the exam date for ${data.org} ${data.postName}?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `The exam date for ${data.org} ${data.postName} is scheduled for ${data.examDate || '2026'}. Official notifications and hall tickets are issued directly via ${data.officialWebsite}.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": `How many vacancies are notified for ${data.org} ${data.postName}?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `A total of ${data.vacancies > 0 ? data.vacancies.toLocaleString('en-IN') : 'announced'} vacancies are notified for ${data.postName} across India.`
+            }
+          },
+          {
+            "@type": "Question",
+            "name": `What is the last date to apply for ${data.org} ${data.postName}?`,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": `The last date to submit online application forms for ${data.org} ${data.postName} is ${data.lastDateToApply}.`
+            }
+          }
+        ]
+      },
       createBreadcrumbSchema([
         { name: "Home", path: "/" },
         { name: "Exam Schedules", path: "/exam-schedules" },
@@ -419,7 +528,7 @@ export function generateJsonLdSchema(route, params = {}, data = {}) {
     ];
   }
 
-  // 5. Localized Service City Schema (LocalBusiness, AggregateRating & FAQPage Schema)
+  // 5. Localized Service City Schema (LocalBusiness, GeoCoordinates, Speakable & FAQPage Schema)
   if (route === "service-city" && data) {
     const { niche, service, city, state } = data;
     const cityName = city?.name || "City";
@@ -449,6 +558,27 @@ export function generateJsonLdSchema(route, params = {}, data = {}) {
           "addressRegion": stateName,
           "addressCountry": "IN"
         },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": city?.lat || 13.0827,
+          "longitude": city?.lng || 80.2707
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": cityName
+        },
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": [".speakable-summary", ".speakable-answer", "h1", "h2"]
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            "opens": "07:00",
+            "closes": "22:00"
+          }
+        ],
         "aggregateRating": {
           "@type": "AggregateRating",
           "ratingValue": "4.85",

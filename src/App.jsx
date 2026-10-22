@@ -25,8 +25,24 @@ import { NICHES, getNicheBySlug, getServiceBySlugs } from './data/servicesData';
 import { getCityBySlugs, getStateBySlug } from './data/cities';
 import { SlidersHorizontal } from 'lucide-react';
 
+const GITHUB_REPO_BASE = '/full-scale-programmatic-seo-app';
+
+function getNormalizedPath() {
+  // Check if redirected from public/404.html on GitHub Pages
+  const redirected = sessionStorage.getItem('spa_redirect');
+  if (redirected) {
+    sessionStorage.removeItem('spa_redirect');
+    return redirected;
+  }
+  let path = window.location.pathname || '/';
+  if (path.startsWith(GITHUB_REPO_BASE)) {
+    path = path.slice(GITHUB_REPO_BASE.length) || '/';
+  }
+  return path;
+}
+
 function AppContent() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname || '/');
+  const [currentPath, setCurrentPath] = useState(getNormalizedPath);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isInspectorOpen, setIsInspectorOpen] = useState(false);
@@ -42,7 +58,11 @@ function AppContent() {
   // Handle browser back/forward buttons
   useEffect(() => {
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname || '/');
+      let path = window.location.pathname || '/';
+      if (path.startsWith(GITHUB_REPO_BASE)) {
+        path = path.slice(GITHUB_REPO_BASE.length) || '/';
+      }
+      setCurrentPath(path);
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -50,7 +70,9 @@ function AppContent() {
 
   const navigate = (path) => {
     if (path === currentPath) return;
-    window.history.pushState({}, '', path);
+    const isGhPages = window.location.pathname.startsWith(GITHUB_REPO_BASE);
+    const fullTarget = (isGhPages ? GITHUB_REPO_BASE : '') + path;
+    window.history.pushState({}, '', fullTarget);
     setCurrentPath(path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -166,20 +188,53 @@ function AppContent() {
   const seoMetadata = generateSeoMetadata(routeInfo.view, routeInfo.params, activeData);
   const jsonLdSchema = generateJsonLdSchema(routeInfo.view, routeInfo.params, activeData);
 
-  // Auto-inject meta tags into document <head>
+  // Auto-inject SEO, VEO, and GEO meta tags into document <head>
   useEffect(() => {
     document.title = seoMetadata.title;
 
-    // Update Meta Description
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.name = 'description';
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.content = seoMetadata.metaDescription;
+    const setMetaTag = (attrName, attrValue, content) => {
+      if (!content) return;
+      let el = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attrName, attrValue);
+        document.head.appendChild(el);
+      }
+      el.setAttribute('content', content);
+    };
 
-    // Update JSON-LD Script
+    // Standard SEO Tags
+    setMetaTag('name', 'description', seoMetadata.metaDescription);
+    setMetaTag('name', 'keywords', seoMetadata.keywords);
+
+    // Canonical URL
+    let canonicalEl = document.querySelector('link[rel="canonical"]');
+    if (!canonicalEl) {
+      canonicalEl = document.createElement('link');
+      canonicalEl.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalEl);
+    }
+    canonicalEl.setAttribute('href', seoMetadata.canonicalUrl || window.location.href);
+
+    // OpenGraph & Social Cards
+    setMetaTag('property', 'og:title', seoMetadata.openGraph?.title || seoMetadata.title);
+    setMetaTag('property', 'og:description', seoMetadata.openGraph?.description || seoMetadata.metaDescription);
+    setMetaTag('property', 'og:url', seoMetadata.canonicalUrl || window.location.href);
+    setMetaTag('property', 'og:type', seoMetadata.ogType || 'website');
+
+    // Twitter Cards
+    setMetaTag('name', 'twitter:title', seoMetadata.twitter?.title || seoMetadata.title);
+    setMetaTag('name', 'twitter:description', seoMetadata.twitter?.description || seoMetadata.metaDescription);
+
+    // GEO / Local Pack Tags
+    if (seoMetadata.geo) {
+      setMetaTag('name', 'geo.region', seoMetadata.geo.region);
+      setMetaTag('name', 'geo.placename', seoMetadata.geo.placename);
+      setMetaTag('name', 'geo.position', seoMetadata.geo.position);
+      setMetaTag('name', 'ICBM', seoMetadata.geo.icbm);
+    }
+
+    // Update JSON-LD Script (Structured Data for Google, Bing & AI Engines)
     const jsonLdScript = document.getElementById('pseo-schema-jsonld');
     if (jsonLdScript) {
       jsonLdScript.textContent = JSON.stringify(jsonLdSchema);

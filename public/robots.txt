@@ -1,0 +1,46 @@
+# Advanced Robots.txt for Google Antigravity & Sarkari Result Portal
+# Designed for High-Traffic Crawlers, Voice Assistants & AI Search Engines (SEO, VEO, GEO)
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /private/
+Disallow: /api/
+
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+User-agent: Googlebot-Mobile
+Allow: /
+User-agent: Googlebot-Image
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+User-agent: YandexBot
+Allow: /
+User-agent: Baiduspider
+Allow: /
+
+# Generative Engine Optimization (GEO) - Explicit Permissions for AI Engines
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: FacebookExternalHit
+Allow: /
+
+# XML Sitemap Directives
+Sitemap: https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/sitemap.xml
+Sitemap: https://google-antigravity.in/sitemap.xml
