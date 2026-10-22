@@ -202,6 +202,15 @@ export default function SitemapView({ navigate }) {
                 {urls.filter(u => u.vertical === 'Exams').length}
               </div>
             </div>
+
+            <div className="glass-panel" style={{ padding: '1rem' }}>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>
+                Verified Services Routes
+              </div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, fontFamily: 'var(--font-display)', color: '#ea580c' }}>
+                {urls.filter(u => u.vertical === 'Services').length}
+              </div>
+            </div>
           </div>
 
           {/* Search & Filter */}
@@ -228,6 +237,7 @@ export default function SitemapView({ navigate }) {
               <option value="Fuel">Daily Fuel Prices</option>
               <option value="Gold">Live Gold Rates</option>
               <option value="Exams">Sarkari Exams</option>
+              <option value="Services">Verified Services & Niches</option>
             </select>
           </div>
 
@@ -258,8 +268,8 @@ export default function SitemapView({ navigate }) {
                           padding: '2px 6px', 
                           borderRadius: '4px',
                           fontWeight: 600,
-                          background: u.vertical === 'Gold' ? 'var(--gold-bg)' : u.vertical === 'Fuel' ? 'var(--accent-blue-light)' : u.vertical === 'Exams' ? 'var(--red-bg)' : 'var(--bg-tertiary)',
-                          color: u.vertical === 'Gold' ? 'var(--gold-primary)' : u.vertical === 'Fuel' ? 'var(--accent-blue)' : u.vertical === 'Exams' ? 'var(--red-primary)' : 'var(--text-primary)'
+                          background: u.vertical === 'Gold' ? 'var(--gold-bg)' : u.vertical === 'Fuel' ? 'var(--accent-blue-light)' : u.vertical === 'Exams' ? 'var(--red-bg)' : u.vertical === 'Services' ? 'rgba(234, 88, 12, 0.12)' : 'var(--bg-tertiary)',
+                          color: u.vertical === 'Gold' ? 'var(--gold-primary)' : u.vertical === 'Fuel' ? 'var(--accent-blue)' : u.vertical === 'Exams' ? 'var(--red-primary)' : u.vertical === 'Services' ? '#ea580c' : 'var(--text-primary)'
                         }}>
                           {u.vertical}
                         </span>

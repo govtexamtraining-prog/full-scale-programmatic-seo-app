@@ -75,7 +75,21 @@ export default function Footer({ navigate }) {
               <li><button onClick={() => navigate('/exam-schedules/ibps/po-recruitment-2026')} style={{ color: 'inherit' }}>IBPS PO 2026 Admit Card</button></li>
               <li><button onClick={() => navigate('/exam-schedules/rrb/assistant-loco-pilot-alp-2026')} style={{ color: 'inherit' }}>Railway RRB ALP Vacancy</button></li>
               <li><button onClick={() => navigate('/exam-schedules/tnpsc/group-4-services-vao-2026')} style={{ color: 'inherit' }}>TNPSC Group 4 VAO 2026</button></li>
-              <li><button onClick={() => navigate('/sitemap.xml')} style={{ color: 'var(--accent-blue)', fontWeight: 600 }}>Dynamic XML Sitemap Engine →</button></li>
+            </ul>
+          </div>
+
+          {/* High-Traffic Niches & Services */}
+          <div>
+            <div style={{ fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.85rem' }}>
+              High-Traffic Niches
+            </div>
+            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.45rem', fontSize: '0.825rem' }}>
+              <li><button onClick={() => navigate('/home-services/ac-repair-service/tamil-nadu/coimbatore')} style={{ color: 'inherit' }}>AC Repair in Coimbatore</button></li>
+              <li><button onClick={() => navigate('/home-services/electrician-services/tamil-nadu/chennai')} style={{ color: 'inherit' }}>Electricians in Chennai</button></li>
+              <li><button onClick={() => navigate('/coaching-institutes/upsc-ias-coaching/delhi/delhi')} style={{ color: 'inherit' }}>UPSC Coaching in Delhi</button></li>
+              <li><button onClick={() => navigate('/legal-tax-services/gst-registration-filing/karnataka/bengaluru')} style={{ color: 'inherit' }}>GST Registration Bengaluru</button></li>
+              <li><button onClick={() => navigate('/wellness-fitness/gyms-fitness-centers/maharashtra/mumbai')} style={{ color: 'inherit' }}>Top Gyms in Mumbai</button></li>
+              <li><button onClick={() => navigate('/services')} style={{ color: 'var(--accent-blue)', fontWeight: 600 }}>Traffic Density Matrix Hub →</button></li>
             </ul>
           </div>
         </div>

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X, MapPin, Fuel, Coins, GraduationCap, ArrowRight } from 'lucide-react';
+import { Search, X, MapPin, Fuel, Coins, GraduationCap, ArrowRight, Wrench, Sparkles } from 'lucide-react';
 import { ALL_CITIES } from '../data/cities';
 import { SARKARI_EXAMS } from '../data/examData';
+import { NICHES } from '../data/servicesData';
 
 export default function UniversalSearchModal({ isOpen, onClose, navigate }) {
   const [query, setQuery] = useState('');
@@ -45,11 +46,27 @@ export default function UniversalSearchModal({ isOpen, onClose, navigate }) {
 
   // Search exams
   const matchedExams = cleanQuery === ''
-    ? SARKARI_EXAMS.slice(0, 4)
+    ? SARKARI_EXAMS.slice(0, 3)
     : SARKARI_EXAMS.filter(e => 
         e.postName.toLowerCase().includes(cleanQuery) ||
         e.org.toLowerCase().includes(cleanQuery)
-      ).slice(0, 6);
+      ).slice(0, 4);
+
+  // Search services across all 4 niches
+  const allServices = NICHES.flatMap(n => n.services.map(s => ({
+    ...s,
+    nicheSlug: n.slug,
+    nicheShortName: n.shortName,
+    nicheColor: n.color
+  })));
+
+  const matchedServices = cleanQuery === ''
+    ? allServices.slice(0, 4)
+    : allServices.filter(s => 
+        s.name.toLowerCase().includes(cleanQuery) ||
+        s.shortName.toLowerCase().includes(cleanQuery) ||
+        s.searchIntent.toLowerCase().includes(cleanQuery)
+      ).slice(0, 5);
 
   const handleSelect = (path) => {
     navigate(path);
@@ -222,6 +239,61 @@ export default function UniversalSearchModal({ isOpen, onClose, navigate }) {
                       </div>
                       <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>
                         Last Date: {exam.lastDateToApply} • {exam.vacancies > 0 ? `${exam.vacancies} Vacancies` : 'Eligibility Test'}
+                      </div>
+                    </div>
+                  </div>
+                  <ArrowRight size={14} style={{ color: 'var(--text-muted)' }} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Verified Services & High-Traffic Niches Section */}
+          <div>
+            <div style={{ 
+              fontSize: '0.75rem', 
+              fontWeight: 700, 
+              color: 'var(--text-muted)', 
+              textTransform: 'uppercase', 
+              letterSpacing: '0.05em',
+              marginBottom: '0.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
+              <span>Verified Services & High-Traffic Niches</span>
+              <button 
+                onClick={() => handleSelect('/services')}
+                style={{ color: 'var(--accent-blue)', fontSize: '0.72rem', textTransform: 'none', fontWeight: 600 }}
+              >
+                View Density Matrix →
+              </button>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+              {matchedServices.map((srv) => (
+                <div
+                  key={`${srv.nicheSlug}-${srv.slug}`}
+                  onClick={() => handleSelect(`/${srv.nicheSlug}/${srv.slug}/tamil-nadu/chennai`)}
+                  style={{
+                    padding: '0.65rem 0.85rem',
+                    borderRadius: '8px',
+                    border: '1px solid var(--bg-card-border)',
+                    background: 'var(--bg-tertiary)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Wrench size={16} style={{ color: srv.nicheColor }} />
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>
+                        <span style={{ color: srv.nicheColor, marginRight: '6px' }}>[{srv.nicheShortName}]</span>
+                        {srv.name}
+                      </div>
+                      <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>
+                        Rates: <strong style={{ color: 'var(--green-primary)' }}>{srv.basePriceRange}</strong> • Avg Response: {srv.avgResponseTime}
                       </div>
                     </div>
                   </div>

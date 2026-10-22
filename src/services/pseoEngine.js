@@ -5,6 +5,7 @@ import { ALL_CITIES, STATES_AND_CITIES } from '../data/cities';
 import { FUEL_DATA, NATIONAL_FUEL_AVERAGES } from '../data/fuelData';
 import { GOLD_DATA, NATIONAL_GOLD_AVERAGES } from '../data/goldData';
 import { SARKARI_EXAMS } from '../data/examData';
+import { NICHES, getNicheBySlug, getServiceBySlugs } from '../data/servicesData';
 
 export const APP_BASE_URL = "https://google-antigravity.in";
 export const CURRENT_MONTH_YEAR = "October 2026";
@@ -110,7 +111,71 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
     };
   }
 
-  // 8. Dynamic XML Sitemap
+  // 8. Services & Niches Directory Hub: /services or /directory
+  if (route === "services-hub" || currentPath === "/services") {
+    return {
+      title: `Verified Home Services, Coaching, Legal & Wellness Directory India (${CURRENT_MONTH_YEAR})`,
+      metaDescription: `All-India verified local services directory. Instant booking and rate cards for AC repair, certified electricians, plumbers, UPSC/NEET coaching academies, GST CA lawyers, and premium gyms across 30+ cities.`,
+      canonicalUrl: `${APP_BASE_URL}/services`,
+      h1: "Verified Services & High-Traffic Niches Directory",
+      h2: "National Traffic Density Matrix, Fixed Rate Cards & Local Pro Dispatch",
+      keywords: "home services india, coaching institutes near me, gst ca consultants, best gyms india, ac repair charges",
+      ogType: "website"
+    };
+  }
+
+  // 9. Niche Vertical Hub: /[nicheSlug]
+  if (route === "niche-hub" && data?.niche) {
+    const { niche } = data;
+    return {
+      title: `${niche.name} Across Indian Cities (${CURRENT_MONTH_YEAR}) - Verified Rate Cards & Booking`,
+      metaDescription: `${niche.description} Transparent pricing, background-verified professionals, and instant lead callback across major Indian cities.`,
+      canonicalUrl: `${APP_BASE_URL}/${niche.slug}`,
+      h1: `${niche.name} Across India`,
+      h2: `Verified Service Providers, Standard Rate Cards & Doorstep Dispatch`,
+      keywords: `${niche.slug.replace(/-/g, ' ')}, ${niche.shortName.toLowerCase()} india, verified ${niche.shortName.toLowerCase()}`,
+      ogType: "website"
+    };
+  }
+
+  // 10. Localized Service City Route: /[nicheSlug]/[serviceSlug]/[stateSlug]/[citySlug]
+  if (route === "service-city" && data) {
+    const { niche, service, city, state } = data;
+    const cityName = city?.name || "City";
+    const stateName = city?.stateName || state?.stateName || "India";
+    const serviceName = service ? service.name : niche?.name;
+    const shortName = service ? service.shortName : niche?.shortName;
+    const priceRange = service?.basePriceRange || "Best Market Rates";
+
+    return {
+      title: `${serviceName} in ${cityName} (${CURRENT_MONTH_YEAR}) - Charges ${priceRange} & Verified Pros`,
+      metaDescription: `Looking for ${shortName} in ${cityName}, ${stateName}? Rates start at ${priceRange}. 100% background-checked pros, 30-min doorstep arrival, transparent rate card & 30-day warranty. Book now or call directly!`,
+      canonicalUrl: `${APP_BASE_URL}/${niche?.slug}/${service?.slug}/${city?.stateSlug}/${city?.slug}`,
+      h1: `${serviceName} in ${cityName}`,
+      h2: `Verified Specialists, Standardized Price Matrix & Rapid Booking in ${cityName}, ${stateName}`,
+      keywords: `${shortName.toLowerCase()} in ${cityName.toLowerCase()}, best ${shortName.toLowerCase()} ${cityName.toLowerCase()}, ${shortName.toLowerCase()} charges in ${cityName.toLowerCase()}, ${service?.searchIntent?.replace(/{city}/g, cityName.toLowerCase())}`,
+      ogType: "article"
+    };
+  }
+
+  // 11. Localized Niche City Route: /[nicheSlug]/[stateSlug]/[citySlug]
+  if (route === "niche-city" && data) {
+    const { niche, city, state } = data;
+    const cityName = city?.name || "City";
+    const stateName = city?.stateName || state?.stateName || "India";
+
+    return {
+      title: `${niche?.name} in ${cityName}, ${stateName} (${CURRENT_MONTH_YEAR}) - Verified Local Directory`,
+      metaDescription: `Directory of verified ${niche?.shortName} in ${cityName}. Compare rate cards, customer ratings, and book immediate callback with 30-day guarantee.`,
+      canonicalUrl: `${APP_BASE_URL}/${niche?.slug}/${city?.stateSlug}/${city?.slug}`,
+      h1: `${niche?.name} in ${cityName}`,
+      h2: `Top Rated ${niche?.shortName} Specialists & Rate Cards in ${cityName}, ${stateName}`,
+      keywords: `${niche?.shortName?.toLowerCase()} in ${cityName.toLowerCase()}, verified ${niche?.shortName?.toLowerCase()} ${cityName.toLowerCase()}`,
+      ogType: "article"
+    };
+  }
+
+  // 12. Dynamic XML Sitemap
   if (route === "sitemap" || currentPath === "/sitemap.xml") {
     return {
       title: `Programmatic XML Sitemap Index - Google Antigravity Crawler Directory`,
@@ -354,6 +419,89 @@ export function generateJsonLdSchema(route, params = {}, data = {}) {
     ];
   }
 
+  // 5. Localized Service City Schema (LocalBusiness, AggregateRating & FAQPage Schema)
+  if (route === "service-city" && data) {
+    const { niche, service, city, state } = data;
+    const cityName = city?.name || "City";
+    const stateName = city?.stateName || state?.stateName || "India";
+    const serviceName = service ? service.name : niche?.name;
+    const shortName = service ? service.shortName : niche?.shortName;
+
+    // Determine specific schema type
+    let schemaType = "LocalBusiness";
+    if (niche?.id === "home-services") schemaType = "HomeAndConstructionBusiness";
+    else if (niche?.id === "coaching-institutes") schemaType = "EducationalOrganization";
+    else if (niche?.id === "legal-tax-services") schemaType = "LegalService";
+    else if (niche?.id === "wellness-fitness") schemaType = "HealthAndBeautyBusiness";
+
+    const schemas = [
+      {
+        "@context": "https://schema.org",
+        "@type": schemaType,
+        "name": `Verified ${serviceName} Specialists in ${cityName}`,
+        "description": `Certified and background-checked ${shortName} providers offering transparent rate cards in ${cityName}, ${stateName}.`,
+        "url": `${APP_BASE_URL}/${niche?.slug}/${service?.slug}/${city?.stateSlug}/${city?.slug}`,
+        "telephone": "+91-98000-00000",
+        "priceRange": service?.basePriceRange || "₹299 - ₹2,499",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": cityName,
+          "addressRegion": stateName,
+          "addressCountry": "IN"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.85",
+          "bestRating": "5",
+          "worstRating": "1",
+          "ratingCount": service?.reviewsCount || "320"
+        }
+      }
+    ];
+
+    // Auto-inject FAQPage schema if FAQs are defined
+    if (service?.faqs && service.faqs.length > 0) {
+      schemas.push({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": service.faqs.map(faq => ({
+          "@type": "Question",
+          "name": faq.q.replace(/{city}/g, cityName),
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.a.replace(/{city}/g, cityName)
+          }
+        }))
+      });
+    }
+
+    schemas.push(createBreadcrumbSchema([
+      { name: "Home", path: "/" },
+      { name: "Services", path: "/services" },
+      { name: niche?.shortName || "Category", path: `/${niche?.slug}` },
+      { name: `${cityName}`, path: `/${niche?.slug}/${service?.slug}/${city?.stateSlug}/${city?.slug}` }
+    ]));
+
+    return schemas;
+  }
+
+  // 6. Services Directory Hub Schema
+  if (route === "services-hub") {
+    return [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Google Antigravity Services Directory",
+        "url": `${APP_BASE_URL}/services`,
+        "description": "All-India verified local services directory for Home Services, Coaching, Legal, Tax, and Wellness."
+      },
+      createBreadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Services Directory", path: "/services" }
+      ])
+    ];
+  }
+
   // Generic fallback
   return [createBreadcrumbSchema([{ name: "Home", path: "/" }])];
 }
@@ -372,6 +520,27 @@ export function generateAllProgrammaticUrls() {
     priority: "1.0",
     title: "Google Antigravity Aggregator Hub",
     vertical: "Core"
+  });
+
+  urls.push({
+    loc: `${APP_BASE_URL}/services`,
+    lastmod: "2026-10-20",
+    changefreq: "daily",
+    priority: "0.95",
+    title: "All India Verified Services Directory",
+    vertical: "Services"
+  });
+
+  // Niche Category Hubs
+  NICHES.forEach(niche => {
+    urls.push({
+      loc: `${APP_BASE_URL}/${niche.slug}`,
+      lastmod: "2026-10-20",
+      changefreq: "daily",
+      priority: "0.9",
+      title: `${niche.name} India Directory Hub`,
+      vertical: "Services"
+    });
   });
 
   urls.push({
@@ -437,6 +606,23 @@ export function generateAllProgrammaticUrls() {
       title: `${exam.org} ${exam.postName} Notification 2026`,
       vertical: "Exams",
       org: exam.org
+    });
+  });
+
+  // 5. Programmatic Services & Local City Landing Pages
+  NICHES.forEach(niche => {
+    niche.services.forEach(service => {
+      ALL_CITIES.forEach(city => {
+        urls.push({
+          loc: `${APP_BASE_URL}/${niche.slug}/${service.slug}/${city.stateSlug}/${city.slug}`,
+          lastmod: "2026-10-20",
+          changefreq: "weekly",
+          priority: "0.8",
+          title: `${service.name} in ${city.name}`,
+          vertical: "Services",
+          state: city.stateName
+        });
+      });
     });
   });
 

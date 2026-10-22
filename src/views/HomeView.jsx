@@ -9,14 +9,18 @@ import {
   MapPin, 
   Calendar, 
   Clock, 
-  Sparkles,
-  Zap,
-  CheckCircle,
-  FileText,
-  Radio,
-  RefreshCw
+  Sparkles, 
+  Zap, 
+  CheckCircle, 
+  FileText, 
+  Radio, 
+  RefreshCw,
+  Wrench,
+  Briefcase,
+  HeartPulse
 } from 'lucide-react';
 import { ALL_CITIES, STATES_AND_CITIES } from '../data/cities';
+import { NICHES } from '../data/servicesData';
 import { useLiveData } from '../context/LiveDataContext';
 import AdSlot from '../components/AdSlot';
 
@@ -407,6 +411,133 @@ export default function HomeView({ navigate }) {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* TRAFFIC DENSITY MATRIX & HIGH-TRAFFIC NICHES SECTION */}
+      <section style={{ marginTop: '3.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <div>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'var(--accent-blue-light)', color: 'var(--accent-blue)', fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '4px', marginBottom: '0.35rem' }}>
+              <TrendingUp size={13} />
+              <span>High-Traffic Niches Engine (All India)</span>
+            </div>
+            <h2 style={{ fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Zap style={{ color: '#ea580c' }} size={24} />
+              <span>Traffic Density Matrix & Verified Services</span>
+            </h2>
+            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              Targeting high-intent search queries: Home Services, Coaching Academies, Legal Retainers & Wellness Hubs
+            </p>
+          </div>
+          <button 
+            onClick={() => navigate('/services')}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '4px', 
+              color: 'var(--accent-blue)', 
+              fontWeight: 600,
+              fontSize: '0.875rem' 
+            }}
+          >
+            <span>Explore All Services & Matrix</span>
+            <ArrowRight size={14} />
+          </button>
+        </div>
+
+        {/* 4 Niche Cards Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '1.5rem' }}>
+          {NICHES.map(niche => (
+            <div 
+              key={niche.id}
+              className="glass-panel"
+              style={{ 
+                padding: '1.5rem', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                justifyContent: 'space-between',
+                borderTop: `4px solid ${niche.color}` 
+              }}
+            >
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                  <span style={{ 
+                    fontSize: '0.75rem', 
+                    fontWeight: 700, 
+                    color: niche.color, 
+                    background: niche.bgColor, 
+                    padding: '3px 8px', 
+                    borderRadius: '4px' 
+                  }}>
+                    {niche.trafficBadge}
+                  </span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                    Comp: {niche.competitionLevel}
+                  </span>
+                </div>
+
+                <h3 style={{ fontSize: '1.15rem', marginBottom: '0.4rem', color: 'var(--text-primary)' }}>
+                  {niche.name}
+                </h3>
+                <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '1rem', lineHeight: 1.4 }}>
+                  {niche.description}
+                </p>
+
+                <div style={{ background: 'var(--bg-tertiary)', borderRadius: '6px', padding: '0.5rem 0.75rem', marginBottom: '1rem', fontSize: '0.75rem' }}>
+                  <div style={{ color: 'var(--text-muted)', fontSize: '0.68rem', textTransform: 'uppercase', fontWeight: 700 }}>
+                    Monetisation Model
+                  </div>
+                  <strong style={{ color: 'var(--text-primary)' }}>{niche.monetizationStrategy}</strong>
+                </div>
+
+                {/* Popular service chips */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '1.25rem' }}>
+                  {niche.services.slice(0, 3).map(s => (
+                    <a
+                      key={s.slug}
+                      href={`/${niche.slug}/${s.slug}/tamil-nadu/coimbatore`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/${niche.slug}/${s.slug}/tamil-nadu/coimbatore`);
+                      }}
+                      style={{
+                        fontSize: '0.72rem',
+                        background: 'var(--bg-tertiary)',
+                        color: 'var(--text-secondary)',
+                        padding: '2px 7px',
+                        borderRadius: '4px',
+                        textDecoration: 'none'
+                      }}
+                    >
+                      {s.shortName}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <button
+                onClick={() => navigate(`/${niche.slug}`)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  background: niche.color,
+                  color: 'white',
+                  padding: '9px 12px',
+                  borderRadius: '6px',
+                  fontWeight: 700,
+                  fontSize: '0.825rem',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                <span>Browse {niche.shortName} Hub</span>
+                <ArrowRight size={13} />
+              </button>
+            </div>
+          ))}
         </div>
       </section>
 

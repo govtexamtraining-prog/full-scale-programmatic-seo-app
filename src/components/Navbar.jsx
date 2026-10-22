@@ -7,6 +7,7 @@ import {
   Fuel, 
   Coins, 
   GraduationCap, 
+  Wrench,
   FileCode, 
   CheckCircle2, 
   AlertTriangle,
@@ -37,6 +38,7 @@ export default function Navbar({
     { label: "Fuel Prices", route: "/fuel-prices", icon: Fuel },
     { label: "Gold Rates", route: "/gold-rates", icon: Coins },
     { label: "Sarkari Exams", route: "/exam-schedules", icon: GraduationCap },
+    { label: "Services Hub", route: "/services", icon: Wrench },
     { label: "XML Sitemap", route: "/sitemap.xml", icon: FileCode }
   ];
 

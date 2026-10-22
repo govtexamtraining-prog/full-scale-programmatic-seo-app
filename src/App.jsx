@@ -13,10 +13,14 @@ import GoldVerticalView from './views/GoldVerticalView';
 import GoldCityView from './views/GoldCityView';
 import ExamsVerticalView from './views/ExamsVerticalView';
 import ExamDetailView from './views/ExamDetailView';
+import ServicesDirectoryView from './views/ServicesDirectoryView';
+import ServiceCityView from './views/ServiceCityView';
 import SitemapView from './views/SitemapView';
 
 import { LiveDataProvider, useLiveData } from './context/LiveDataContext';
 import { generateSeoMetadata, generateJsonLdSchema } from './services/pseoEngine';
+import { NICHES, getNicheBySlug, getServiceBySlugs } from './data/servicesData';
+import { getCityBySlugs, getStateBySlug } from './data/cities';
 import { SlidersHorizontal } from 'lucide-react';
 
 function AppContent() {
@@ -61,7 +65,16 @@ function AppContent() {
     if (clean === '/fuel-prices') return { view: 'fuel-hub', params: {} };
     if (clean === '/gold-rates') return { view: 'gold-hub', params: {} };
     if (clean === '/exam-schedules') return { view: 'exam-hub', params: {} };
+    if (clean === '/services' || clean === '/directory') return { view: 'services-hub', params: {} };
     if (clean === '/sitemap.xml') return { view: 'sitemap', params: {} };
+
+    const validNicheSlugs = ['home-services', 'coaching-institutes', 'legal-tax-services', 'wellness-fitness'];
+
+    // Match /[nicheSlug]
+    const singleSlugMatch = clean.match(/^\/([^/]+)$/);
+    if (singleSlugMatch && validNicheSlugs.includes(singleSlugMatch[1])) {
+      return { view: 'niche-hub', params: { nicheSlug: singleSlugMatch[1] } };
+    }
 
     // Match /fuel-prices/[state]/[city]
     const fuelMatch = clean.match(/^\/fuel-prices\/([^/]+)\/([^/]+)$/);
@@ -90,6 +103,33 @@ function AppContent() {
       };
     }
 
+    // Match /[nicheSlug]/[serviceSlug]/[stateSlug]/[citySlug]
+    const serviceCityMatch = clean.match(/^\/([^/]+)\/([^/]+)\/([^/]+)\/([^/]+)$/);
+    if (serviceCityMatch && validNicheSlugs.includes(serviceCityMatch[1])) {
+      return {
+        view: 'service-city',
+        params: {
+          nicheSlug: serviceCityMatch[1],
+          serviceSlug: serviceCityMatch[2],
+          stateSlug: serviceCityMatch[3],
+          citySlug: serviceCityMatch[4]
+        }
+      };
+    }
+
+    // Match /[nicheSlug]/[stateSlug]/[citySlug]
+    const nicheCityMatch = clean.match(/^\/([^/]+)\/([^/]+)\/([^/]+)$/);
+    if (nicheCityMatch && validNicheSlugs.includes(nicheCityMatch[1])) {
+      return {
+        view: 'niche-city',
+        params: {
+          nicheSlug: nicheCityMatch[1],
+          stateSlug: nicheCityMatch[2],
+          citySlug: nicheCityMatch[3]
+        }
+      };
+    }
+
     return { view: 'home', params: {} };
   };
 
@@ -103,6 +143,20 @@ function AppContent() {
     activeData = getGoldForCity(routeInfo.params.stateSlug, routeInfo.params.citySlug);
   } else if (routeInfo.view === 'exam-detail') {
     activeData = getExam(routeInfo.params.orgSlug, routeInfo.params.postSlug);
+  } else if (routeInfo.view === 'service-city') {
+    const niche = getNicheBySlug(routeInfo.params.nicheSlug);
+    const service = getServiceBySlugs(routeInfo.params.nicheSlug, routeInfo.params.serviceSlug);
+    const city = getCityBySlugs(routeInfo.params.stateSlug, routeInfo.params.citySlug);
+    const state = getStateBySlug(routeInfo.params.stateSlug);
+    activeData = { niche, service, city, state };
+  } else if (routeInfo.view === 'niche-city') {
+    const niche = getNicheBySlug(routeInfo.params.nicheSlug);
+    const city = getCityBySlugs(routeInfo.params.stateSlug, routeInfo.params.citySlug);
+    const state = getStateBySlug(routeInfo.params.stateSlug);
+    activeData = { niche, city, state };
+  } else if (routeInfo.view === 'niche-hub') {
+    const niche = getNicheBySlug(routeInfo.params.nicheSlug);
+    activeData = { niche };
   }
 
   // Generate dynamic SEO metadata & JSON-LD
@@ -169,6 +223,30 @@ function AppContent() {
             orgSlug={routeInfo.params.orgSlug} 
             postSlug={routeInfo.params.postSlug} 
             navigate={navigate} 
+          />
+        )}
+        {routeInfo.view === 'services-hub' && <ServicesDirectoryView navigate={navigate} />}
+        {routeInfo.view === 'niche-hub' && (
+          <ServicesDirectoryView 
+            navigate={navigate} 
+            initialNicheSlug={routeInfo.params.nicheSlug} 
+          />
+        )}
+        {routeInfo.view === 'service-city' && (
+          <ServiceCityView 
+            nicheSlug={routeInfo.params.nicheSlug}
+            serviceSlug={routeInfo.params.serviceSlug}
+            stateSlug={routeInfo.params.stateSlug}
+            citySlug={routeInfo.params.citySlug}
+            navigate={navigate}
+          />
+        )}
+        {routeInfo.view === 'niche-city' && (
+          <ServiceCityView 
+            nicheSlug={routeInfo.params.nicheSlug}
+            stateSlug={routeInfo.params.stateSlug}
+            citySlug={routeInfo.params.citySlug}
+            navigate={navigate}
           />
         )}
         {routeInfo.view === 'sitemap' && <SitemapView navigate={navigate} />}
