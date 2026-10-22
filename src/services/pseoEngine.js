@@ -1,0 +1,464 @@
+// Programmatic SEO (pSEO) Core Engine
+// Handles dynamic meta title, description, keywords, canonical URLs, JSON-LD schemas, and XML sitemaps
+
+import { ALL_CITIES, STATES_AND_CITIES } from '../data/cities';
+import { FUEL_DATA, NATIONAL_FUEL_AVERAGES } from '../data/fuelData';
+import { GOLD_DATA, NATIONAL_GOLD_AVERAGES } from '../data/goldData';
+import { SARKARI_EXAMS } from '../data/examData';
+
+export const APP_BASE_URL = "https://google-antigravity.in";
+export const CURRENT_MONTH_YEAR = "October 2026";
+export const CURRENT_DATE_STRING = "20 October 2026";
+
+/**
+ * Generate comprehensive SEO Metadata for any route
+ */
+export function generateSeoMetadata(route, params = {}, data = {}) {
+  const currentPath = route || "/";
+
+  // 1. Home / National Hub
+  if (currentPath === "/" || route === "home") {
+    return {
+      title: `Google Antigravity: Live Daily Fuel Rates, Gold Prices & Sarkari Exams (${CURRENT_MONTH_YEAR})`,
+      metaDescription: `India's Centralized Public Data Portal. Instant real-time petrol & diesel rates, 22K/24K gold rates across 30+ cities, and official Sarkari exam schedules, admit cards & results.`,
+      canonicalUrl: `${APP_BASE_URL}/`,
+      h1: "India's Live Public Data & Micro-Keyword Portal",
+      h2: "Real-Time Commodities, Daily City Rates & National Exam Timelines",
+      keywords: "petrol price today, diesel price today, gold rate 22k today, sarkari result 2026, upsc prelims, fuel rates india, public data portal",
+      ogType: "website"
+    };
+  }
+
+  // 2. Vertical: Fuel Prices Landing Page
+  if (route === "fuel-hub" || currentPath === "/fuel-prices") {
+    return {
+      title: `Daily Fuel Prices in India Today (${CURRENT_MONTH_YEAR}) - Live Petrol & Diesel Rates`,
+      metaDescription: `Check today's live Petrol and Diesel prices across all Indian states and cities. Updated daily at 06:00 AM IST. Compare city-wise fuel rates and calculate trip fuel expenses.`,
+      canonicalUrl: `${APP_BASE_URL}/fuel-prices`,
+      h1: "Live Daily Fuel Prices Across India (Petrol & Diesel)",
+      h2: "State-wise Price Matrix, 7-Day Trend Charts & Nearby City Comparison",
+      keywords: "fuel price india, petrol rate today, diesel rate in india, daily petrol price 06 am, cng rate today",
+      ogType: "website"
+    };
+  }
+
+  // 3. Localized Fuel City Route: /fuel-prices/[state]/[city]
+  if (route === "fuel-city" && data) {
+    const { cityName, stateName, petrolPrice, dieselPrice } = data;
+    return {
+      title: `${cityName} Fuel Prices Today (${CURRENT_MONTH_YEAR}) - Current Live Petrol & Diesel Price`,
+      metaDescription: `Live Petrol price in ${cityName} is ₹${petrolPrice.toFixed(2)}/L and Diesel is ₹${dieselPrice.toFixed(2)}/L today (${CURRENT_DATE_STRING}). Check 7-day trend, state taxes, and cheaper nearby fuel stations in ${stateName}.`,
+      canonicalUrl: `${APP_BASE_URL}/fuel-prices/${data.stateSlug}/${data.citySlug}`,
+      h1: `${cityName} Fuel Prices Today (${CURRENT_DATE_STRING})`,
+      h2: `Live Petrol, Diesel & CNG Rates in ${cityName}, ${stateName}`,
+      keywords: `${cityName.toLowerCase()} petrol price, ${cityName.toLowerCase()} diesel rate today, fuel rate in ${cityName.toLowerCase()}, ${data.stateSlug} petrol tax`,
+      ogType: "article"
+    };
+  }
+
+  // 4. Vertical: Gold Rates Landing Page
+  if (route === "gold-hub" || currentPath === "/gold-rates") {
+    return {
+      title: `Live Gold Rate in India Today (${CURRENT_MONTH_YEAR}) - 24K, 22K & 18K Precious Metals`,
+      metaDescription: `Real-time 24 Carat, 22 Carat Hallmarked (916) Gold and Silver rates in India today. Dynamic weight calculators for 1g, 8g Sovereign, 10g Tola, and 100g with GST breakdown.`,
+      canonicalUrl: `${APP_BASE_URL}/gold-rates`,
+      h1: "Live 24K & 22K Gold Rates Across Indian Cities",
+      h2: "Real-time IBJA Spot Bullion Rates, Sovereign Multiples & Hallmarking Guide",
+      keywords: "gold rate today, 22k gold price per gram, 24 carat gold rate, silver rate india, gold sovereign price today",
+      ogType: "website"
+    };
+  }
+
+  // 5. Localized Gold City Route: /gold-rates/[state]/[city]
+  if (route === "gold-city" && data) {
+    const { cityName, stateName, gold24kPerGram, gold22kPerGram } = data;
+    return {
+      title: `${cityName} Gold Rates Today (${CURRENT_MONTH_YEAR}) - Current Live 22K & 24K Price`,
+      metaDescription: `Today's live 22 Karat Gold rate in ${cityName} is ₹${gold22kPerGram.toLocaleString('en-IN')}/gram (₹${(gold22kPerGram * 8).toLocaleString('en-IN')} per 8g Sovereign). 24 Karat pure gold is ₹${gold24kPerGram.toLocaleString('en-IN')}/gram. Check making charge calculator & hallmarking notice.`,
+      canonicalUrl: `${APP_BASE_URL}/gold-rates/${data.stateSlug}/${data.citySlug}`,
+      h1: `${cityName} Gold Rate Today (${CURRENT_DATE_STRING})`,
+      h2: `Current 22K & 24K Precious Metal Rates in ${cityName}, ${stateName}`,
+      keywords: `${cityName.toLowerCase()} gold rate today, 22 carat gold price in ${cityName.toLowerCase()}, 1 pavan gold rate ${cityName.toLowerCase()}, 24k gold ${cityName.toLowerCase()}`,
+      ogType: "article"
+    };
+  }
+
+  // 6. Vertical: Sarkari Exams Hub
+  if (route === "exam-hub" || currentPath === "/exam-schedules") {
+    return {
+      title: `Sarkari Exam Schedules, Admit Cards & Results 2026 - Central & State Government Jobs`,
+      metaDescription: `Fast, clean Sarkari public notifications for UPSC, SSC, IBPS, RRB, and State PSC exams 2026. Official download links for Admit Cards, Notifications, and Result Scorecards.`,
+      canonicalUrl: `${APP_BASE_URL}/exam-schedules`,
+      h1: "Sarkari Exam Schedules, Admit Cards & Results 2026",
+      h2: "Direct Official Registration Links, Exam Timelines & Vacancy Breakdown",
+      keywords: "sarkari result, sarkari exam 2026, upsc notification 2026, ssc cgl admit card, ibps po result 2026",
+      ogType: "website"
+    };
+  }
+
+  // 7. Micro-Keyword Exam Detail: /exam-schedules/[org]/[slug]
+  if (route === "exam-detail" && data) {
+    const { org, postName, vacancies, lastDateToApply, qualification } = data;
+    return {
+      title: `${org} ${postName} - Notification, Apply Online, Admit Card & Result 2026`,
+      metaDescription: `${org} has announced recruitment for ${postName} with ${vacancies > 0 ? vacancies.toLocaleString('en-IN') + ' vacancies' : 'eligibility exam'}. Last date to apply is ${lastDateToApply}. Qualification: ${qualification}. Check eligibility, age limits & direct links.`,
+      canonicalUrl: `${APP_BASE_URL}/exam-schedules/${data.orgSlug}/${data.postSlug}`,
+      h1: `${org} ${postName}`,
+      h2: `Official Recruitment Notification, Eligibility, Exam Date & Selection Process`,
+      keywords: `${org.toLowerCase()} ${data.postSlug.replace(/-/g, ' ')}, ${org.toLowerCase()} exam date 2026, ${org.toLowerCase()} admit card, ${org.toLowerCase()} result link`,
+      ogType: "article"
+    };
+  }
+
+  // 8. Dynamic XML Sitemap
+  if (route === "sitemap" || currentPath === "/sitemap.xml") {
+    return {
+      title: `Programmatic XML Sitemap Index - Google Antigravity Crawler Directory`,
+      metaDescription: `Real-time dynamically generated XML and HTML sitemap containing all programmatic routes for Google Search Engine indexing and micro-keyword discovery.`,
+      canonicalUrl: `${APP_BASE_URL}/sitemap.xml`,
+      h1: "Programmatic SEO XML Sitemap Engine",
+      h2: "Dynamic Crawl-Budget Optimizer & Micro-Keyword Route Inventory",
+      keywords: "sitemap.xml, programmatic seo urls, xml sitemap generator, crawl discovery",
+      ogType: "website"
+    };
+  }
+
+  // Default fallback
+  return {
+    title: `Google Antigravity - Real-time Public Data Portal`,
+    metaDescription: `India's Centralized Public Data & Micro-Keyword Portal.`,
+    canonicalUrl: `${APP_BASE_URL}${currentPath}`,
+    h1: "Google Antigravity Portal",
+    h2: "Real-time Public Data Platform",
+    keywords: "public data, india rates, sarkari results, fuel prices",
+    ogType: "website"
+  };
+}
+
+/**
+ * Auto-injects dynamic JSON-LD Structured Data for search engines
+ */
+export function generateJsonLdSchema(route, params = {}, data = {}) {
+  // Breadcrumb schema generator
+  const createBreadcrumbSchema = (items) => ({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": items.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.name,
+      "item": `${APP_BASE_URL}${item.path}`
+    }))
+  });
+
+  // 1. Home schema
+  if (route === "home" || !route) {
+    return [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Google Antigravity",
+        "url": APP_BASE_URL,
+        "description": "India's Ultimate Centralized Public Data & Micro-Keyword Portal",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": `${APP_BASE_URL}/?search={search_term_string}`,
+          "query-input": "required name=search_term_string"
+        }
+      },
+      createBreadcrumbSchema([{ name: "Home", path: "/" }])
+    ];
+  }
+
+  // 2. Fuel City Schema (Product, PriceSpecification & LocalBusiness)
+  if (route === "fuel-city" && data) {
+    const petrolPrice = data.petrolPrice || 100;
+    const dieselPrice = data.dieselPrice || 90;
+    return [
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": `Petrol in ${data.cityName}`,
+        "description": `Live retail selling price of motor spirit (Petrol) in ${data.cityName}, ${data.stateName}.`,
+        "category": "Energy > Fuel > Petroleum",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": petrolPrice.toFixed(2),
+          "priceValidUntil": "2026-12-31",
+          "itemCondition": "https://schema.org/NewCondition",
+          "availability": "https://schema.org/InStock",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": petrolPrice.toFixed(2),
+            "priceCurrency": "INR",
+            "unitCode": "LTR",
+            "unitText": "Liter"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": `Diesel in ${data.cityName}`,
+        "description": `Live retail selling price of High Speed Diesel in ${data.cityName}, ${data.stateName}.`,
+        "category": "Energy > Fuel > Diesel",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": dieselPrice.toFixed(2),
+          "priceValidUntil": "2026-12-31",
+          "itemCondition": "https://schema.org/NewCondition",
+          "availability": "https://schema.org/InStock",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": dieselPrice.toFixed(2),
+            "priceCurrency": "INR",
+            "unitCode": "LTR",
+            "unitText": "Liter"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": `${data.cityName} Fuel Distribution Market`,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": data.cityName,
+          "addressRegion": data.stateName,
+          "addressCountry": "IN"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": data.lat || 13.08,
+          "longitude": data.lng || 80.27
+        }
+      },
+      createBreadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Fuel Prices", path: "/fuel-prices" },
+        { name: data.stateName, path: `/fuel-prices` },
+        { name: `${data.cityName} Rates`, path: `/fuel-prices/${data.stateSlug}/${data.citySlug}` }
+      ])
+    ];
+  }
+
+  // 3. Gold City Schema (Commodity, PriceSpecification, LocalBusiness)
+  if (route === "gold-city" && data) {
+    return [
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": `22 Karat Hallmarked Gold in ${data.cityName}`,
+        "description": `Current BIS 916 hallmarked 22 Karat gold bullion price per gram in ${data.cityName}, ${data.stateName}.`,
+        "category": "Jewellery > Precious Metals > Gold",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": data.gold22kPerGram,
+          "priceValidUntil": "2026-12-31",
+          "availability": "https://schema.org/InStock",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": data.gold22kPerGram,
+            "priceCurrency": "INR",
+            "unitCode": "GRM",
+            "unitText": "Gram"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": `24 Karat Pure Gold in ${data.cityName}`,
+        "description": `Current 999 fineness 24 Karat pure gold price per gram in ${data.cityName}, ${data.stateName}.`,
+        "category": "Jewellery > Precious Metals > Gold",
+        "offers": {
+          "@type": "Offer",
+          "priceCurrency": "INR",
+          "price": data.gold24kPerGram,
+          "priceValidUntil": "2026-12-31",
+          "availability": "https://schema.org/InStock",
+          "priceSpecification": {
+            "@type": "UnitPriceSpecification",
+            "price": data.gold24kPerGram,
+            "priceCurrency": "INR",
+            "unitCode": "GRM",
+            "unitText": "Gram"
+          }
+        }
+      },
+      createBreadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Gold Rates", path: "/gold-rates" },
+        { name: data.stateName, path: `/gold-rates` },
+        { name: `${data.cityName} Gold`, path: `/gold-rates/${data.stateSlug}/${data.citySlug}` }
+      ])
+    ];
+  }
+
+  // 4. Sarkari Exam Schema (JobPosting & EducationEvent)
+  if (route === "exam-detail" && data) {
+    return [
+      {
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        "title": `${data.org} ${data.postName}`,
+        "description": `${data.orgFullName} has officially published notification for ${data.postName}. Total Vacancies: ${data.vacancies}. Minimum Qualification: ${data.qualification}. Age Limit: ${data.ageLimit}.`,
+        "datePosted": data.notificationDate || "2026-01-01",
+        "validThrough": data.lastDateIso || "2026-12-31T23:59:59+05:30",
+        "employmentType": "FULL_TIME",
+        "hiringOrganization": {
+          "@type": "Organization",
+          "name": data.orgFullName,
+          "sameAs": data.officialWebsite
+        },
+        "jobLocation": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "IN"
+          }
+        },
+        "baseSalary": {
+          "@type": "MonetaryAmount",
+          "currency": "INR",
+          "value": {
+            "@type": "QuantitativeValue",
+            "value": 56100,
+            "unitText": "MONTH"
+          }
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationEvent",
+        "name": `${data.org} ${data.postName} Examination 2026`,
+        "description": `National Competitive Recruitment Examination for ${data.postName}.`,
+        "startDate": data.examDate || "2026-05-24",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "organizer": {
+          "@type": "Organization",
+          "name": data.orgFullName,
+          "url": data.officialWebsite
+        }
+      },
+      createBreadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Exam Schedules", path: "/exam-schedules" },
+        { name: data.org, path: `/exam-schedules` },
+        { name: data.postName, path: `/exam-schedules/${data.orgSlug}/${data.postSlug}` }
+      ])
+    ];
+  }
+
+  // Generic fallback
+  return [createBreadcrumbSchema([{ name: "Home", path: "/" }])];
+}
+
+/**
+ * Generates all programmatic URLs for the XML Sitemap & search engine crawlers
+ */
+export function generateAllProgrammaticUrls() {
+  const urls = [];
+
+  // 1. Static Core Hubs
+  urls.push({
+    loc: `${APP_BASE_URL}/`,
+    lastmod: "2026-10-20",
+    changefreq: "hourly",
+    priority: "1.0",
+    title: "Google Antigravity Aggregator Hub",
+    vertical: "Core"
+  });
+
+  urls.push({
+    loc: `${APP_BASE_URL}/fuel-prices`,
+    lastmod: "2026-10-20",
+    changefreq: "hourly",
+    priority: "0.9",
+    title: "National Daily Fuel Rates Hub",
+    vertical: "Fuel"
+  });
+
+  urls.push({
+    loc: `${APP_BASE_URL}/gold-rates`,
+    lastmod: "2026-10-20",
+    changefreq: "hourly",
+    priority: "0.9",
+    title: "Live Precious Metals & Gold Rates Hub",
+    vertical: "Gold"
+  });
+
+  urls.push({
+    loc: `${APP_BASE_URL}/exam-schedules`,
+    lastmod: "2026-10-20",
+    changefreq: "daily",
+    priority: "0.9",
+    title: "Sarkari Exam Schedules & Results 2026",
+    vertical: "Exams"
+  });
+
+  // 2. Programmatic Fuel Cities
+  Object.values(FUEL_DATA).forEach(city => {
+    urls.push({
+      loc: `${APP_BASE_URL}/fuel-prices/${city.stateSlug}/${city.citySlug}`,
+      lastmod: "2026-10-20",
+      changefreq: "hourly",
+      priority: "0.8",
+      title: `${city.cityName} Petrol & Diesel Rates Today`,
+      vertical: "Fuel",
+      state: city.stateName
+    });
+  });
+
+  // 3. Programmatic Gold Cities
+  Object.values(GOLD_DATA).forEach(city => {
+    urls.push({
+      loc: `${APP_BASE_URL}/gold-rates/${city.stateSlug}/${city.citySlug}`,
+      lastmod: "2026-10-20",
+      changefreq: "hourly",
+      priority: "0.8",
+      title: `${city.cityName} 22K & 24K Gold Rate Today`,
+      vertical: "Gold",
+      state: city.stateName
+    });
+  });
+
+  // 4. Programmatic Sarkari Exams
+  SARKARI_EXAMS.forEach(exam => {
+    urls.push({
+      loc: `${APP_BASE_URL}/exam-schedules/${exam.orgSlug}/${exam.postSlug}`,
+      lastmod: "2026-10-20",
+      changefreq: "daily",
+      priority: "0.85",
+      title: `${exam.org} ${exam.postName} Notification 2026`,
+      vertical: "Exams",
+      org: exam.org
+    });
+  });
+
+  return urls;
+}
+
+/**
+ * Builds standard XML sitemap output
+ */
+export function buildXmlSitemapString() {
+  const urls = generateAllProgrammaticUrls();
+  const xmlItems = urls.map(u => `  <url>
+    <loc>${u.loc}</loc>
+    <lastmod>${u.lastmod}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!-- Google Antigravity Programmatic SEO Dynamic Sitemap -->
+<!-- Total Dynamic Micro-Keyword URLs: ${urls.length} -->
+${xmlItems}
+</urlset>`;
+}
