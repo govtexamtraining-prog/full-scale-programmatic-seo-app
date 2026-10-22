@@ -54,7 +54,7 @@ export default function HomeView({ navigate }) {
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '1rem' }}>
           <div className="hero-tag" style={{ margin: 0 }}>
             <Zap size={14} />
-            <span>Centralized Indian Public Data Engine</span>
+            <span>Public Services, Sarkari Exams & Local Business Intelligence</span>
           </div>
           <div style={{ 
             display: 'inline-flex', 
@@ -69,49 +69,19 @@ export default function HomeView({ navigate }) {
             fontWeight: 700
           }}>
             <Radio size={12} className="spin-anim" />
-            <span>Auto-Fetched: {lastSyncTime || 'Today'}</span>
+            <span>Live 2026 Board Active</span>
           </div>
         </div>
 
         <h1 className="hero-title">
-          India's Live Public Data & Micro-Keyword Portal
+          Sarkari Exam Board & Verified Public Services Directory
         </h1>
         <p className="hero-subtitle">
-          Real-time daily fuel rates, live 22K/24K gold bullion spot prices, and Sarkari examination schedules across 30+ Indian metropolitan hubs.
+          Centralized public directory for official 2026 Sarkari exam circulars, admit cards, and verified local professionals across 750+ Indian districts.
         </p>
 
-        {/* Quick Vertical Switchers */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <button 
-            onClick={() => navigate('/fuel-prices')} 
-            className="glass-panel"
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '8px', 
-              padding: '0.75rem 1.25rem', 
-              fontWeight: 600,
-              fontSize: '0.9rem' 
-            }}
-          >
-            <Fuel size={18} style={{ color: 'var(--accent-blue)' }} />
-            <span>Daily Fuel Rates Matrix</span>
-          </button>
-          <button 
-            onClick={() => navigate('/gold-rates')} 
-            className="glass-panel"
-            style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '8px', 
-              padding: '0.75rem 1.25rem', 
-              fontWeight: 600,
-              fontSize: '0.9rem' 
-            }}
-          >
-            <Coins size={18} style={{ color: 'var(--gold-primary)' }} />
-            <span>22K & 24K Gold Rates</span>
-          </button>
+        {/* 5 Core Vertical Switchers */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
           <button 
             onClick={() => navigate('/exam-schedules')} 
             className="glass-panel"
@@ -119,68 +89,161 @@ export default function HomeView({ navigate }) {
               display: 'flex', 
               alignItems: 'center', 
               gap: '8px', 
-              padding: '0.75rem 1.25rem', 
-              fontWeight: 600,
-              fontSize: '0.9rem' 
+              padding: '0.7rem 1.15rem', 
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              borderColor: 'rgba(220, 38, 38, 0.3)'
             }}
           >
-            <GraduationCap size={18} style={{ color: '#dc2626' }} />
-            <span>Sarkari Result Hub</span>
+            <GraduationCap size={17} style={{ color: '#dc2626' }} />
+            <span>Sarkari Result & Exams</span>
+          </button>
+
+          <button 
+            onClick={() => navigate('/home-services')} 
+            className="glass-panel"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              padding: '0.7rem 1.15rem', 
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              borderColor: 'rgba(234, 88, 12, 0.3)'
+            }}
+          >
+            <Wrench size={16} style={{ color: '#ea580c' }} />
+            <span>Home Services & Utilities</span>
+          </button>
+
+          <button 
+            onClick={() => navigate('/coaching-institutes')} 
+            className="glass-panel"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              padding: '0.7rem 1.15rem', 
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              borderColor: 'rgba(37, 99, 235, 0.3)'
+            }}
+          >
+            <Briefcase size={16} style={{ color: '#2563eb' }} />
+            <span>Coaching Academies</span>
+          </button>
+
+          <button 
+            onClick={() => navigate('/legal-tax-services')} 
+            className="glass-panel"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              padding: '0.7rem 1.15rem', 
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              borderColor: 'rgba(124, 58, 237, 0.3)'
+            }}
+          >
+            <FileText size={16} style={{ color: '#7c3aed' }} />
+            <span>Legal, Tax & CA</span>
+          </button>
+
+          <button 
+            onClick={() => navigate('/wellness-fitness')} 
+            className="glass-panel"
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px', 
+              padding: '0.7rem 1.15rem', 
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              borderColor: 'rgba(16, 185, 129, 0.3)'
+            }}
+          >
+            <HeartPulse size={16} style={{ color: '#10b981' }} />
+            <span>Wellness, Gyms & Spas</span>
           </button>
         </div>
       </section>
 
-      {/* Key National Metrics Strip (Dynamically bound to live data) */}
+      {/* 4 Pillars National KPI Metrics Bento Strip */}
       <div className="metrics-grid">
-        {/* National Petrol */}
-        <div className="metric-card glass-panel">
+        {/* Pillar 1: Sarkari Exams Active */}
+        <div 
+          className="metric-card glass-panel"
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate('/exam-schedules')}
+        >
           <div className="metric-header">
-            <span>National Avg Petrol</span>
-            <Fuel size={16} />
+            <span>Sarkari Result & Exam Board</span>
+            <GraduationCap size={16} style={{ color: '#dc2626' }} />
           </div>
-          <div className="metric-val">₹{nationalFuelAvg.petrolAverage.toFixed(2)}</div>
+          <div className="metric-val" style={{ color: '#dc2626' }}>
+            {examsData.length} Active 2026 Notices
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Per Liter (All India Avg)</span>
-            <span className="metric-change down">● Live OMC Rate</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>UPSC, SSC, IBPS, RRB & TNPSC</span>
+            <span className="metric-change down">● Live Notifications</span>
           </div>
         </div>
 
-        {/* National Diesel */}
-        <div className="metric-card glass-panel green">
+        {/* Pillar 2: Home Services & Utilities */}
+        <div 
+          className="metric-card glass-panel"
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate('/home-services')}
+        >
           <div className="metric-header">
-            <span>National Avg Diesel</span>
-            <Fuel size={16} />
+            <span>Home Services & Utilities</span>
+            <Wrench size={16} style={{ color: '#ea580c' }} />
           </div>
-          <div className="metric-val">₹{nationalFuelAvg.dieselAverage.toFixed(2)}</div>
+          <div className="metric-val" style={{ color: '#ea580c' }}>
+            ₹499 Starting
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Per Liter (All India Avg)</span>
-            <span className="metric-change down">● Live OMC Rate</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>AC Repair, Plumbing & Electrical</span>
+            <span className="metric-change up">⚡ 15-Min Dispatch</span>
           </div>
         </div>
 
-        {/* 22K Gold Sovereign */}
-        <div className="metric-card glass-panel gold">
+        {/* Pillar 3: Coaching Academies */}
+        <div 
+          className="metric-card glass-panel"
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate('/coaching-institutes')}
+        >
           <div className="metric-header">
-            <span>22K Gold (8g Sovereign / Pavan)</span>
-            <Coins size={16} />
+            <span>Coaching & Education Hubs</span>
+            <Briefcase size={16} style={{ color: '#2563eb' }} />
           </div>
-          <div className="metric-val">₹{(nationalGoldAvg.gold22kAvg * 8).toLocaleString('en-IN')}</div>
+          <div className="metric-val" style={{ color: '#2563eb' }}>
+            2026 Batches Open
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>₹{nationalGoldAvg.gold22kAvg.toLocaleString('en-IN')}/gram</span>
-            <span className="metric-change up">+₹160 (8g)</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>NEET, JEE, IAS & Bank Exam</span>
+            <span className="metric-change up">🎓 Free Counseling</span>
           </div>
         </div>
 
-        {/* Silver 1kg */}
-        <div className="metric-card glass-panel">
+        {/* Pillar 4: Legal & CA Retainers */}
+        <div 
+          className="metric-card glass-panel"
+          style={{ cursor: 'pointer' }}
+          onClick={() => navigate('/legal-tax-services')}
+        >
           <div className="metric-header">
-            <span>Silver (1 KG Bar)</span>
-            <Coins size={16} />
+            <span>Professional Legal & Tax CA</span>
+            <FileText size={16} style={{ color: '#7c3aed' }} />
           </div>
-          <div className="metric-val">₹{(nationalGoldAvg.silverAvg * 1000).toLocaleString('en-IN')}</div>
+          <div className="metric-val" style={{ color: '#7c3aed' }}>
+            Verified Advocates & CAs
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>₹{nationalGoldAvg.silverAvg.toFixed(2)}/gram</span>
-            <span className="metric-change up">+₹500/kg</span>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>GST, Property Law & Trademark</span>
+            <span className="metric-change up">⚖️ Confidential</span>
           </div>
         </div>
       </div>
@@ -577,82 +640,89 @@ export default function HomeView({ navigate }) {
         </div>
 
         {/* City cards grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1rem' }}>
-          {currentStateCities.map(city => {
-            const fuel = fuelData[city.id];
-            const gold = goldData[city.id];
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', gap: '1.25rem' }}>
+          {currentStateCities.map(city => (
+            <div 
+              key={city.id}
+              className="glass-panel"
+              style={{ 
+                padding: '1.25rem', 
+                display: 'flex', 
+                flexDirection: 'column', 
+                gap: '0.85rem',
+                border: '1px solid var(--bg-card-border)'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>{city.name}</h3>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>📍 {city.stateName}</span>
+              </div>
 
-            return (
-              <div 
-                key={city.id}
-                className="glass-panel"
-                style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                  <h3 style={{ fontSize: '1.2rem' }}>{city.name}</h3>
-                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{city.stateName}</span>
+              {/* Verified Local Service Sectors */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', background: 'var(--bg-tertiary)', padding: '0.75rem', borderRadius: '8px', fontSize: '0.75rem' }}>
+                <div>
+                  <span style={{ color: 'var(--text-muted)' }}>Home Services:</span>
+                  <div style={{ fontWeight: 700, color: '#ea580c' }}>AC, Plumber, Electrical</div>
                 </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', background: 'var(--bg-tertiary)', padding: '0.75rem', borderRadius: '8px' }}>
-                  <div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Petrol</div>
-                    <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--text-primary)' }}>
-                      ₹{fuel?.petrolPrice?.toFixed(2) || '101.40'}
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>22K Gold (1g)</div>
-                    <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--gold-primary)' }}>
-                      ₹{gold?.gold22kPerGram?.toLocaleString('en-IN') || '6,680'}
-                    </div>
-                  </div>
+                <div>
+                  <span style={{ color: 'var(--text-muted)' }}>Coaching:</span>
+                  <div style={{ fontWeight: 700, color: '#2563eb' }}>NEET, JEE, UPSC</div>
                 </div>
-
-                <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
-                  <button
-                    onClick={() => navigate(`/fuel-prices/${city.stateSlug}/${city.slug}`)}
-                    style={{
-                      flex: 1,
-                      padding: '6px',
-                      borderRadius: '6px',
-                      background: 'var(--bg-primary)',
-                      border: '1px solid var(--bg-card-border)',
-                      fontSize: '0.78rem',
-                      fontWeight: 600,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '4px'
-                    }}
-                  >
-                    <Fuel size={13} style={{ color: 'var(--accent-blue)' }} />
-                    <span>Fuel Rate</span>
-                  </button>
-
-                  <button
-                    onClick={() => navigate(`/gold-rates/${city.stateSlug}/${city.slug}`)}
-                    style={{
-                      flex: 1,
-                      padding: '6px',
-                      borderRadius: '6px',
-                      background: 'var(--gold-bg)',
-                      border: '1px solid rgba(217,119,6,0.2)',
-                      color: 'var(--gold-primary)',
-                      fontSize: '0.78rem',
-                      fontWeight: 700,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '4px'
-                    }}
-                  >
-                    <Coins size={13} />
-                    <span>Gold Rate</span>
-                  </button>
+                <div>
+                  <span style={{ color: 'var(--text-muted)' }}>Legal & Tax:</span>
+                  <div style={{ fontWeight: 700, color: '#7c3aed' }}>GST, CA, Property</div>
+                </div>
+                <div>
+                  <span style={{ color: 'var(--text-muted)' }}>Wellness:</span>
+                  <div style={{ fontWeight: 700, color: '#10b981' }}>Top Gyms & Yoga</div>
                 </div>
               </div>
-            );
-          })}
+
+              <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
+                <button
+                  onClick={() => navigate(`/home-services/ac-repair-service/${city.stateSlug}/${city.slug}`)}
+                  style={{
+                    flex: 1,
+                    padding: '8px',
+                    borderRadius: '6px',
+                    background: 'var(--bg-primary)',
+                    border: '1px solid var(--bg-card-border)',
+                    fontSize: '0.78rem',
+                    fontWeight: 700,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <Wrench size={13} style={{ color: '#ea580c' }} />
+                  <span>Book Services</span>
+                </button>
+
+                <button
+                  onClick={() => navigate(`/services`)}
+                  style={{
+                    flex: 1,
+                    padding: '8px',
+                    borderRadius: '6px',
+                    background: 'rgba(99, 102, 241, 0.15)',
+                    border: '1px solid rgba(99, 102, 241, 0.3)',
+                    color: 'var(--accent-indigo)',
+                    fontSize: '0.78rem',
+                    fontWeight: 700,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <span>All Niches Hub →</span>
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </div>

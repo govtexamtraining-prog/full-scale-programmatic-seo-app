@@ -16,28 +16,6 @@ const DEFAULT_SETTINGS = {
 
 const DEFAULT_AFFILIATES = [
   {
-    id: 'rupeek-gold-loan',
-    badge: '⚡ 0.79% Lowest Interest',
-    title: 'Instant Doorstep Gold Loan in 30 Mins',
-    description: 'Maximum value per gram for 22K/24K jewellery. Zero processing fee, RBI regulated partners, and certified doorstep appraisal.',
-    ctaText: 'Check Free Loan Eligibility',
-    url: 'https://rupeek.com?ref=antigravity_pseo',
-    category: 'gold',
-    active: true,
-    accentColor: '#fbbf24'
-  },
-  {
-    id: 'jar-digital-gold',
-    badge: '🏆 24K 99.9% BIS Hallmark',
-    title: 'Automate Daily Micro-Gold Savings from ₹10',
-    description: 'Grow your wealth with 100% insured physical gold stored in secure bank vaults. Liquidate or get physical coins delivered anytime.',
-    ctaText: 'Start Micro-Gold Savings',
-    url: 'https://myjar.app?ref=antigravity_pseo',
-    category: 'gold',
-    active: true,
-    accentColor: '#f59e0b'
-  },
-  {
     id: 'testbook-pass-pro',
     badge: '🎯 50,000+ Mock Tests & PYQs',
     title: 'Testbook Pass Pro 2026: Official Test Series',
@@ -57,16 +35,38 @@ const DEFAULT_AFFILIATES = [
     url: 'https://adda247.com?ref=antigravity_pseo',
     category: 'exam',
     active: true,
-    accentColor: '#f43f5e'
+    accentColor: '#dc2626'
   },
   {
-    id: 'rupay-credit-card',
-    badge: '💳 Lifetime Free RuPay Card',
-    title: 'Get 5% Instant UPI Cashback on Fuel & Gold',
-    description: 'Link directly to Google Pay or PhonePe. Zero joining fees, zero annual charges, and instant digital approval.',
-    ctaText: 'Apply Pre-Approved Card',
-    url: 'https://bankbazaar.com?ref=antigravity_pseo',
-    category: 'finance',
+    id: 'home-appliance-care',
+    badge: '⚡ ₹399 Doorstep AC Protection',
+    title: 'Annual AC & Appliance Protection Plan',
+    description: 'Unlimited free gas top-ups, electrical servicing, and certified technician warranty across all Indian metros.',
+    ctaText: 'Check Service Coverage',
+    url: 'https://urbancompany.com?ref=antigravity_pseo',
+    category: 'home-services',
+    active: true,
+    accentColor: '#ea580c'
+  },
+  {
+    id: 'indiafilings-gst',
+    badge: '⚖️ 100% Online Company & GST',
+    title: 'Fast GST Registration & Private Limited Incorporation',
+    description: 'Connect with senior Chartered Accountants and corporate lawyers. Paperless filing completed in 3 working days.',
+    ctaText: 'Start Business Registration',
+    url: 'https://indiafilings.com?ref=antigravity_pseo',
+    category: 'legal',
+    active: true,
+    accentColor: '#7c3aed'
+  },
+  {
+    id: 'cult-fitness-pass',
+    badge: '🧘 Multi-Center Gym Access',
+    title: 'CultPass All-India Gym, Yoga & CrossFit Access',
+    description: 'Work out across 500+ premium fitness centers in Delhi, Mumbai, Bengaluru, Chennai, and Coimbatore with one flexible pass.',
+    ctaText: 'Claim 3-Day Free Trial',
+    url: 'https://cult.fit?ref=antigravity_pseo',
+    category: 'wellness',
     active: true,
     accentColor: '#10b981'
   }
@@ -190,7 +190,14 @@ export function MonetizationProvider({ children }) {
   const [affiliates, setAffiliates] = useState(() => {
     try {
       const saved = localStorage.getItem('ga_affiliates_db');
-      return saved ? JSON.parse(saved) : DEFAULT_AFFILIATES;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed.some(a => a.category === 'gold')) {
+          return DEFAULT_AFFILIATES;
+        }
+        return parsed;
+      }
+      return DEFAULT_AFFILIATES;
     } catch {
       return DEFAULT_AFFILIATES;
     }

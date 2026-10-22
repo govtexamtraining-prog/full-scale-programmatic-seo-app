@@ -20,12 +20,12 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
   // 1. Home / National Hub
   if (currentPath === "/" || route === "home") {
     return {
-      title: `Google Antigravity: Live Daily Fuel Rates, Gold Prices & Sarkari Exams (${CURRENT_MONTH_YEAR})`,
-      metaDescription: `India's Centralized Public Data Portal. Instant real-time petrol & diesel rates, 22K/24K gold rates across 30+ cities, and official Sarkari exam schedules, admit cards & results.`,
+      title: `Google Antigravity: Sarkari Result 2026, Home Services, Coaching & Local Directory (${CURRENT_MONTH_YEAR})`,
+      metaDescription: `India's Centralized Public Portal for 2026 Sarkari Exam schedules, admit cards, verified Home Services (AC repair, plumbing), Coaching Academies, Legal & CA retainers, and Wellness Hubs across 750+ districts.`,
       canonicalUrl: `${APP_BASE_URL}/`,
-      h1: "India's Live Public Data & Micro-Keyword Portal",
-      h2: "Real-Time Commodities, Daily City Rates & National Exam Timelines",
-      keywords: "petrol price today, diesel price today, gold rate 22k today, sarkari result 2026, upsc prelims, fuel rates india, public data portal",
+      h1: "Sarkari Exam Board & Verified Public Services Directory",
+      h2: "Official 2026 Recruitment Notifications, Verified Home Services & Local Professional Directory",
+      keywords: "sarkari result 2026, upsc prelims admit card, ssc cgl recruitment, ac repair service, coaching institutes, ca gst filing, top gyms india, public services directory",
       ogType: "website"
     };
   }

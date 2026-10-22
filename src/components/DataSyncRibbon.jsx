@@ -75,10 +75,10 @@ export default function DataSyncRibbon() {
               letterSpacing: '0.04em'
             }}>
               <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--green-primary)', boxShadow: '0 0 6px var(--green-primary)' }} />
-              LIVE TICKER
+              LIVE RADAR
             </span>
             <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-              Daily fuel rates & gold spot prices synchronized live ({liveDataSource} • <strong>{lastSyncTime || '07:45 AM IST'}</strong>).
+              14 Active 2026 Sarkari Exam Circulars & 750+ District Verified Services Active (Updated <strong>{lastSyncTime || 'Today'}</strong> • Sub-100ms Verified Data).
             </span>
           </>
         )}

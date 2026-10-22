@@ -14,7 +14,10 @@ import {
   RefreshCw,
   SlidersHorizontal,
   Radio,
-  Lock
+  Lock,
+  Briefcase,
+  FileText,
+  HeartPulse
 } from 'lucide-react';
 import { useLiveData } from '../context/LiveDataContext';
 
@@ -36,11 +39,11 @@ export default function Navbar({
 
   const navItems = [
     { label: "Dashboard", route: "/", icon: Zap },
-    { label: "Fuel Prices", route: "/fuel-prices", icon: Fuel },
-    { label: "Gold Rates", route: "/gold-rates", icon: Coins },
     { label: "Sarkari Exams", route: "/exam-schedules", icon: GraduationCap },
-    { label: "Services Hub", route: "/services", icon: Wrench },
-    { label: "Sitemap", route: "/sitemap.xml", icon: FileCode }
+    { label: "Home Services", route: "/home-services", icon: Wrench },
+    { label: "Coaching Hub", route: "/coaching-institutes", icon: Briefcase },
+    { label: "Legal & CA", route: "/legal-tax-services", icon: FileText },
+    { label: "Wellness & Gyms", route: "/wellness-fitness", icon: HeartPulse }
   ];
 
   return (

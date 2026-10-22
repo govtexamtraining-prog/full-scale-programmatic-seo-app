@@ -162,39 +162,42 @@ export default function UniversalSearchModal({ isOpen, onClose, navigate }) {
                   </div>
                   <div style={{ display: 'flex', gap: '4px' }}>
                     <button
-                      onClick={() => handleSelect(`/fuel-prices/${city.stateSlug}/${city.slug}`)}
+                      onClick={() => handleSelect(`/home-services/ac-repair-service/${city.stateSlug}/${city.slug}`)}
                       style={{
                         fontSize: '0.7rem',
-                        padding: '3px 6px',
+                        padding: '3px 8px',
                         borderRadius: '4px',
-                        background: 'var(--bg-secondary)',
-                        color: 'var(--text-primary)',
-                        border: '1px solid var(--bg-card-border)',
+                        background: 'rgba(234, 88, 12, 0.15)',
+                        color: '#ea580c',
+                        border: '1px solid rgba(234, 88, 12, 0.3)',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '2px'
+                        gap: '4px',
+                        fontWeight: 700,
+                        cursor: 'pointer'
                       }}
-                      title={`View ${city.name} Fuel Prices`}
+                      title={`View ${city.name} Home Services`}
                     >
-                      <Fuel size={11} /> Fuel
+                      <Wrench size={11} /> Services
                     </button>
                     <button
-                      onClick={() => handleSelect(`/gold-rates/${city.stateSlug}/${city.slug}`)}
+                      onClick={() => handleSelect(`/coaching-institutes/upsc-ias-coaching/${city.stateSlug}/${city.slug}`)}
                       style={{
                         fontSize: '0.7rem',
-                        padding: '3px 6px',
+                        padding: '3px 8px',
                         borderRadius: '4px',
-                        background: 'var(--gold-bg)',
-                        color: 'var(--gold-primary)',
-                        border: '1px solid rgba(217,119,6,0.2)',
+                        background: 'rgba(37, 99, 235, 0.15)',
+                        color: '#2563eb',
+                        border: '1px solid rgba(37, 99, 235, 0.3)',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '2px',
-                        fontWeight: 600
+                        gap: '4px',
+                        fontWeight: 700,
+                        cursor: 'pointer'
                       }}
-                      title={`View ${city.name} Gold Rates`}
+                      title={`View ${city.name} Coaching Academies`}
                     >
-                      <Coins size={11} /> Gold
+                      <GraduationCap size={11} /> Academies
                     </button>
                   </div>
                 </div>
