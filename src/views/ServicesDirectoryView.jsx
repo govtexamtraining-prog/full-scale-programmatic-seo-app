@@ -55,7 +55,12 @@ export default function ServicesDirectoryView({ navigate, initialNicheSlug = nul
   return (
     <div>
       <Breadcrumbs 
-        items={[{ label: "India Services & Traffic Density Matrix", path: "/services" }]} 
+        items={initialNicheSlug ? [
+          { label: "Services Matrix", path: "/services" },
+          { label: NICHES.find(n => n.slug === initialNicheSlug)?.name || "Services Hub", path: `/${initialNicheSlug}` }
+        ] : [
+          { label: "India Services & Traffic Density Matrix", path: "/services" }
+        ]} 
         navigate={navigate} 
       />
 
@@ -161,30 +166,95 @@ export default function ServicesDirectoryView({ navigate, initialNicheSlug = nul
                       {niche.competitionLevel}
                     </span>
                   </td>
-                  <td style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                    {niche.services.slice(0, 3).map(s => s.shortName).join(', ')}...
+                  <td style={{ fontSize: '0.8rem' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+                      {niche.services.slice(0, 4).map(s => (
+                        <a
+                          key={s.slug}
+                          href={`/${niche.slug}/${s.slug}/${currentCity.stateSlug}/${currentCity.slug}`}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(`/${niche.slug}/${s.slug}/${currentCity.stateSlug}/${currentCity.slug}`);
+                          }}
+                          style={{
+                            fontSize: '0.72rem',
+                            fontWeight: 600,
+                            color: 'var(--text-primary)',
+                            background: 'var(--bg-tertiary)',
+                            border: '1px solid var(--bg-card-border)',
+                            padding: '2px 7px',
+                            borderRadius: '4px',
+                            textDecoration: 'none',
+                            display: 'inline-block',
+                            transition: 'all 0.15s ease'
+                          }}
+                          title={`Explore ${s.name} in ${currentCity.name}`}
+                        >
+                          {s.shortName}
+                        </a>
+                      ))}
+                    </div>
                   </td>
                   <td>
-                    <button
-                      onClick={() => {
-                        setSelectedNiche(niche.slug);
-                        window.scrollTo({ top: 520, behavior: 'smooth' });
-                      }}
-                      style={{
-                        fontSize: '0.78rem',
-                        fontWeight: 700,
-                        color: niche.color,
-                        background: niche.bgColor,
-                        padding: '4px 10px',
-                        borderRadius: '6px',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '4px'
-                      }}
-                    >
-                      <span>View Services</span>
-                      <ArrowRight size={12} />
-                    </button>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedNiche(niche.slug);
+                          const el = document.getElementById('services-grid-section');
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                          } else {
+                            navigate(`/${niche.slug}`);
+                          }
+                        }}
+                        style={{
+                          fontSize: '0.76rem',
+                          fontWeight: 700,
+                          color: '#ffffff',
+                          background: niche.color,
+                          padding: '6px 12px',
+                          borderRadius: '6px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '5px',
+                          border: 'none',
+                          cursor: 'pointer',
+                          boxShadow: `0 2px 10px ${niche.color}50`,
+                          transition: 'all 0.18s ease'
+                        }}
+                        title={`View ${niche.name} cards in ${currentCity.name}`}
+                      >
+                        <span>View Services</span>
+                        <ArrowRight size={12} />
+                      </button>
+
+                      <a
+                        href={`/${niche.slug}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(`/${niche.slug}`);
+                        }}
+                        style={{
+                          fontSize: '0.74rem',
+                          fontWeight: 700,
+                          color: 'var(--text-primary)',
+                          background: 'var(--bg-tertiary)',
+                          border: '1px solid var(--bg-card-border)',
+                          padding: '5px 9px',
+                          borderRadius: '6px',
+                          textDecoration: 'none',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '3px',
+                          transition: 'all 0.18s ease'
+                        }}
+                        title={`Open dedicated ${niche.name} Hub`}
+                      >
+                        <span>Hub</span>
+                        <ArrowRight size={10} />
+                      </a>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -287,7 +357,16 @@ export default function ServicesDirectoryView({ navigate, initialNicheSlug = nul
       <AdSlot slotType="in-feed" slotId="services-directory-mid-feed" />
 
       {/* SERVICES GRID ORGANIZED BY NICHE */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem', marginBottom: '3rem' }}>
+      <div 
+        id="services-grid-section" 
+        style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          gap: '3rem', 
+          marginBottom: '3rem',
+          scrollMarginTop: '100px'
+        }}
+      >
         {filteredNiches.map(niche => {
           const matchedServices = niche.services.filter(s => {
             if (!searchQuery) return true;
