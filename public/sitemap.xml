@@ -3,7 +3,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <!-- UrbanSarkari Programmatic Engine Sitemap -->
-  <!-- Total High-Traffic Indexed URLs: 597 -->
+  <!-- Total High-Traffic Indexed URLs: 668 -->
   <url>
     <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/</loc>
     <lastmod>2026-10-22</lastmod>
@@ -14,13 +14,37 @@
     <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>hourly</changefreq>
-    <priority>0.95</priority>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/central</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.98</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/category/jobs</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.98</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/category/admit-card</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.98</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/category/results</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.98</priority>
   </url>
   <url>
     <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/services</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.95</priority>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/home-services</loc>
@@ -77,6 +101,204 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/uttar-pradesh</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/bihar</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/rajasthan</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/madhya-pradesh</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/maharashtra</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/tamil-nadu</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/karnataka</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/andhra-pradesh</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/telangana</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/west-bengal</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/gujarat</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/haryana</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/punjab</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/odisha</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/jharkhand</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/kerala</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/delhi</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/jammu-and-kashmir</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/himachal-pradesh</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/uttarakhand</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/assam</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/chhattisgarh</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/goa</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/tripura</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/meghalaya</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/manipur</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/nagaland</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/mizoram</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/arunachal-pradesh</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/sikkim</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/chandigarh</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/puducherry</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/state/ladakh</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.96</priority>
+  </url>
+  <url>
     <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/upsc/civil-services-ias-prelims-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
@@ -89,7 +311,7 @@
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/ibps/po-recruitment-2026</loc>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/rrb/rrb-ntpc-graduate-level-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -101,7 +323,19 @@
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/tnpsc/group-4-services-vao-2026</loc>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/rrb/rrb-group-d-level-1-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/ibps/po-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/sbi/sbi-po-recruitment-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -113,13 +347,19 @@
     <priority>0.95</priority>
   </url>
   <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/ssc/gd-constable-final-result-merit-list-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
     <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/nta/ugc-net-june-session-admit-card-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/rrb/ntpc-graduate-cbt-2-admit-card-2026</loc>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/cbse/ctet-eligibility-test-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -137,31 +377,217 @@
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/ssc/gd-constable-final-result-merit-list-2026</loc>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/defence/indian-army-agniveer-rally-recruitment-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/sbi/sbi-po-recruitment-2026</loc>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/upprpb/up-police-constable-recruitment-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/rrb/rrb-group-d-level-1-2026</loc>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/uppsc/uppsc-pcs-prelims-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/cbse/ctet-eligibility-test-2026</loc>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/upsssc/upsssc-pet-preliminary-eligibility-test-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/bpsc/bpsc-70th-cce-prelims-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/bpsc/bihar-teacher-tre-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/csbc/bihar-police-constable-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/rpsc/rpsc-ras-rts-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/rsmssb/rsmssb-cet-senior-secondary-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/tnpsc/group-4-services-vao-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
     <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/tnpsc/group-2-2a-mains-admit-card-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/mpsc/mpsc-gazetted-civil-services-prelims-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/maha-police/maharashtra-police-constable-bharti-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/mppsc/mppsc-state-service-exam-sse-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/mpesb/mp-police-constable-vyapam-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/kpsc/kpsc-kas-gazetted-probationers-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/ksp/karnataka-police-civil-constable-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/appsc/appsc-group-2-services-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/tgpsc/tgpsc-group-1-services-mains-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/wbpsc/wbcs-executive-prelims-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/wbprb/wb-police-constable-lady-constable-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/gpsc/gpsc-class-1-2-prelims-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/gsssb/gsssb-cce-group-a-b-clerk-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/hssc/hssc-cet-group-c-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/pun-police/punjab-police-constable-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/dsssb/dsssb-tgt-pgt-teacher-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/osssc/osssc-combined-recruitment-ri-ari-amin-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/jssc/jssc-cgl-jgglcce-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/kerala-psc/kerala-administrative-service-kas-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/apsc/apsc-cce-prelims-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/slrc-assam/assam-direct-recruitment-adre-grade-3-4-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/jkpsc/jkpsc-cce-prelims-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/jkssb/jkssb-jk-police-constable-recruitment-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/hppsc/hppsc-hpas-administrative-services-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/ukpsc/ukpsc-pcs-upper-subordinate-2026</loc>
+    <lastmod>2026-10-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://govtexamtraining-prog.github.io/full-scale-programmatic-seo-app/exam-schedules/cgpsc/cgpsc-state-service-sse-recruitment-2026</loc>
     <lastmod>2026-10-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>

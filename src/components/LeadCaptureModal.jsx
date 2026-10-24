@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   Phone, 
@@ -22,7 +22,8 @@ export default function LeadCaptureModal({
   service, 
   niche, 
   city, 
-  provider 
+  provider,
+  ctaTitle = ''
 }) {
   const { addLead, settings } = useMonetization();
 
@@ -38,40 +39,62 @@ export default function LeadCaptureModal({
   const [leadResult, setLeadResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
 
-  if (!isOpen) return null;
-
   const cityName = city?.name || "Your City";
   const stateName = city?.state || "India";
   const serviceName = service?.name || niche?.name || "Service";
+
+  const handleReset = () => {
+    setIsSuccess(false);
+    setFormData({ fullName: '', phone: '', locality: '', preferredSlot: 'immediate', notes: '' });
+    setErrorMsg('');
+    setLeadResult(null);
+    onClose();
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        handleReset();
+      }
+    };
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
 
   const getModalTitles = () => {
     switch (niche?.monetizationType) {
       case 'student-acquisition':
         return {
-          title: `Apply for Free Counseling & Syllabus`,
+          title: ctaTitle ? `${ctaTitle} (2026)` : `Apply for Free Counseling & Syllabus`,
           subtitle: `Get 2026 fee structure, scholarship test details & 1-on-1 counseling for ${cityName}`,
-          ctaButton: "Book Free 1-on-1 Trial Class",
+          ctaButton: ctaTitle || "Book Free 1-on-1 Trial Class",
           iconBadge: "🎓 Admission Open 2026"
         };
       case 'retainer-lead':
         return {
-          title: `Book Confidential Consultation`,
-          subtitle: `Connect with a verified Advocate / Chartered Accountant in ${cityName}`,
-          ctaButton: "Schedule Consultation Call",
+          title: ctaTitle ? `${ctaTitle} (2026)` : `Book Confidential Consultation`,
+          subtitle: provider?.businessName 
+            ? `Get verified retainer quote & fee schedule for ${provider.businessName} in ${cityName}`
+            : `Connect with a verified Advocate / Chartered Accountant in ${cityName}`,
+          ctaButton: ctaTitle || "Schedule Consultation Call",
           iconBadge: "⚖️ Confidential & Verified"
         };
       case 'subscription-ad':
         return {
-          title: `Claim 1-Day Free Guest Pass`,
+          title: ctaTitle ? `${ctaTitle} (2026)` : `Claim 1-Day Free Guest Pass`,
           subtitle: `Experience top facilities, trainer floor access & zero commitment in ${cityName}`,
-          ctaButton: "Claim My Free Guest Pass",
+          ctaButton: ctaTitle || "Claim My Free Guest Pass",
           iconBadge: "🎟️ 100% Free Pass"
         };
       default: // lead-call / home-services
         return {
-          title: `Book Instant Doorstep Service`,
+          title: ctaTitle ? `${ctaTitle} (2026)` : `Book Instant Doorstep Service`,
           subtitle: `Zero booking advance. Verified specialist dispatched to your doorstep in ${cityName}`,
-          ctaButton: "Confirm & Request Callback",
+          ctaButton: ctaTitle || "Confirm & Request Callback",
           iconBadge: "⚡ 15-Min Rapid Callback"
         };
     }
@@ -114,18 +137,20 @@ export default function LeadCaptureModal({
     }, 500);
   };
 
-  const handleReset = () => {
-    setIsSuccess(false);
-    setFormData({ fullName: '', phone: '', locality: '', preferredSlot: 'immediate', notes: '' });
-    setErrorMsg('');
-    setLeadResult(null);
-    onClose();
-  };
-
   return (
     <div 
-      className="inspector-drawer" 
-      style={{ alignItems: 'center', justifyContent: 'center', padding: '1rem' }}
+      style={{ 
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        background: 'rgba(0, 0, 0, 0.78)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        display: 'flex',
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        padding: '1rem' 
+      }}
       onClick={handleReset}
     >
       <div 
@@ -137,7 +162,7 @@ export default function LeadCaptureModal({
           padding: '2rem', 
           borderRadius: '20px',
           border: '1px solid var(--bg-card-border)',
-          boxShadow: '0 24px 60px rgba(0,0,0,0.4)',
+          boxShadow: '0 24px 60px rgba(0,0,0,0.6)',
           maxHeight: '92vh',
           overflowY: 'auto'
         }}
@@ -188,11 +213,11 @@ export default function LeadCaptureModal({
           fontSize: '0.85rem'
         }}>
           <div>
-            <span style={{ color: 'var(--text-muted)' }}>Target Service: </span>
-            <strong>{serviceName}</strong>
+            <span style={{ color: 'var(--text-muted)' }}>{provider ? 'Target Professional: ' : 'Target Service: '}</span>
+            <strong>{provider?.businessName || provider?.name || serviceName}</strong>
           </div>
           <div style={{ color: 'var(--accent-indigo)', fontWeight: 600 }}>
-            📍 {cityName}
+            📍 {provider?.locality ? `${provider.locality}, ${cityName}` : cityName}
           </div>
         </div>
 

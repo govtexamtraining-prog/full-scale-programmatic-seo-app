@@ -89,7 +89,36 @@ function AppContent() {
     if (clean === '/') return { view: 'home', params: {} };
     if (clean === '/fuel-prices') return { view: 'fuel-hub', params: {} };
     if (clean === '/gold-rates') return { view: 'gold-hub', params: {} };
-    if (clean === '/exam-schedules') return { view: 'exam-hub', params: {} };
+    if (clean === '/exam-schedules' || clean === '/exams' || clean === '/sarkari-results') {
+      return { view: 'exam-hub', params: {} };
+    }
+    if (clean === '/exam-schedules/central' || clean === '/exams/central') {
+      return { view: 'exam-hub', params: { stateSlug: 'central' } };
+    }
+
+    // Match /exam-schedules/state/[stateSlug] or /exams/state/[stateSlug]
+    const examStateMatch = clean.match(/^\/(?:exam-schedules|exams)\/state\/([^/]+)$/);
+    if (examStateMatch) {
+      return { view: 'exam-hub', params: { stateSlug: examStateMatch[1] } };
+    }
+
+    // Match /exam-schedules/category/[category] or /exams/category/[category]
+    const examCatMatch = clean.match(/^\/(?:exam-schedules|exams)\/category\/([^/]+)$/);
+    if (examCatMatch) {
+      return { view: 'exam-hub', params: { category: examCatMatch[1] } };
+    }
+
+    // Match /exam-schedules/[org]/[postSlug] or /exams/[org]/[postSlug]
+    const examMatch = clean.match(/^\/(?:exam-schedules|exams)\/([^/]+)\/([^/]+)$/);
+    if (examMatch) {
+      if (examMatch[1] !== 'state' && examMatch[1] !== 'category') {
+        return { 
+          view: 'exam-detail', 
+          params: { orgSlug: examMatch[1], postSlug: examMatch[2] } 
+        };
+      }
+    }
+
     if (clean === '/services' || clean === '/directory') return { view: 'services-hub', params: {} };
     if (clean === '/admin') return { view: 'admin', params: {} };
     if (clean === '/sitemap.xml') return { view: 'sitemap', params: {} };
@@ -122,15 +151,6 @@ function AppContent() {
       return { 
         view: 'gold-city', 
         params: { stateSlug: goldMatch[1], citySlug: goldMatch[2] } 
-      };
-    }
-
-    // Match /exam-schedules/[org]/[postSlug]
-    const examMatch = clean.match(/^\/exam-schedules\/([^/]+)\/([^/]+)$/);
-    if (examMatch) {
-      return { 
-        view: 'exam-detail', 
-        params: { orgSlug: examMatch[1], postSlug: examMatch[2] } 
       };
     }
 
@@ -281,7 +301,13 @@ function AppContent() {
             navigate={navigate} 
           />
         )}
-        {routeInfo.view === 'exam-hub' && <ExamsVerticalView navigate={navigate} />}
+        {routeInfo.view === 'exam-hub' && (
+          <ExamsVerticalView 
+            navigate={navigate} 
+            initialStateSlug={routeInfo.params.stateSlug} 
+            initialCategory={routeInfo.params.category} 
+          />
+        )}
         {routeInfo.view === 'exam-detail' && (
           <ExamDetailView 
             orgSlug={routeInfo.params.orgSlug} 

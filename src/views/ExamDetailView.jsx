@@ -81,6 +81,9 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
       <Breadcrumbs 
         items={[
           { label: "Sarkari Exams", path: "/exam-schedules" },
+          exam.isCentral 
+            ? { label: "Central Govt", path: "/exam-schedules/central" }
+            : { label: exam.stateName, path: `/exam-schedules/state/${exam.stateSlug}` },
           { label: exam.org, path: "/exam-schedules" },
           { label: exam.postName, path: `/exam-schedules/${orgSlug}/${postSlug}` }
         ]} 
@@ -100,7 +103,7 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
       }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1.25rem' }}>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.5rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.5rem', flexWrap: 'wrap' }}>
               <span style={{ 
                 background: isJob ? '#dc2626' : isAdmitCard ? '#1e40af' : '#065f46', 
                 color: 'white', 
@@ -110,6 +113,21 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
                 borderRadius: '4px' 
               }}>
                 {exam.org}
+              </span>
+              <span 
+                onClick={() => navigate(exam.isCentral ? '/exam-schedules/central' : `/exam-schedules/state/${exam.stateSlug}`)}
+                style={{ 
+                  fontSize: '0.75rem', 
+                  color: '#00f0ff',
+                  background: 'rgba(0, 240, 255, 0.1)',
+                  border: '1px solid rgba(0, 240, 255, 0.3)',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  fontWeight: 700,
+                  cursor: 'pointer'
+                }}
+              >
+                {exam.stateName}
               </span>
               <span style={{ fontSize: '0.825rem', color: 'var(--text-muted)' }}>
                 {exam.orgFullName}
@@ -393,7 +411,7 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
             <tbody>
               <tr>
                 <td style={{ fontWeight: 700 }}>
-                  {isJob ? "Apply Online (Registration & Login)" : isAdmitCard ? "Download Admit Card / Hall Ticket" : "Check Written Result & Scorecard"}
+                  Apply Online (Registration & Form Submission)
                 </td>
                 <td>
                   <a 
@@ -408,13 +426,88 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
                       gap: '4px'
                     }}
                   >
-                    <span>Click Here to Proceed</span>
+                    <span>Click Here to Apply Direct</span>
                     <ExternalLink size={13} />
                   </a>
                 </td>
                 <td>
                   <span style={{ background: 'var(--green-bg)', color: 'var(--green-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: 700 }}>
-                    Active Link
+                    Active Portal
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700 }}>Download Admit Card / Hall Ticket</td>
+                <td>
+                  <a 
+                    href={exam.admitCardLink || exam.applyLink} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ 
+                      color: 'var(--accent-blue)', 
+                      fontWeight: 700,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                  >
+                    <span>Click Here for Hall Ticket</span>
+                    <Download size={13} />
+                  </a>
+                </td>
+                <td>
+                  <span style={{ background: 'rgba(99, 102, 241, 0.15)', color: '#818cf8', padding: '2px 8px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: 700 }}>
+                    {exam.admitCardStatus ? 'Available / Live' : 'Link Active'}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700 }}>Check Result & Scorecard PDF</td>
+                <td>
+                  <a 
+                    href={exam.resultPdfLink || exam.officialWebsite} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ 
+                      color: 'var(--accent-blue)', 
+                      fontWeight: 700,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                  >
+                    <span>Click Here for Result PDF</span>
+                    <ExternalLink size={13} />
+                  </a>
+                </td>
+                <td>
+                  <span style={{ background: 'rgba(0, 255, 157, 0.15)', color: '#00ff9d', padding: '2px 8px', borderRadius: '4px', fontSize: '0.78rem', fontWeight: 700 }}>
+                    Official Merit List
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ fontWeight: 700 }}>Official Answer Key & Objection Portal</td>
+                <td>
+                  <a 
+                    href={exam.answerKeyLink || exam.officialWebsite} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ 
+                      color: 'var(--accent-blue)', 
+                      fontWeight: 700,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px'
+                    }}
+                  >
+                    <span>Click Here for Answer Key</span>
+                    <ExternalLink size={13} />
+                  </a>
+                </td>
+                <td>
+                  <span style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.78rem' }}>
+                    {exam.answerKeyStatus || 'Official Keys'}
                   </span>
                 </td>
               </tr>
@@ -433,18 +526,18 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
                       gap: '4px'
                     }}
                   >
-                    <span>Click Here for Official Circular</span>
+                    <span>Click Here for Notification PDF</span>
                     <ExternalLink size={13} />
                   </a>
                 </td>
                 <td>
                   <span style={{ background: 'var(--bg-tertiary)', color: 'var(--text-primary)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.78rem' }}>
-                    Gazette PDF
+                    Official Circular
                   </span>
                 </td>
               </tr>
               <tr>
-                <td style={{ fontWeight: 700 }}>Official Authority Website ({exam.org})</td>
+                <td style={{ fontWeight: 700 }}>Official Authority Portal ({exam.org})</td>
                 <td>
                   <a 
                     href={exam.officialWebsite} 
@@ -474,15 +567,54 @@ export default function ExamDetailView({ orgSlug, postSlug, navigate }) {
       </section>
 
       {/* Syllabus & Exam Pattern Overview */}
-      <section className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2.5rem' }}>
+      <section className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
         <h2 style={{ fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.75rem' }}>
           <BookOpen size={18} style={{ color: 'var(--accent-blue)' }} />
           <span>Syllabus & Selection Pattern Summary</span>
         </h2>
-        <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--text-secondary)' }}>
+        <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
           {exam.syllabusSummary}
         </p>
+
+        {exam.selectionProcess && (
+          <div style={{
+            background: 'var(--bg-primary)',
+            border: '1px solid var(--bg-card-border)',
+            borderRadius: '10px',
+            padding: '1rem',
+            marginTop: '1rem'
+          }}>
+            <strong style={{ fontSize: '0.85rem', color: '#00f0ff', display: 'block', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              Selection Process Stages:
+            </strong>
+            <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
+              {exam.selectionProcess}
+            </p>
+          </div>
+        )}
       </section>
+
+      {/* FAQs Section for Google Snippets & Aspirants */}
+      {exam.faqs && exam.faqs.length > 0 && (
+        <section className="glass-panel" style={{ padding: '1.5rem', marginBottom: '2.5rem' }}>
+          <h2 style={{ fontSize: '1.15rem', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '1rem' }}>
+            <FileText size={18} style={{ color: '#00ff9d' }} />
+            <span>Frequently Asked Questions ({exam.org} {exam.postName})</span>
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+            {exam.faqs.map((faq, idx) => (
+              <div key={idx} style={{ background: 'var(--bg-primary)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--bg-card-border)' }}>
+                <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '0.92rem', color: 'var(--text-primary)', fontWeight: 700 }}>
+                  Q: {faq.q}
+                </h4>
+                <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                  {faq.a}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Fixed Ad Placement */}
       <AdSlot slotType="mpu" slotId="exam-detail-mpu" />

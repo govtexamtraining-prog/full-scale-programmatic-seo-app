@@ -6,6 +6,7 @@ import { FUEL_DATA, NATIONAL_FUEL_AVERAGES } from '../data/fuelData';
 import { GOLD_DATA, NATIONAL_GOLD_AVERAGES } from '../data/goldData';
 import { SARKARI_EXAMS } from '../data/examData';
 import { NICHES, getNicheBySlug, getServiceBySlugs } from '../data/servicesData';
+import { getStateInfoBySlug } from '../data/indianStates';
 
 export const APP_BASE_URL = typeof window !== 'undefined' && window.location.origin 
   ? (window.location.origin + (window.location.pathname.startsWith('/full-scale-programmatic-seo-app') ? '/full-scale-programmatic-seo-app' : ''))
@@ -120,15 +121,52 @@ export function generateSeoMetadata(route, params = {}, data = {}) {
     };
   }
 
-  // 6. Vertical: Sarkari Exams Hub
-  if (route === "exam-hub" || currentPath === "/exam-schedules") {
+  // 6. Vertical: Sarkari Exams Hub (National, Central, State-specific, and Category routes)
+  if (route === "exam-hub" || currentPath.startsWith("/exam-schedules") || currentPath.startsWith("/exams")) {
+    const stateSlug = params.stateSlug;
+    const category = params.category;
+    let title = `Sarkari Exam Schedules, Admit Cards & Results 2026 - Central & All States Government Jobs`;
+    let metaDescription = `Fast, clean Sarkari public notifications for UPSC, SSC, IBPS, RRB, and All 28 State PSC exams 2026. Official download links for Admit Cards, Notifications, and Result Scorecards across all Indian states.`;
+    let h1 = "Sarkari Exam Schedules, Admit Cards & Results 2026";
+    let h2 = "Direct Official Registration Links, Exam Timelines & Vacancy Breakdown Across India";
+
+    if (stateSlug === 'central') {
+      title = `Central Govt Exams, Admit Cards & Results 2026 - UPSC, SSC, RRB, Banking, Defence Jobs`;
+      metaDescription = `All Central Government recruitment notifications 2026 for UPSC IAS, SSC CGL/CHSL/GD, Railway RRB NTPC/ALP/Group D, IBPS & SBI Banking, and Indian Armed Forces.`;
+      h1 = "Central Government Exam Schedules, Admit Cards & Results 2026";
+      h2 = "UPSC, SSC, Railways RRB, Banking (IBPS/SBI) & Defence Official Notifications";
+    } else if (stateSlug) {
+      const stateInfo = getStateInfoBySlug(stateSlug);
+      const stateTitleName = stateInfo ? stateInfo.name : stateSlug.replace(/-/g, ' ').toUpperCase();
+      const boardsList = stateInfo ? stateInfo.boards.map(b => b.code).join(', ') : 'State PSC';
+      title = `${stateTitleName} Govt Exams & Results 2026 - ${boardsList} Recruitment Notifications`;
+      metaDescription = `Complete ${stateTitleName} government exam notifications, admit cards, answer keys and results for ${boardsList}. Direct official links to apply online and download PDF circulars.`;
+      h1 = `${stateTitleName} Government Exam Schedules, Admit Cards & Results 2026`;
+      h2 = `Official Notifications & Scorecards for ${boardsList} Recruitment Boards`;
+    } else if (category === 'jobs') {
+      title = `Latest Sarkari Jobs & Govt Recruitment 2026 - Apply Online for Central & State Vacancies`;
+      metaDescription = `Apply online for active government jobs in India. Verified recruitment notifications with vacancies, eligibility, salary, and direct application links across all 28 states.`;
+      h1 = "Latest Government Jobs & Active Notifications 2026";
+      h2 = "Apply Online Direct Links, Eligibility & Vacancy Matrices";
+    } else if (category === 'admit-card') {
+      title = `Sarkari Admit Card 2026 - Download Hall Tickets & Exam City Intimation Slips`;
+      metaDescription = `Direct download links for Central and State government exam hall tickets, admit cards, and city allotment slips for UPSC, SSC, RRB, Banking, and State PSCs.`;
+      h1 = "Sarkari Admit Cards & Hall Tickets 2026";
+      h2 = "Direct Download Links, Reporting Timings & Examination Dates";
+    } else if (category === 'results') {
+      title = `Sarkari Result 2026 - Central & State Government Exam Results, Scorecards & Cut-Off Marks`;
+      metaDescription = `Check live government exam results, merit lists, cutoff marks, and scorecards for UPSC, SSC, Railways RRB, Banking, and State PSC examinations across India.`;
+      h1 = "Sarkari Results, Scorecards & Merit Lists 2026";
+      h2 = "Official Scorecards, Category-wise Cut-off Marks & Selection Lists";
+    }
+
     return {
-      title: `Sarkari Exam Schedules, Admit Cards & Results 2026 - Central & State Government Jobs`,
-      metaDescription: `Fast, clean Sarkari public notifications for UPSC, SSC, IBPS, RRB, and State PSC exams 2026. Official download links for Admit Cards, Notifications, and Result Scorecards.`,
-      canonicalUrl: `${APP_BASE_URL}/exam-schedules`,
-      h1: "Sarkari Exam Schedules, Admit Cards & Results 2026",
-      h2: "Direct Official Registration Links, Exam Timelines & Vacancy Breakdown",
-      keywords: "sarkari result, sarkari exam 2026, upsc notification 2026, ssc cgl admit card, ibps po result 2026",
+      title,
+      metaDescription,
+      canonicalUrl: `${APP_BASE_URL}${currentPath}`,
+      h1,
+      h2,
+      keywords: "sarkari result 2026, sarkari exam 2026, all states govt jobs, upsc notification 2026, ssc cgl admit card, rrb ntpc result",
       ogType: "website"
     };
   }

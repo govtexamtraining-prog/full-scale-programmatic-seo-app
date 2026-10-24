@@ -17,7 +17,10 @@ import {
   Lock,
   Briefcase,
   FileText,
-  HeartPulse
+  HeartPulse,
+  Building,
+  Award,
+  Download
 } from 'lucide-react';
 import { useLiveData } from '../context/LiveDataContext';
 
@@ -39,11 +42,11 @@ export default function Navbar({
 
   const navItems = [
     { label: "Dashboard", route: "/", icon: Zap },
-    { label: "Sarkari Exams", route: "/exam-schedules", icon: GraduationCap },
-    { label: "Home Services", route: "/home-services", icon: Wrench },
-    { label: "Coaching Hub", route: "/coaching-institutes", icon: Briefcase },
-    { label: "Legal & CA", route: "/legal-tax-services", icon: FileText },
-    { label: "Wellness & Gyms", route: "/wellness-fitness", icon: HeartPulse }
+    { label: "All Sarkari Exams", route: "/exam-schedules", icon: GraduationCap },
+    { label: "Central Govt", route: "/exam-schedules/central", icon: Building },
+    { label: "Admit Cards", route: "/exam-schedules/category/admit-card", icon: Download },
+    { label: "Results", route: "/exam-schedules/category/results", icon: Award },
+    { label: "Local Services", route: "/services", icon: Wrench }
   ];
 
   return (

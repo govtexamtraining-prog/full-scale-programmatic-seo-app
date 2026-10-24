@@ -38,9 +38,17 @@ export default function HomeView({ navigate }) {
     fetchLiveData 
   } = useLiveData();
 
-  const jobsList = examsData.filter(e => e.category === 'jobs');
-  const admitCardList = examsData.filter(e => e.category === 'admit-card');
-  const resultsList = examsData.filter(e => e.category === 'results');
+  const [examStateFilter, setExamStateFilter] = useState('all');
+
+  const homeFilteredExams = examsData.filter(e => {
+    if (examStateFilter === 'all') return true;
+    if (examStateFilter === 'central') return e.isCentral;
+    return e.stateSlug === examStateFilter;
+  });
+
+  const jobsList = homeFilteredExams.filter(e => e.category === 'jobs').slice(0, 8);
+  const admitCardList = homeFilteredExams.filter(e => e.category === 'admit-card').slice(0, 8);
+  const resultsList = homeFilteredExams.filter(e => e.category === 'results').slice(0, 8);
 
   const currentStateCities = ALL_CITIES.filter(c => c.stateSlug === selectedState);
 
@@ -289,6 +297,59 @@ export default function HomeView({ navigate }) {
           </button>
         </div>
 
+        {/* All India State Switcher Pills */}
+        <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '1.25rem', scrollbarWidth: 'thin' }}>
+          {[
+            { slug: 'all', label: 'All India' },
+            { slug: 'central', label: 'Central Govt' },
+            { slug: 'uttar-pradesh', label: 'Uttar Pradesh' },
+            { slug: 'bihar', label: 'Bihar' },
+            { slug: 'rajasthan', label: 'Rajasthan' },
+            { slug: 'madhya-pradesh', label: 'Madhya Pradesh' },
+            { slug: 'maharashtra', label: 'Maharashtra' },
+            { slug: 'tamil-nadu', label: 'Tamil Nadu' },
+            { slug: 'karnataka', label: 'Karnataka' },
+            { slug: 'andhra-pradesh', label: 'Andhra Pradesh' },
+            { slug: 'telangana', label: 'Telangana' },
+            { slug: 'west-bengal', label: 'West Bengal' },
+            { slug: 'delhi', label: 'Delhi UT' }
+          ].map(st => (
+            <button
+              key={st.slug}
+              onClick={() => setExamStateFilter(st.slug)}
+              style={{
+                background: examStateFilter === st.slug ? '#6366f1' : 'var(--bg-secondary)',
+                color: examStateFilter === st.slug ? 'white' : 'var(--text-secondary)',
+                border: examStateFilter === st.slug ? '1px solid #818cf8' : '1px solid var(--bg-card-border)',
+                padding: '4px 12px',
+                borderRadius: '9999px',
+                fontSize: '0.78rem',
+                fontWeight: examStateFilter === st.slug ? 800 : 600,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap'
+              }}
+            >
+              {st.label}
+            </button>
+          ))}
+          <button
+            onClick={() => navigate('/exam-schedules')}
+            style={{
+              background: 'rgba(0, 240, 255, 0.12)',
+              color: '#00f0ff',
+              border: '1px solid rgba(0, 240, 255, 0.3)',
+              padding: '4px 12px',
+              borderRadius: '9999px',
+              fontSize: '0.78rem',
+              fontWeight: 800,
+              cursor: 'pointer',
+              whiteSpace: 'nowrap'
+            }}
+          >
+            All 28 States & UTs →
+          </button>
+        </div>
+
         <div className="sarkari-grid">
           {/* Column 1: Latest Jobs (Quests) */}
           <div className="sarkari-col">
@@ -317,12 +378,18 @@ export default function HomeView({ navigate }) {
                     onClick={(e) => { e.preventDefault(); navigate(`/exam-schedules/${job.orgSlug}/${job.postSlug}`); }}
                     style={{ textDecoration: 'none', display: 'block' }}
                   >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
+                      <span style={{ color: '#ff2a6d', fontWeight: 800 }}>[{job.org}]</span>
+                      <span style={{ fontSize: '0.68rem', color: 'var(--text-muted)', background: 'rgba(255,255,255,0.06)', padding: '1px 5px', borderRadius: '3px' }}>
+                        {job.stateName}
+                      </span>
+                    </div>
                     <div className="sarkari-item-title">
-                      <span style={{ color: '#ff2a6d', fontWeight: 800 }}>[{job.org}]</span> {job.postName}
+                      {job.postName}
                     </div>
                     <div className="sarkari-item-meta" style={{ flexWrap: 'wrap' }}>
                       <span>Last Date: <strong style={{ color: 'var(--text-primary)' }}>{job.lastDateToApply}</strong></span>
-                      <span>• {job.vacancies.toLocaleString('en-IN')} Posts</span>
+                      <span>• {job.vacancies > 0 ? `${job.vacancies.toLocaleString('en-IN')} Posts` : 'Entrance'}</span>
                     </div>
                   </a>
                   

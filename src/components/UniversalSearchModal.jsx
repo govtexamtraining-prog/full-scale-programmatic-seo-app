@@ -3,6 +3,7 @@ import { Search, X, MapPin, Fuel, Coins, GraduationCap, ArrowRight, Wrench, Spar
 import { ALL_CITIES } from '../data/cities';
 import { SARKARI_EXAMS } from '../data/examData';
 import { NICHES } from '../data/servicesData';
+import { INDIAN_STATES_EXAM_DIRECTORY } from '../data/indianStates';
 
 export default function UniversalSearchModal({ isOpen, onClose, navigate }) {
   const [query, setQuery] = useState('');
@@ -44,13 +45,25 @@ export default function UniversalSearchModal({ isOpen, onClose, navigate }) {
         c.stateName.toLowerCase().includes(cleanQuery)
       ).slice(0, 8);
 
+  // Search state boards
+  const matchedStates = cleanQuery === ''
+    ? []
+    : INDIAN_STATES_EXAM_DIRECTORY.filter(s =>
+        s.name.toLowerCase().includes(cleanQuery) ||
+        s.code.toLowerCase().includes(cleanQuery) ||
+        s.boards.some(b => b.code.toLowerCase().includes(cleanQuery) || b.name.toLowerCase().includes(cleanQuery))
+      ).slice(0, 4);
+
   // Search exams
   const matchedExams = cleanQuery === ''
-    ? SARKARI_EXAMS.slice(0, 3)
+    ? SARKARI_EXAMS.slice(0, 5)
     : SARKARI_EXAMS.filter(e => 
         e.postName.toLowerCase().includes(cleanQuery) ||
-        e.org.toLowerCase().includes(cleanQuery)
-      ).slice(0, 4);
+        e.org.toLowerCase().includes(cleanQuery) ||
+        e.orgFullName?.toLowerCase().includes(cleanQuery) ||
+        e.qualification?.toLowerCase().includes(cleanQuery) ||
+        e.stateName?.toLowerCase().includes(cleanQuery)
+      ).slice(0, 6);
 
   // Search services across all 4 niches
   const allServices = NICHES.flatMap(n => n.services.map(s => ({
@@ -204,6 +217,50 @@ export default function UniversalSearchModal({ isOpen, onClose, navigate }) {
               ))}
             </div>
           </div>
+
+          {/* Matched State & Central Exam Authorities */}
+          {matchedStates.length > 0 && (
+            <div>
+              <div style={{ 
+                fontSize: '0.75rem', 
+                fontWeight: 700, 
+                color: 'var(--text-muted)', 
+                textTransform: 'uppercase', 
+                letterSpacing: '0.05em',
+                marginBottom: '0.5rem' 
+              }}>
+                State & Central Exam Boards
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '0.5rem', marginBottom: '1rem' }}>
+                {matchedStates.map(st => (
+                  <div
+                    key={st.slug}
+                    onClick={() => handleSelect(st.slug === 'central' ? '/exam-schedules/central' : `/exam-schedules/state/${st.slug}`)}
+                    style={{
+                      padding: '0.65rem 0.85rem',
+                      borderRadius: '8px',
+                      border: '1px solid var(--bg-card-border)',
+                      background: 'var(--bg-tertiary)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: '0.85rem', color: '#00f0ff' }}>
+                        [{st.code}] {st.name}
+                      </div>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>
+                        {st.boards.slice(0, 3).map(b => b.code).join(', ')}
+                      </div>
+                    </div>
+                    <ArrowRight size={13} style={{ color: 'var(--text-muted)' }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Sarkari Exams Section */}
           <div>

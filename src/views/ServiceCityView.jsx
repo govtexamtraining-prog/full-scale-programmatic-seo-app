@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Wrench, 
   GraduationCap, 
@@ -17,7 +17,11 @@ import {
   ArrowRight,
   ExternalLink,
   Zap,
-  Info
+  Info,
+  X,
+  MessageCircle,
+  Copy,
+  Check
 } from 'lucide-react';
 import { getNicheBySlug, getServiceBySlugs, getVerifiedProvidersForCity } from '../data/servicesData';
 import { getCityBySlugs, getStateBySlug } from '../data/cities';
@@ -35,6 +39,21 @@ export default function ServiceCityView({
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [callProProvider, setCallProProvider] = useState(null);
+  const [copiedPhone, setCopiedPhone] = useState(false);
+  const [modalCtaTitle, setModalCtaTitle] = useState('');
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setCallProProvider(null);
+      }
+    };
+    if (callProProvider) {
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [callProProvider]);
 
   const niche = getNicheBySlug(nicheSlug);
   const city = getCityBySlugs(stateSlug, citySlug);
@@ -73,8 +92,9 @@ export default function ServiceCityView({
   // Generate verified local providers
   const providers = getVerifiedProvidersForCity(cityName, city.slug, shortServiceName, niche.id);
 
-  const handleOpenLeadModal = (provider = null) => {
+  const handleOpenLeadModal = (provider = null, ctaTitle = '') => {
     setSelectedProvider(provider);
+    setModalCtaTitle(ctaTitle);
     setIsModalOpen(true);
   };
 
@@ -236,7 +256,7 @@ export default function ServiceCityView({
             </p>
 
             <button
-              onClick={() => handleOpenLeadModal(providers[0])}
+              onClick={() => handleOpenLeadModal(providers[0], niche.ctaPrimary)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -258,8 +278,9 @@ export default function ServiceCityView({
             </button>
 
             {providers[0]?.phoneCall && (
-              <a
-                href={providers[0].phoneCall}
+              <button
+                type="button"
+                onClick={() => setCallProProvider(providers[0])}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -272,12 +293,14 @@ export default function ServiceCityView({
                   borderRadius: '8px',
                   fontWeight: 600,
                   fontSize: '0.85rem',
-                  textDecoration: 'none'
+                  cursor: 'pointer',
+                  width: '100%',
+                  transition: 'all 0.18s ease'
                 }}
               >
                 <Phone size={14} style={{ color: 'var(--green-primary)' }} />
                 <span>Call {providers[0].phoneDisplay}</span>
-              </a>
+              </button>
             )}
 
             <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', textAlign: 'center' }}>
@@ -369,8 +392,9 @@ export default function ServiceCityView({
 
               {/* Actions */}
               <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-                <a
-                  href={pro.phoneCall}
+                <button
+                  type="button"
+                  onClick={() => setCallProProvider(pro)}
                   style={{
                     flex: 1,
                     display: 'flex',
@@ -378,20 +402,25 @@ export default function ServiceCityView({
                     justifyContent: 'center',
                     gap: '6px',
                     background: 'var(--green-primary)',
-                    color: 'white',
+                    color: '#07090e',
                     padding: '9px 12px',
                     borderRadius: '8px',
-                    fontWeight: 700,
+                    fontWeight: 800,
                     fontSize: '0.85rem',
-                    textDecoration: 'none'
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 0 12px rgba(0, 255, 157, 0.35)',
+                    transition: 'all 0.18s ease'
                   }}
+                  title={`View direct contact details for ${pro.name}`}
                 >
                   <Phone size={14} />
                   <span>Call Pro</span>
-                </a>
+                </button>
 
                 <button
-                  onClick={() => handleOpenLeadModal(pro)}
+                  type="button"
+                  onClick={() => handleOpenLeadModal(pro, niche.ctaSecondary)}
                   style={{
                     flex: 1.2,
                     display: 'flex',
@@ -405,8 +434,11 @@ export default function ServiceCityView({
                     fontWeight: 700,
                     fontSize: '0.85rem',
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    boxShadow: `0 2px 10px ${niche.color}40`,
+                    transition: 'all 0.18s ease'
                   }}
+                  title={`Request ${niche.ctaSecondary} from ${pro.name}`}
                 >
                   <span>{niche.ctaSecondary}</span>
                   <ArrowRight size={13} />
@@ -463,7 +495,7 @@ export default function ServiceCityView({
                     </td>
                     <td>
                       <button
-                        onClick={() => handleOpenLeadModal()}
+                        onClick={() => handleOpenLeadModal(null, `Book ${item.service}`)}
                         style={{
                           fontSize: '0.78rem',
                           fontWeight: 700,
@@ -639,7 +671,223 @@ export default function ServiceCityView({
         niche={niche}
         city={city}
         provider={selectedProvider}
+        ctaTitle={modalCtaTitle}
       />
+
+      {/* Call Pro Contact Modal */}
+      {callProProvider && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9999,
+            background: 'rgba(0, 0, 0, 0.78)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1rem'
+          }}
+          onClick={() => setCallProProvider(null)}
+        >
+          <div
+            className="glass-panel"
+            style={{
+              width: '100%',
+              maxWidth: '460px',
+              background: 'var(--bg-secondary)',
+              borderRadius: '20px',
+              border: '1px solid var(--bg-card-border)',
+              boxShadow: '0 24px 60px rgba(0,0,0,0.6)',
+              overflow: 'hidden',
+              position: 'relative'
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '1.25rem 1.5rem',
+              borderBottom: '1px solid var(--bg-card-border)',
+              background: 'rgba(14, 17, 26, 0.95)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '8px',
+                  background: 'rgba(0, 255, 157, 0.15)',
+                  color: 'var(--green-primary)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <Phone size={18} />
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.7rem', fontFamily: 'var(--font-mono)', color: 'var(--green-primary)', fontWeight: 800 }}>
+                    VERIFIED DIRECT CONTACT
+                  </div>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>
+                    {callProProvider.businessName || callProProvider.name}
+                  </h3>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCallProProvider(null)}
+                title="Close (Esc)"
+                style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'var(--bg-tertiary)',
+                  border: '1px solid var(--bg-card-border)',
+                  color: 'var(--text-muted)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer'
+                }}
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            <div style={{ padding: '1.5rem' }}>
+              {/* Phone Readout Box */}
+              <div style={{
+                textAlign: 'center',
+                background: 'var(--bg-tertiary)',
+                border: '1px solid var(--bg-card-border)',
+                borderRadius: '12px',
+                padding: '1.25rem 1rem',
+                marginBottom: '1.25rem'
+              }}>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.35rem' }}>
+                  Direct Helpline ({callProProvider.locality}, {cityName})
+                </div>
+                <div style={{
+                  fontSize: '1.65rem',
+                  fontFamily: 'var(--font-mono)',
+                  fontWeight: 900,
+                  letterSpacing: '0.04em',
+                  color: '#00ff9d',
+                  marginBottom: '0.5rem'
+                }}>
+                  {callProProvider.phoneDisplay}
+                </div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00ff9d' }}></span>
+                  <span>{callProProvider.openHours}</span>
+                </div>
+              </div>
+
+              {/* 3 Real Working Action Channels */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {/* 1. Direct Dial */}
+                <a
+                  href={callProProvider.phoneCall}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    background: '#00ff9d',
+                    color: '#07090e',
+                    padding: '11px 16px',
+                    borderRadius: '8px',
+                    fontWeight: 800,
+                    fontSize: '0.92rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 0 15px rgba(0, 255, 157, 0.4)'
+                  }}
+                >
+                  <Phone size={16} />
+                  <span>Dial Call Now</span>
+                </a>
+
+                {/* 2. WhatsApp Direct Chat */}
+                <a
+                  href={`https://wa.me/${callProProvider.phoneCall.replace(/\D/g, '')}?text=${encodeURIComponent(`Hello, I saw your verified profile on UrbanSarkari for ${shortServiceName} in ${cityName}. I would like to consult with you.`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    background: '#25D366',
+                    color: '#ffffff',
+                    padding: '11px 16px',
+                    borderRadius: '8px',
+                    fontWeight: 800,
+                    fontSize: '0.92rem',
+                    textDecoration: 'none',
+                    boxShadow: '0 0 15px rgba(37, 211, 102, 0.3)'
+                  }}
+                >
+                  <MessageCircle size={16} />
+                  <span>Chat on WhatsApp</span>
+                </a>
+
+                {/* 3. Copy Phone Number */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(callProProvider.phoneDisplay);
+                    setCopiedPhone(true);
+                    setTimeout(() => setCopiedPhone(false), 2000);
+                  }}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    background: 'var(--bg-tertiary)',
+                    color: 'var(--text-primary)',
+                    border: '1px solid var(--bg-card-border)',
+                    padding: '10px 16px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    fontSize: '0.85rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {copiedPhone ? <CheckCircle2 size={16} style={{ color: '#00ff9d' }} /> : <Copy size={16} />}
+                  <span>{copiedPhone ? "Phone Number Copied to Clipboard!" : "Copy Phone Number"}</span>
+                </button>
+              </div>
+
+              {/* Free Callback Link */}
+              <div style={{ marginTop: '1.1rem', textAlign: 'center' }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const p = callProProvider;
+                    setCallProProvider(null);
+                    handleOpenLeadModal(p, niche.ctaSecondary);
+                  }}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'var(--accent-blue)',
+                    fontSize: '0.8rem',
+                    fontWeight: 700,
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Or request an instant callback / quote online →
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -11,14 +11,19 @@ const TODAY = "2026-10-22";
 import { ALL_CITIES } from '../src/data/cities.js';
 import { SARKARI_EXAMS } from '../src/data/examData.js';
 import { NICHES } from '../src/data/servicesData.js';
+import { INDIAN_STATES_EXAM_DIRECTORY } from '../src/data/indianStates.js';
 
 const urls = [];
 
-// 1. Core National Portals
+// 1. Core National Portals & Categories
 urls.push(
   { loc: `${BASE_URL}/`, priority: '1.0', changefreq: 'hourly' },
-  { loc: `${BASE_URL}/exam-schedules`, priority: '0.95', changefreq: 'hourly' },
-  { loc: `${BASE_URL}/services`, priority: '0.95', changefreq: 'daily' },
+  { loc: `${BASE_URL}/exam-schedules`, priority: '1.0', changefreq: 'hourly' },
+  { loc: `${BASE_URL}/exam-schedules/central`, priority: '0.98', changefreq: 'hourly' },
+  { loc: `${BASE_URL}/exam-schedules/category/jobs`, priority: '0.98', changefreq: 'hourly' },
+  { loc: `${BASE_URL}/exam-schedules/category/admit-card`, priority: '0.98', changefreq: 'hourly' },
+  { loc: `${BASE_URL}/exam-schedules/category/results`, priority: '0.98', changefreq: 'hourly' },
+  { loc: `${BASE_URL}/services`, priority: '0.90', changefreq: 'daily' },
   { loc: `${BASE_URL}/home-services`, priority: '0.90', changefreq: 'daily' },
   { loc: `${BASE_URL}/coaching-institutes`, priority: '0.90', changefreq: 'daily' },
   { loc: `${BASE_URL}/legal-tax-services`, priority: '0.90', changefreq: 'daily' },
@@ -30,7 +35,18 @@ urls.push(
   { loc: `${BASE_URL}/disclaimer`, priority: '0.80', changefreq: 'monthly' }
 );
 
-// 2. Sarkari Exam 2026 Micro-Pages
+// 2. All 28 States & UTs Sarkari Exam Hubs
+INDIAN_STATES_EXAM_DIRECTORY.forEach(state => {
+  if (state.slug !== 'central') {
+    urls.push({
+      loc: `${BASE_URL}/exam-schedules/state/${state.slug}`,
+      priority: '0.96',
+      changefreq: 'hourly'
+    });
+  }
+});
+
+// 3. Sarkari Exam 2026 Micro-Pages (Central & All Indian States)
 SARKARI_EXAMS.forEach(exam => {
   urls.push({
     loc: `${BASE_URL}/exam-schedules/${exam.orgSlug}/${exam.postSlug}`,

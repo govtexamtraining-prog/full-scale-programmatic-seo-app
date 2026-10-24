@@ -1,3 +1,5 @@
+@import './styles/cyberpunk-hud.css';
+
 /* UrbanSarkari — Creative Gamer Minimalist Design System */
 :root {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -304,6 +306,58 @@ button {
   color: var(--text-secondary);
 }
 
+/* Responsive Navbar for Tablets and Mobile Devices */
+@media (max-width: 960px) {
+  .navbar {
+    height: auto;
+    padding: 0.65rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .nav-brand {
+    font-size: 1.05rem;
+    gap: 0.5rem;
+  }
+  .nav-brand .brand-badge {
+    width: 28px;
+    height: 28px;
+  }
+  .nav-links {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 3px 6px;
+    justify-content: flex-start;
+  }
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-item {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.78rem;
+  }
+  .kbd-shortcut {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.5rem 0.75rem;
+  }
+  .search-trigger-btn span {
+    display: none;
+  }
+  .search-trigger-btn {
+    padding: 0.45rem;
+    border-radius: 50%;
+  }
+}
+
 /* High-Tech Sync Ribbon */
 .sync-ribbon {
   padding: 0.35rem 1.5rem;
@@ -313,6 +367,15 @@ button {
   justify-content: space-between;
   border-bottom: 1px solid transparent;
   transition: var(--transition);
+}
+
+@media (max-width: 640px) {
+  .sync-ribbon {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 6px 0.75rem !important;
+  }
 }
 
 .sync-ribbon.live {
@@ -331,10 +394,23 @@ button {
 /* Layout Container */
 .container {
   max-width: 1240px;
+  width: 100%;
   margin: 0 auto;
   padding: 1.5rem 1.25rem 4rem;
   position: relative;
   z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem 0.75rem 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem 0.5rem 2.5rem;
+  }
 }
 
 /* Hero Section */
@@ -509,9 +585,18 @@ button {
   margin-top: 1.5rem;
 }
 
-@media (max-width: 868px) {
+@media (max-width: 1100px) {
+  .sarkari-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
   .sarkari-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
   }
 }
 
@@ -985,4 +1070,131 @@ button {
 
 .spin-anim {
   animation: spin 0.8s linear infinite;
+}
+
+/* Interactive Sarkari HUD Metric Cards */
+.hud-metric-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg, 12px);
+  padding: 1.15rem 1.25rem;
+  border: 1px solid var(--bg-card-border);
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+}
+
+.hud-metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.7), 0 0 20px -4px rgba(99, 102, 241, 0.25);
+}
+
+.hud-metric-card:active {
+  transform: translateY(-1px);
+}
+
+.hud-metric-card:focus-visible {
+  outline: 2px solid #00f0ff;
+  outline-offset: 3px;
+}
+
+.hud-metric-card.hud-crimson {
+  border-left: 4px solid #ff2a6d;
+}
+
+.hud-metric-card.hud-cyan {
+  border-left: 4px solid #00f0ff;
+}
+
+.hud-metric-card.hud-indigo {
+  border-left: 4px solid #818cf8;
+}
+
+.hud-metric-card.hud-emerald {
+  border-left: 4px solid #00ff9d;
+}
+
+.hud-metric-card.hud-crimson:hover,
+.hud-metric-card.hud-crimson.is-active {
+  border-color: rgba(255, 42, 109, 0.6);
+  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 42, 109, 0.35);
+}
+
+.hud-metric-card.hud-cyan:hover,
+.hud-metric-card.hud-cyan.is-active {
+  border-color: rgba(0, 240, 255, 0.6);
+  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 240, 255, 0.35);
+}
+
+.hud-metric-card.hud-indigo:hover,
+.hud-metric-card.hud-indigo.is-active {
+  border-color: rgba(129, 140, 248, 0.6);
+  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.7), 0 0 25px rgba(129, 140, 248, 0.35);
+}
+
+.hud-metric-card.hud-emerald:hover,
+.hud-metric-card.hud-emerald.is-active {
+  border-color: rgba(0, 255, 157, 0.6);
+  box-shadow: 0 14px 30px -8px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 255, 157, 0.35);
+}
+
+.hud-metric-card.is-active {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(15, 23, 42, 0.9));
+}
+
+.hud-cta-link {
+  font-size: 0.72rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 0.75rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.hud-metric-card:hover .hud-cta-link {
+  gap: 8px;
+}
+
+/* Responsive HUD Metric Cards Grid for All Devices */
+.hud-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .hud-metrics-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.65rem !important;
+  }
+  .hud-metric-card {
+    padding: 0.85rem !important;
+  }
+  .hud-metric-card .hud-metric-value {
+    font-size: 1.3rem !important;
+  }
+  .hud-metric-card .hud-cta-link {
+    font-size: 0.65rem !important;
+    padding-top: 0.4rem !important;
+    margin-top: 0.5rem !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .hud-metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
 }

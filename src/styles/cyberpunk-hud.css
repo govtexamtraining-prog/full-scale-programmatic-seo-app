@@ -1,0 +1,463 @@
+/* ==========================================================================
+   CYBERPUNK HUD & iOS MOBILE APP DASHBOARD STYLESHEET
+   Unreal Engine UI Aesthetic | Obsidian Black | Neon Teal & Hot Magenta
+   ========================================================================== */
+
+:root {
+  --cb-obsidian: #05070c;
+  --cb-obsidian-deep: #020306;
+  --cb-panel-bg: rgba(9, 13, 22, 0.88);
+  --cb-panel-solid: #0c111c;
+  --cb-teal: #00f0ff;
+  --cb-teal-glow: rgba(0, 240, 255, 0.5);
+  --cb-magenta: #ff007f;
+  --cb-magenta-glow: rgba(255, 0, 127, 0.5);
+  --cb-gold: #ffb703;
+  --cb-gold-glow: rgba(255, 183, 3, 0.5);
+  --cb-emerald: #00ff9d;
+  --cb-emerald-glow: rgba(0, 255, 157, 0.5);
+  --cb-border: rgba(0, 240, 255, 0.2);
+  --cb-border-magenta: rgba(255, 0, 127, 0.35);
+  --cb-grid-line: rgba(0, 240, 255, 0.04);
+}
+
+/* Background Cyberpunk Grid Pattern */
+.cb-grid-bg {
+  background-color: var(--cb-obsidian);
+  background-image: 
+    linear-gradient(var(--cb-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--cb-grid-line) 1px, transparent 1px);
+  background-size: 30px 30px;
+  background-position: center center;
+}
+
+/* Sci-Fi Digital Chamfered Polygon Borders */
+.cb-chamfer-box {
+  clip-path: polygon(
+    12px 0, 
+    100% 0, 
+    100% calc(100% - 12px), 
+    calc(100% - 12px) 100%, 
+    0 100%, 
+    0 12px
+  );
+}
+
+.cb-chamfer-sm {
+  clip-path: polygon(
+    8px 0, 
+    100% 0, 
+    100% calc(100% - 8px), 
+    calc(100% - 8px) 100%, 
+    0 100%, 
+    0 8px
+  );
+}
+
+.cb-chamfer-button {
+  clip-path: polygon(
+    10px 0, 
+    100% 0, 
+    100% calc(100% - 10px), 
+    calc(100% - 10px) 100%, 
+    0 100%, 
+    0 10px
+  );
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cb-chamfer-button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+}
+
+.cb-chamfer-button:active {
+  transform: translateY(1px);
+}
+
+/* Glowing Neon Vector Lines */
+.cb-vector-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--cb-teal) 50%, transparent 100%);
+  box-shadow: 0 0 12px var(--cb-teal-glow);
+}
+
+.cb-vector-line-magenta {
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--cb-magenta) 50%, transparent 100%);
+  box-shadow: 0 0 12px var(--cb-magenta-glow);
+}
+
+/* Chromatic Aberration Text Effect */
+.cb-glitch-text {
+  text-shadow: 
+    1.5px 0 rgba(255, 0, 127, 0.7), 
+    -1.5px 0 rgba(0, 240, 255, 0.7);
+}
+
+/* Micro-Charging Progress Bar */
+.cb-charging-bar {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
+.cb-charging-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: cb-charge-sweep 2.5s infinite linear;
+}
+
+@keyframes cb-charge-sweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* Retro Arcade Dialogue Box */
+.cb-arcade-dialogue {
+  background: rgba(7, 10, 18, 0.94);
+  border: 1.5px solid var(--cb-teal);
+  border-radius: 8px;
+  box-shadow: 
+    0 0 25px rgba(0, 240, 255, 0.25),
+    inset 0 0 20px rgba(0, 240, 255, 0.08);
+  position: relative;
+}
+
+.cb-arcade-dialogue::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: var(--cb-magenta);
+  box-shadow: 0 0 8px var(--cb-magenta);
+}
+
+/* Timeline Quest Boss Battle Nodes */
+.cb-timeline-track {
+  position: relative;
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding: 1rem 0.5rem 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--cb-teal) rgba(0, 0, 0, 0.5);
+}
+
+.cb-timeline-track::-webkit-scrollbar {
+  height: 6px;
+}
+.cb-timeline-track::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 9999px;
+}
+.cb-timeline-track::-webkit-scrollbar-thumb {
+  background: var(--cb-teal);
+  border-radius: 9999px;
+  box-shadow: 0 0 10px var(--cb-teal);
+}
+
+/* Boss Event Card Node */
+.cb-boss-card {
+  min-width: 280px;
+  max-width: 280px;
+  background: rgba(12, 17, 28, 0.92);
+  backdrop-filter: blur(16px);
+  border-radius: 12px;
+  border: 1.5px solid rgba(0, 240, 255, 0.3);
+  padding: 1.15rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+
+.cb-boss-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--cb-teal);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px var(--cb-teal-glow);
+}
+
+.cb-boss-card.cb-magenta-boss {
+  border-color: rgba(255, 0, 127, 0.4);
+}
+
+.cb-boss-card.cb-magenta-boss:hover {
+  border-color: var(--cb-magenta);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px var(--cb-magenta-glow);
+}
+
+/* Collectible Digital Loot Cards */
+.cb-loot-card {
+  background: rgba(12, 17, 28, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 14px;
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  border: 1.5px solid transparent;
+}
+
+/* Legendary Loot Card Glow (Gold / Amber) */
+.cb-loot-legendary {
+  border-color: var(--cb-gold);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--cb-gold-glow);
+}
+.cb-loot-legendary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cb-gold), transparent);
+  box-shadow: 0 0 12px var(--cb-gold);
+}
+
+/* Epic Loot Card Glow (Hot Magenta / Violet) */
+.cb-loot-epic {
+  border-color: var(--cb-magenta);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--cb-magenta-glow);
+}
+.cb-loot-epic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cb-magenta), transparent);
+  box-shadow: 0 0 12px var(--cb-magenta);
+}
+
+/* Rare Loot Card Glow (Electric Teal / Cyan) */
+.cb-loot-rare {
+  border-color: var(--cb-teal);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--cb-teal-glow);
+}
+.cb-loot-rare::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cb-teal), transparent);
+  box-shadow: 0 0 12px var(--cb-teal);
+}
+
+/* Special Loot Card Glow (Emerald Green) */
+.cb-loot-special {
+  border-color: var(--cb-emerald);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 25px var(--cb-emerald-glow);
+}
+.cb-loot-special::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cb-emerald), transparent);
+  box-shadow: 0 0 12px var(--cb-emerald);
+}
+
+.cb-loot-card:hover {
+  transform: translateY(-6px);
+  filter: brightness(1.08);
+}
+
+/* Holographic Sheen on Hover */
+.cb-loot-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    125deg, 
+    transparent 30%, 
+    rgba(255, 255, 255, 0.08) 45%, 
+    rgba(0, 240, 255, 0.12) 50%, 
+    rgba(255, 0, 127, 0.08) 55%, 
+    transparent 70%
+  );
+  transform: rotate(25deg) translateY(-100%);
+  transition: transform 0.6s ease;
+  pointer-events: none;
+}
+
+.cb-loot-card:hover::after {
+  transform: rotate(25deg) translateY(100%);
+}
+
+/* iOS Phone Frame Simulation Container */
+.cb-ios-viewport {
+  max-width: 430px;
+  margin: 0 auto;
+  border-radius: 54px;
+  border: 10px solid #1f2430;
+  box-shadow: 
+    0 0 0 2px #0a0e17, 
+    0 25px 60px rgba(0, 0, 0, 0.9), 
+    0 0 50px rgba(0, 240, 255, 0.2);
+  overflow: hidden;
+  position: relative;
+  background: var(--cb-obsidian);
+}
+
+/* iOS Dynamic Island */
+.cb-dynamic-island {
+  position: sticky;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 32px;
+  background: #000000;
+  border-radius: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+/* iOS Home Indicator Bar */
+.cb-ios-home-bar {
+  width: 135px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 9999px;
+  margin: 12px auto 6px;
+}
+
+/* Bottom iOS Navigation Dock */
+.cb-ios-dock {
+  background: rgba(7, 10, 18, 0.95);
+  backdrop-filter: blur(24px);
+  border-top: 1px solid rgba(0, 240, 255, 0.25);
+  padding: 0.65rem 1rem 0.5rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  z-index: 90;
+}
+
+.cb-dock-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.cb-dock-tab.is-active {
+  color: var(--cb-teal);
+  text-shadow: 0 0 12px var(--cb-teal-glow);
+}
+
+.cb-dock-tab:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   RESPONSIVE DEVICE FIT ADAPTATIONS (MOBILE, TABLET, DESKTOP, ULTRAWIDE)
+   ========================================================================== */
+
+/* Timeline Touch & Momentum Scrolling */
+.cb-timeline-track {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.cb-boss-card {
+  scroll-snap-align: start;
+}
+
+/* Tablet Adaptations (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .cb-boss-card {
+    min-width: min(270px, 75vw);
+    max-width: min(270px, 80vw);
+  }
+}
+
+/* Mobile Phone Adaptations (max-width: 768px) */
+@media (max-width: 768px) {
+  .cb-ios-viewport {
+    max-width: 100% !important;
+    border: none !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+
+  .cb-dynamic-island {
+    display: none !important;
+  }
+
+  .cb-ios-home-bar {
+    display: none !important;
+  }
+
+  .cb-arcade-dialogue {
+    padding: 0.85rem 1rem !important;
+  }
+
+  .cb-boss-card {
+    min-width: min(260px, 82vw) !important;
+    max-width: min(260px, 85vw) !important;
+    padding: 0.9rem !important;
+  }
+
+  .cb-loot-card {
+    padding: 1rem !important;
+  }
+
+  .cb-chamfer-button {
+    padding: 6px 10px !important;
+    font-size: 0.72rem !important;
+  }
+}
+
+/* Small Handset Adaptations (max-width: 480px) */
+@media (max-width: 480px) {
+  .cb-boss-card {
+    min-width: min(250px, 84vw) !important;
+  }
+
+  .cb-dock-tab {
+    font-size: 0.6rem !important;
+    padding: 3px 6px !important;
+  }
+}
